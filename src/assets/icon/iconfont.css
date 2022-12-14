@@ -1,0 +1,60 @@
+@font-face {
+  font-family: "iconfont";
+  /* Project id 3348533 */
+  src: url('iconfont.woff2?t=1660629889915') format('woff2'),
+    url('iconfont.woff?t=1660629889915') format('woff'),
+    url('iconfont.ttf?t=1660629889915') format('truetype'),
+    url('iconfont.svg?t=1660629889915#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-NaviLeft-9-remain:before {
+  content: "\e615";
+}
+
+.icon-NaviLeft-9-lower1:before {
+  content: "\e616";
+}
+
+.icon-NaviLeft-8-account:before {
+  content: "\e614";
+}
+
+.icon-NaviLeft-7-news:before {
+  content: "\e613";
+}
+
+.icon-NaviLeft-6-message:before {
+  content: "\e612";
+}
+
+.icon-NaviLeft-5-bill:before {
+  content: "\e611";
+}
+
+.icon-NaviLeft-4-order:before {
+  content: "\e610";
+}
+
+.icon-NaviLeft-3-release:before {
+  content: "\e60f";
+}
+
+.icon-NaviLeft-2-material:before {
+  content: "\e60e";
+}
+
+.icon-NaviLeft-1-home:before {
+  content: "\e60d";
+}
+
+.icon-NaviLeft-1-spart:before {
+  content: "\e601";
+}

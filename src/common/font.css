@@ -1,0 +1,42 @@
+@font-face {
+  font-family: "SourceHanSansCN";
+  src: url("./SourceHanSansCN-Regular.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "SourceHanSansCN-Medium";
+  src: url("./SourceHanSansCN-Medium.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "d-din-bold";
+  src: url("./D-DIN-Bold.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "d-din";
+  src: url("./D-DIN.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "D-DINxp";
+  src: url("./D-DINExp.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "tyzt-public";
+  src: url("./苹方-简\ 常规体.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "tyzt-zht";
+  src: url("./苹方-简\ 中黑体.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}

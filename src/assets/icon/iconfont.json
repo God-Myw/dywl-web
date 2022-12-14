@@ -1,0 +1,79 @@
+{
+  "id": "3348533",
+  "name": "道裕官网b端",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "31273665",
+      "name": "NaviLeft-9-remain",
+      "font_class": "NaviLeft-9-remain",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "31273667",
+      "name": "NaviLeft-9-lower1",
+      "font_class": "NaviLeft-9-lower1",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "29212470",
+      "name": "NaviLeft-8-account",
+      "font_class": "NaviLeft-8-account",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "29212464",
+      "name": "NaviLeft-7-news",
+      "font_class": "NaviLeft-7-news",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "29212463",
+      "name": "NaviLeft-6-message",
+      "font_class": "NaviLeft-6-message",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "29212458",
+      "name": "NaviLeft-5-bill",
+      "font_class": "NaviLeft-5-bill",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "29212453",
+      "name": "NaviLeft-4-order",
+      "font_class": "NaviLeft-4-order",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "29212452",
+      "name": "NaviLeft-3-release",
+      "font_class": "NaviLeft-3-release",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "29212445",
+      "name": "NaviLeft-2-material",
+      "font_class": "NaviLeft-2-material",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "29212414",
+      "name": "NaviLeft-1-home",
+      "font_class": "NaviLeft-1-home",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    }
+  ]
+}
