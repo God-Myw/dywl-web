@@ -146,19 +146,25 @@ const routes = [
           //   name: 'spart',
           //   component: () => import('@/views/workbench/spart/spartList/index.vue'),
           // },
-          // 工作台-船舶备件
+          // 工作台-发布船舶备件
           {
             path: '/workbench/spart/reSpart',
             name: 'reSpart',
             component: () => import('@/views/workbench/spart/reSpart/index.vue'),
           },
-          // 工作台-船舶备件
+          // 工作台-船舶备件列表
           {
             path: '/workbench/spart/spartList',
             name: 'spartList',
             component: () => import('@/views/workbench/spart/spartList/index.vue'),
           },
-          // 工作台-船舶备件
+          // 工作台-船舶备件编辑
+          {
+            path: '/workbench/spart/spartEdit',
+            name: 'spartList',
+            component: () => import('@/views/workbench/spart/spartList/spartEdit.vue'),
+          },
+          // 工作台-我的商铺
           {
             path: '/workbench/spart/myStore',
             name: 'myStore',

@@ -249,8 +249,8 @@ export default {
       line-height: 100px;
       font-size: 22px;
     }
-    .contentInfo {
-    }
+    // .contentInfo {
+    // }
   }
   .icon-NaviLeft-1-workbench {
     background-color: #1890ff;
