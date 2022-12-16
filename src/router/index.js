@@ -104,92 +104,6 @@ const routes = [
         name: 'aboutUs',
         component: () => import('@/views/aboutUs/index.vue'),
       },
-      // 工作台
-      {
-        path: '/workbench',
-        name: 'workbench',
-        component: () => import('@/views/workbench/index.vue'),
-        children: [
-          // 工作台-首页
-          {
-            path: '/workbench',
-            name: 'home',
-            component: () => import('@/views/workbench/home/index.vue'),
-          },
-          // 工作台-资料认证
-          {
-            path: '/workbench/dataVerify',
-            name: 'dataVerify',
-            component: () => import('@/views/workbench/dataVerify/index.vue'),
-          },
-          // 工作台-我要发布
-          {
-            path: '/workbench/release',
-            name: 'release',
-            component: () => import('@/views/workbench/release/index.vue'),
-          },
-          // 工作台-散杂货发布
-          {
-            path: '/workbench/release/bulkCargo',
-            name: 'bulkCargo',
-            component: () => import('@/views/workbench/release/bulkCargo/index.vue'),
-          },
-          // 工作台-船舶备件发布
-          {
-            path: '/workbench/release/spart',
-            name: 'spart',
-            component: () => import('@/views/workbench/release/spart/index.vue'),
-          },
-          // 工作台-船舶备件
-          // {
-          //   path: '/workbench/spart',
-          //   name: 'spart',
-          //   component: () => import('@/views/workbench/spart/spartList/index.vue'),
-          // },
-          // 工作台-发布船舶备件
-          {
-            path: '/workbench/spart/reSpart',
-            name: 'reSpart',
-            component: () => import('@/views/workbench/spart/reSpart/index.vue'),
-          },
-          // 工作台-船舶备件列表
-          {
-            path: '/workbench/spart/spartList',
-            name: 'spartList',
-            component: () => import('@/views/workbench/spart/spartList/index.vue'),
-          },
-          // 工作台-船舶备件编辑
-          {
-            path: '/workbench/spart/spartEdit',
-            name: 'spartList',
-            component: () => import('@/views/workbench/spart/spartList/spartEdit.vue'),
-          },
-          // 工作台-我的商铺
-          {
-            path: '/workbench/spart/myStore',
-            name: 'myStore',
-            component: () => import('@/views/workbench/spart/myStore/index.vue'),
-          },
-          // 工作台-订单列表
-          {
-            path: '/workbench/orderList',
-            name: 'orderList',
-            component: () => import('@/views/workbench/orderList/bulkShip/index.vue'),
-          },
-          // 工作台-散货船订单
-          {
-            path: '/workbench/orderList/bulkShip',
-            name: 'bulkShip',
-            component: () => import('@/views/workbench/orderList/bulkShip/index.vue'),
-          },
-          // 工作台-集装箱订单
-          {
-            path: '/workbench/orderList/containerList',
-            name: 'containerList',
-            component: () => import('@/views/workbench/orderList/container/index.vue'),
-          },
-        ],
-      },
       // 港口信息查询
       {
         path: '/tool/portmessage',
@@ -207,6 +121,93 @@ const routes = [
         path: '/otherServe/agency',
         name: 'agency',
         component: () => import('@/views/otherServe/agency.vue'),
+      },
+    ],
+  },
+
+  // 工作台
+  {
+    path: '/workbench',
+    name: 'workbench',
+    component: () => import('@/views/workbench/index.vue'),
+    children: [
+      // 工作台-首页
+      {
+        path: '/workbench',
+        name: 'home',
+        component: () => import('@/views/workbench/home/index.vue'),
+      },
+      // 工作台-资料认证
+      {
+        path: '/workbench/dataVerify',
+        name: 'dataVerify',
+        component: () => import('@/views/workbench/dataVerify/index.vue'),
+      },
+      // 工作台-我要发布
+      {
+        path: '/workbench/release',
+        name: 'release',
+        component: () => import('@/views/workbench/release/index.vue'),
+      },
+      // 工作台-散杂货发布
+      {
+        path: '/workbench/release/bulkCargo',
+        name: 'bulkCargo',
+        component: () => import('@/views/workbench/release/bulkCargo/index.vue'),
+      },
+      // 工作台-船舶备件发布
+      {
+        path: '/workbench/release/spart',
+        name: 'spart',
+        component: () => import('@/views/workbench/release/spart/index.vue'),
+      },
+      // 工作台-船舶备件
+      // {
+      //   path: '/workbench/spart',
+      //   name: 'spart',
+      //   component: () => import('@/views/workbench/spart/spartList/index.vue'),
+      // },
+      // 工作台-发布船舶备件
+      {
+        path: '/workbench/spart/reSpart',
+        name: 'reSpart',
+        component: () => import('@/views/workbench/spart/reSpart/index.vue'),
+      },
+      // 工作台-船舶备件列表
+      {
+        path: '/workbench/spart/spartList',
+        name: 'spartList',
+        component: () => import('@/views/workbench/spart/spartList/index.vue'),
+      },
+      // 工作台-船舶备件编辑
+      {
+        path: '/workbench/spart/spartEdit',
+        name: 'spartList',
+        component: () => import('@/views/workbench/spart/spartList/spartEdit.vue'),
+      },
+      // 工作台-我的商铺
+      {
+        path: '/workbench/spart/myStore',
+        name: 'myStore',
+        component: () => import('@/views/workbench/spart/myStore/index.vue'),
+      },
+      // 工作台-订单列表
+      {
+        path: '/workbench/orderList',
+        name: 'orderList',
+        component: () => import('@/views/workbench/orderList/bulkShip/index.vue'),
+      },
+      // 工作台-散货船订单
+      {
+        path: '/workbench/orderList/bulkShip',
+        name: 'bulkShip',
+        component: () => import('@/views/workbench/orderList/bulkShip/index.vue'),
+      },
+      // 工作台-集装箱订单
+      {
+        path: '/workbench/orderList/container',
+        name: 'containerList',
+        component: () => import('@/views/workbench/orderList/container/index.vue'),
       },
     ],
   },

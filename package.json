@@ -10,6 +10,8 @@
   "dependencies": {
     "@sentry/tracing": "^5.29.2",
     "@sentry/vue": "^5.29.2",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^1.0.2",
     "antd": "^4.18.5",
     "autoprefixer": "^9.7.1",
     "axios": "^0.19.2",

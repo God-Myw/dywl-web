@@ -1,11 +1,15 @@
 <template>
-  <div>资料认证</div>
+  <div class="myStore">
+    <Worktitle title="资料认证"></Worktitle>
+  </div>
 </template>
-
 <script>
-import axios from "axios";
-export default {};
+import Worktitle from "../../../components/WorkTitle.vue";
+export default {
+  data() {
+    return {};
+  },
+  components: { Worktitle },
+  mounted() {},
+};
 </script>
-
-<style lang="scss" scoped>
-</style>

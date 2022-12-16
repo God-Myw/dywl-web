@@ -15,7 +15,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-div {
+.reSpart {
+  display: inline-block;
   height: 100px;
   line-height: 100px;
   font-size: 22px;

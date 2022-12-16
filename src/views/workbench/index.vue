@@ -1,7 +1,7 @@
 <template>
   <div class="workbench">
     <t-layout>
-      <!-- <t-header>
+      <t-header>
         <t-head-menu value="item1" height="120px">
           <img
             slot="logo"
@@ -36,18 +36,18 @@
             </div>
           </template>
         </t-head-menu>
-      </t-header> -->
+      </t-header>
       <t-layout>
         <t-aside style="border-top: 1px solid var(--component-border)">
           <t-menu @change="changeHandler">
-            <div class="icon-NaviLeft-1-workbench">
+            <!-- <div class="icon-NaviLeft-1-workbench">
               <div
                 class="iconfont icon-NaviLeft-1-home"
                 style="margin-right: 8px"
               >
                 货主/货代工作台
               </div>
-            </div>
+            </div> -->
             <t-menu-item value="workbench">
               <template #icon>
                 <div
@@ -233,17 +233,20 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 .workbench {
+  .box {
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    width: 99%;
+    box-shadow: 0px 0px 5px rgb(235, 227, 227);
+  }
   /deep/.t-menu__operations-icon {
     margin-right: 0px;
   }
   .content {
-    padding-left: 150px;
+    padding: 2vh 1vw 0px 1vw;
     .contentTitle {
       height: 100px;
       line-height: 100px;

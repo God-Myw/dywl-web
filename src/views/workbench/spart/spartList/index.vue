@@ -1,6 +1,5 @@
 <template>
   <div class="spartList">
-    <Worktitle title="船舶备件商品列表" />
     <div class="box shaixuan">
       <el-row :gutter="20">
         <el-col :span="5">
@@ -37,11 +36,26 @@
         </el-col>
         <el-col :span="3">
           <el-button type="primary">查询</el-button>
-          <el-button type="primary" plain>重置</el-button>
+          <el-button>重置</el-button>
         </el-col>
       </el-row>
     </div>
     <div class="box list">
+      <Worktitle title="船舶备件商品列表" />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <el-button
+        icon="el-icon-plus"
+        type="primary"
+        @click="
+          () => {
+            this.$router.push('/workbench/spart/reSpart');
+          }
+        "
+      >
+        发布新商品
+      </el-button>
+      &nbsp;&nbsp;
+      <el-button icon="el-icon-refresh" @click="getData()"></el-button>
       <el-table :data="spartList" style="width: 100%">
         <el-table-column prop="number" label="商品编号" />
         <el-table-column prop="fileName" label="商品图片">
@@ -55,28 +69,38 @@
           </template>
         </el-table-column>
         <el-table-column prop="tradeName" label="商品名称" />
-        <el-table-column prop="" label="所属商品类目" />
+        <el-table-column prop="" label="所属类目" />
         <el-table-column prop="brand" label="品牌" />
-        <el-table-column prop="money" label="价格" />
+        <el-table-column prop="money" label="价格(元)" />
         <el-table-column prop="quantitySum" label="库存" />
-        <el-table-column prop="shlef" label="状态" />
-        <el-table-column prop="guid" label="地址" min-width="200">
+        <el-table-column prop="shlef" label="状态">
+          <template slot-scope="scope">
+            <div>
+              <p
+                class="shlefColor"
+                :style="
+                  scope.row.shlef == 1
+                    ? 'background: #04AB75'
+                    : 'background: #98979A'
+                "
+              ></p>
+              {{ scope.row.shlef == 1 ? "已上架" : "未上架" }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="guid" label="操作">
           <template slot-scope="scope">
             <div class="listEdit">
               <el-button
-                :type="scope.row.shlef2 == '上架' ? 'primary' : 'info'"
+                :type="scope.row.shlef2 == '上架' ? 'text' : 'text'"
                 @click="shelfChange(scope.row.guid)"
               >
                 {{ scope.row.shlef2 }}
               </el-button>
-              <el-button
-                type="primary"
-                plain
-                @click="getSpartById(scope.row.guid)"
-              >
+              <el-button type="text" @click="getSpartById(scope.row.guid)">
                 编辑
               </el-button>
-              <el-button type="danger" @click="handleDelete(scope.row.guid)">
+              <el-button type="text" @click="handleDelete(scope.row.guid)">
                 删除
               </el-button>
             </div>
@@ -84,11 +108,13 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <span>总共{{ Math.ceil(total / 10) }}页记录每页显示10条记录</span>
+        <!-- <span>总共{{ Math.ceil(total / 10) }}页记录每页显示10条记录</span> -->
         <el-pagination
-          hide-on-single-page
+          @size-change="handleSizeChange"
           @current-change="currentChange"
-          layout="prev, pager, next, jumper"
+          :page-sizes="[5, 12, 15, 20]"
+          :page-size="12"
+          layout="total,sizes,prev, pager, next, jumper"
           :total="total"
         >
         </el-pagination>
@@ -151,6 +177,10 @@ export default {
       this.currentPage = currentPage;
       this.getData();
     },
+    handleSizeChange(handleSizeChange) {
+      this.pageSize = handleSizeChange;
+      this.getData();
+    },
     shelfChange(guid) {
       let params = { guid: guid };
       shelfChange(params).then((res) => {
@@ -171,13 +201,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+//工作台公共样式
 .spartList {
+  /deep/.el-button--primary {
+    background-color: #0052db;
+  }
   .box {
     padding: 20px;
     margin-bottom: 10px;
     border-radius: 5px;
     background-color: #ffffff;
-    width: 90%;
+    width: 99%;
     box-shadow: 0px 0px 5px rgb(235, 227, 227);
   }
   .shaixuan {
@@ -187,11 +221,11 @@ export default {
       align-items: center;
       span {
         font-size: 15px;
-        width: 20%;
+        width: 30%;
       }
       .el-input,
       .el-select {
-        width: 80%;
+        width: 70%;
       }
     }
   }
@@ -205,9 +239,22 @@ export default {
       }
     }
     /deep/.el-table th > .cell {
-      font-size: 20px;
+      font-size: 18px;
       color: black;
       text-align: center;
+    }
+    /deep/ .el-table .el-table__row .cell {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .shlefColor {
+      display: inline-block;
+      margin-right: 5px;
+      width: 8px;
+      height: 8px;
+      border-radius: 8px;
+      // background-color: red;
     }
     .pagination {
       span {
