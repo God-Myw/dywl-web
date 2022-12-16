@@ -72,6 +72,7 @@
                 list-type="picture-card"
                 accept=".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff"
                 :on-change="upLoadChange"
+                :on-remove="upLoadChange"
                 :file-list="form.picList"
               >
                 <i class="el-icon-plus"></i>
@@ -90,8 +91,10 @@
                         action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
                         list-type="picture-card"
                         accept=".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff"
-                        :on-change="upLoadChange"
-                        :file-list="form.spartParts[0].partPicList"
+                        :on-change="(info, list) => {}"
+                        :file-list="
+                          form.spartParts[scope.$index].partPicList || []
+                        "
                         :limit="1"
                       >
                         <i class="el-icon-plus"></i>
@@ -104,7 +107,7 @@
                     <div>
                       <el-input
                         size="small"
-                        v-model="form.spartParts[0].model"
+                        v-model="form.spartParts[scope.$index].model"
                       ></el-input>
                     </div>
                   </template>
@@ -114,7 +117,7 @@
                     <div>
                       <el-input
                         size="small"
-                        v-model="form.spartParts[0].spartMoney"
+                        v-model="form.spartParts[scope.$index].spartMoney"
                       ></el-input>
                     </div>
                   </template>
@@ -124,7 +127,7 @@
                     <div>
                       <el-input
                         size="small"
-                        v-model="form.spartParts[0].quantity"
+                        v-model="form.spartParts[scope.$index].quantity"
                       ></el-input>
                     </div>
                   </template>
@@ -132,12 +135,24 @@
                 <el-table-column prop="address" label="">
                   <template slot-scope="scope">
                     <div>
-                      <i class="el-icon-delete" @click="storeDelete"></i>
+                      <i
+                        style="font-size: 30px"
+                        class="el-icon-delete"
+                        @click="storeDelete(scope)"
+                      ></i>
                     </div>
                   </template>
                 </el-table-column>
               </el-table>
             </el-form-item>
+            <el-button
+              style="position: relative; left: 40vw; display: inline-block"
+              type="primary"
+              size="default"
+              @click="storeListAdd"
+            >
+              <i class="el-icon-plus"></i>
+            </el-button>
           </el-col>
         </el-row>
         <el-row :gutter="24" class="demo-autocomplete">
@@ -221,9 +236,10 @@ export default {
         spartParts: [
           { partPicList: [{}], model: "", spartMoney: "", quantity: "" },
         ],
-        partExplain: [1],
+        partExplain: [],
         details: "",
       },
+      picList2: [],
       rules: {
         // name: [{ required: true, message: "请输入活动名称", trigger: "blur" }],
       },
@@ -247,11 +263,23 @@ export default {
     getData(params) {
       getSpartById(params).then((res) => {
         if (res.status == 200) {
+          if (res.data.picList) {
+            var picList = res.data.picList.map((item) => {
+              return {
+                response: {
+                  data: {
+                    fileName: item.fileName,
+                  },
+                },
+                url: `http://58.33.34.10:10443/images/spart/${item.fileName}`,
+              };
+            });
+          }
           let partExplain = res.data.partExplain.split("/").filter(Boolean);
           this.form.guid = res.data.guid || "";
           this.form.tradeName = res.data.tradeName || "";
           this.form.brand = res.data.brand || "";
-          this.form.picList = res.data.picList || "";
+          this.form.picList = picList || [];
           this.form.spartParts = res.data.spartParts || "";
           this.form.partExplain = partExplain || "";
           this.form.details = res.data.details || "";
@@ -259,10 +287,28 @@ export default {
         }
       });
     },
-    upLoadChange(info) {},
-    storeDelete(guid) {},
+    upLoadChange(info, list) {
+      if (info.status == "success") {
+        let arr = [];
+        list.map((item) => {
+          let obj = {};
+          obj.fileName = item.response.data.fileName;
+          obj.type = "spart";
+          obj.fileLog = 48;
+          arr.push(obj);
+        });
+        this.picList2 = arr;
+      }
+    },
+    storeDelete(info) {
+      let arr = [...this.form.spartParts];
+      this.form.spartParts = arr.filter((item, index) => index != info.$index);
+    },
+    storeListAdd() {
+      this.form.spartParts.push("");
+    },
     partExplainAdd() {
-      this.partExplain.push(1);
+      this.form.partExplain.push("");
     },
     editorCreated(editor) {
       this.editor = Object.seal(editor);
@@ -272,7 +318,8 @@ export default {
     },
     onSubmit(info) {
       let params = { ...info } || {};
-      params.partExplain = params.partExplain.join("/");
+      params.partExplain = [...new Set(params.partExplain)].join("/");
+      params.picList = this.picList2;
       saveSpart(params).then((res) => {
         if (res.status == 200) this.$router.push("/workbench/spart/spartList");
       });
