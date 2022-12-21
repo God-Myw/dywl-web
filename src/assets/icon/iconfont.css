@@ -1,10 +1,9 @@
 @font-face {
-  font-family: "iconfont";
-  /* Project id 3348533 */
-  src: url('iconfont.woff2?t=1660629889915') format('woff2'),
-    url('iconfont.woff?t=1660629889915') format('woff'),
-    url('iconfont.ttf?t=1660629889915') format('truetype'),
-    url('iconfont.svg?t=1660629889915#iconfont') format('svg');
+  font-family: "iconfont"; /* Project id 3348533 */
+  src: url('iconfont.woff2?t=1671588406739') format('woff2'),
+       url('iconfont.woff?t=1671588406739') format('woff'),
+       url('iconfont.ttf?t=1671588406739') format('truetype'),
+       url('iconfont.svg?t=1671588406739#iconfont') format('svg');
 }
 
 .iconfont {
@@ -13,6 +12,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-NaviLeft-10-attachment:before {
+  content: "\e617";
 }
 
 .icon-NaviLeft-9-remain:before {
@@ -54,3 +57,4 @@
 .icon-NaviLeft-1-home:before {
   content: "\e60d";
 }
+

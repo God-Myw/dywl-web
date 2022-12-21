@@ -79,12 +79,16 @@
             </t-submenu>
             <t-submenu title="船舶备件" value="船舶备件">
               <template #icon>
-                <img
+                <div
+                  class="iconfont icon-NaviLeft-10-attachment"
+                  style="margin-right: 9px"
+                ></div>
+                <!-- <img
                   style="width: 23px; height: 23px"
                   src="./bejain.svg"
                   alt=""
                   srcset=""
-                />
+                /> -->
                 &nbsp;&nbsp;
               </template>
               <t-menu-item value="reSpart">发布船舶备件</t-menu-item>
@@ -198,7 +202,8 @@ export default {
           break;
         case "spart":
           this.$router.push({
-            path: "/workbench/release/spart",
+            // path: "/workbench/release/spart",
+            path: "/workbench/spart/reSpart",
           });
           break;
         case "reSpart":

@@ -1,7 +1,7 @@
 <template>
   <div class="reSpart">
-    <Worktitle title="发布船舶备件"></Worktitle>
-    <div v-if="reStauts" class="box spartInfo">
+    <div class="box">
+      <Worktitle title="新增商品信息"></Worktitle>
       <el-form
         ref="form"
         :rules="rules"
@@ -44,88 +44,101 @@
         <el-row :gutter="24" class="demo-autocomplete">
           <el-col :span="10">
             <el-form-item label="商品名称" prop="name">
-              <el-input size="small" v-model="form.name"></el-input>
+              <el-input size="small" v-model="form.tradeName"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="24" class="demo-autocomplete">
           <el-col :span="10">
             <el-form-item label="商品品牌" prop="name">
-              <el-input size="small" v-model="form.name"></el-input>
+              <el-input size="small" v-model="form.brand"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="24" class="demo-autocomplete">
           <el-col :span="10">
             <el-form-item label="商品轮播图" prop="name">
-              <el-input
+              <!-- <el-input
                 disabled
                 size="small"
                 placeholder="请选择上传图片"
-                v-model="form.name"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="" prop="name">
+              ></el-input> -->
               <el-upload
                 action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
                 list-type="picture-card"
                 accept=".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff"
                 :on-change="upLoadChange"
-                :file-list="form.fileList"
+                :on-remove="upLoadChange"
+                :file-list="form.picList"
+                :limit="5"
               >
                 <i class="el-icon-plus"></i>
               </el-upload>
             </el-form-item>
           </el-col>
+          <el-col :span="24">
+            <el-form-item label="" prop="name"> </el-form-item>
+          </el-col>
         </el-row>
         <el-row :gutter="24" class="demo-autocomplete">
-          <el-col :span="24">
+          <el-col :span="20">
             <el-form-item label="商品型号/价格" prop="name">
-              <el-table :data="form.storeTable" style="width: 100%">
-                <el-table-column prop="date" label="型号图片">
+              <el-table :data="form.spartParts" style="width: 100%">
+                <el-table-column label="" width="260">
                   <template slot-scope="scope">
-                    <div>
+                    <div @click="upLoadBefore(scope)">
                       <el-upload
+                        v-show="!scope.row.partPicList[0]"
                         action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
                         list-type="picture-card"
                         accept=".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff"
-                        :on-change="upLoadChange"
-                        :file-list="form.storeTable[0].fileList"
+                        :on-change="upLoadStore"
+                        :file-list="scope.row.partPicList"
                         :limit="1"
                       >
                         <i class="el-icon-plus"></i>
                       </el-upload>
+                      <img
+                        v-show="scope.row.partPicList[0]"
+                        class="storeImg"
+                        :src="
+                          scope.row.partPicList[0]
+                            ? scope.row.partPicList[0].url
+                            : ''
+                        "
+                      />
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column prop="name" label="型号">
+                <el-table-column label="">
                   <template slot-scope="scope">
                     <div>
                       <el-input
                         size="small"
-                        v-model="form.storeTable.name"
+                        placeholder="请填写型号名"
+                        v-model="scope.row.model"
                       ></el-input>
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column prop="address" label="价格">
+                <el-table-column label="">
                   <template slot-scope="scope">
                     <div>
                       <el-input
                         size="small"
-                        v-model="form.storeTable.name"
+                        placeholder="请填写价格"
+                        v-model="scope.row.spartMoney"
                       ></el-input>
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column prop="address" label="库存">
+                <el-table-column label="">
                   <template slot-scope="scope">
                     <div>
                       <el-input
                         size="small"
-                        v-model="form.storeTable.name"
+                        placeholder="请填写库存数"
+                        v-model="scope.row.quantity"
                       ></el-input>
                     </div>
                   </template>
@@ -133,11 +146,22 @@
                 <el-table-column prop="address" label="">
                   <template slot-scope="scope">
                     <div>
-                      <i class="el-icon-delete" @click="storeDelete"></i>
+                      <i
+                        style="font-size: 27px; margin-left: 20px"
+                        class="el-icon-delete"
+                        @click="storeDelete(scope)"
+                      ></i>
                     </div>
                   </template>
                 </el-table-column>
               </el-table>
+              <el-button
+                style="display: inline-block; width: 100%; border: 1px dashed"
+                size="default"
+                @click="storeListAdd"
+              >
+                <i class="el-icon-plus">添加型号</i>
+              </el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -146,22 +170,29 @@
             <el-form-item label="说明" prop="name">
               <el-input
                 style="display: inline-block"
-                v-for="(item, index) in exPlainArr"
+                v-for="(item, index) in form.partExplain"
                 size="small"
-                v-model="form.name"
+                v-model="form.partExplain[index]"
                 :key="index"
+                :placeholder="
+                  index == 0
+                    ? '说明一(品牌宣传语)'
+                    : index == 1
+                    ? '说明二(售后服务等)'
+                    : ''
+                "
               ></el-input>
+              <el-button
+                icon="el-icon-plus"
+                size="small"
+                style="width: 100%; border: 1px dashed"
+                @click="partExplainAdd"
+                >添加说明</el-button
+              >
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="">
-              <el-button
-                type="primary"
-                icon="el-icon-plus"
-                size="small"
-                @click="exAdd"
-              ></el-button>
-            </el-form-item>
+            <el-form-item label=""> </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="24" class="demo-autocomplete">
@@ -179,7 +210,8 @@
                   v-model="html"
                   :defaultConfig="editorConfig"
                   :mode="mode"
-                  @onCreated="onCreated"
+                  @onCreated="editorCreated"
+                  @onChange="editorChange"
                 />
               </div>
             </el-form-item>
@@ -187,13 +219,12 @@
         </el-row>
         <!-- 提交 -->
         <el-row :gutter="24" class="demo-autocomplete">
-          <el-col :span="12">
-            <el-form-item>
-              <el-button>取消</el-button>
-            </el-form-item>
+          <el-col :span="8">
+            <el-form-item> </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="5">
             <el-form-item>
+              <el-button style="margin-right: 50px">取消</el-button>
               <el-button type="primary" @click="onSubmit(form)"
                 >确认提交</el-button
               >
@@ -202,130 +233,131 @@
         </el-row>
       </el-form>
     </div>
-    <div v-else class="box reSuccess">
-      <div>
-        <i class="el-icon-check"></i>
-      </div>
-      <div>恭喜,你的备件已发布成功!</div>
-      <div>
-        <el-button
-          type="primary"
-          plain
-          @click="
-            () => {
-              this.$router.push('/workbench/release');
-            }
-          "
-          >返回备件管理
-        </el-button>
-        <el-button
-          type="primary"
-          plain
-          @click="
-            () => {
-              this.reStauts = !this.reStauts;
-            }
-          "
-          >继续发布备件</el-button
-        >
-      </div>
-    </div>
   </div>
 </template>
 <script>
-import { saveSpart } from "../../../../api/workbench";
 import Worktitle from "../../../../components/WorkTitle.vue";
+import { getSpartById, saveSpart } from "../../../../api/workbench";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 export default {
   components: { Worktitle, Editor, Toolbar },
   data() {
     return {
+      index: 0,
       form: {
-        region: "",
-        name: "",
-        fileList: [],
-        storeTable: [{ name: "", fileList: [] }],
+        guid: "",
+        tradeName: "",
+        brand: "",
+        picList: [],
+        spartParts: [
+          {
+            partPicList: [],
+            model: "",
+            spartMoney: "",
+            quantity: "",
+          },
+        ],
+        partExplain: ["", ""],
+        details: "",
       },
+      picList2: [],
       rules: {
-        name: [{ required: true, message: "不能为空", trigger: "blur" }],
+        // name: [{ required: true, message: "请输入活动名称", trigger: "blur" }],
       },
-      exPlainArr: [1, 2],
       editor: null,
-      html: "<p>hello</p>",
+      html: "",
       toolbarConfig: {},
-      editorConfig: { placeholder: "请输入内容..." },
+      editorConfig: {
+        MENU_CONF: {
+          uploadImage: {
+            server: "http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart",
+            fieldName: "file",
+            headers: {
+              // accept: ".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff",
+              token: String(localStorage.getItem("token")),
+            },
+            // maxFileSize: 10 * 1024 * 1024, // 10M
+            // base64LimitSize: 5 * 1024, // insert base64 format, if file's size less than 5kb
+            customInsert(res, insertFn) {
+              // res 即服务端的返回结果
+              let url = `http://58.33.34.10:10443/images/spart/${res.data.fileName}`;
+              let alt = "";
+              let href = "";
+              insertFn(url, alt, href);
+            },
+            onBeforeUpload(file) {
+              return file;
+            },
+            onProgress(progress) {},
+            onSuccess(file, res) {},
+          },
+        },
+      },
       mode: "default",
-      reStauts: true,
     };
   },
-  mounted() {
-    this.getData();
-  },
+  mounted() {},
   beforeDestroy() {
     const editor = this.editor;
     if (editor == null) return;
     editor.destroy(); // 组件销毁时，及时销毁编辑器
   },
   methods: {
-    getData() {},
-    upLoadChange(info) {},
-    storeDelete(guid) {},
-    exAdd() {
-      this.exPlainArr.push(1);
+    upLoadBefore(index) {
+      this.index = index.$index;
     },
-    onCreated(editor) {
-      this.editor = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
+    upLoadStore(info) {
+      if (info.status == "success") {
+        this.form.spartParts[this.index].partPicList = [
+          {
+            fileName: info.response.data.fileName,
+            type: "spart",
+            fileLog: 49,
+            url: `http://58.33.34.10:10443/images/spart/${info.response.data.fileName}`,
+          },
+        ];
+      }
+    },
+    upLoadChange(info, list) {
+      if (info.status == "success") {
+        this.picList2 = list.map((item) => {
+          return {
+            fileName: item.response.data.fileName,
+            type: "spart",
+            fileLog: 48,
+          };
+        });
+      }
+    },
+    storeDelete(info) {
+      let arr = [...this.form.spartParts];
+      this.form.spartParts = arr.filter((item, index) => index != info.$index);
+    },
+    storeListAdd() {
+      let index = this.index++;
+      this.form.spartParts.push({
+        partPicList: [],
+        model: "",
+        spartMoney: "",
+        quantity: "",
+      });
+    },
+    partExplainAdd() {
+      this.form.partExplain.push("");
+    },
+    editorCreated(editor) {
+      this.editor = Object.seal(editor);
+    },
+    editorChange(editor) {
+      this.form.details = editor.getHtml();
     },
     onSubmit(info) {
-      let params = {
-        tradeName: "商品名称",
-        brand: "商品品牌",
-        placeOf: "产地",
-        picList: [
-          {
-            fileName: "轮播图1",
-            type: "spart",
-            fileLog: 48,
-          },
-          {
-            fileName: "轮播图2",
-            type: "spart",
-            fileLog: 48,
-          },
-        ],
-        spartParts: [
-          {
-            partPicList: [
-              {
-                fileName: "详情图1",
-                type: "spart",
-                fileLog: 49,
-              },
-            ],
-            model: "商品型号",
-            spartMoney: "125.51",
-            quantity: 12,
-          },
-          {
-            partPicList: [
-              {
-                fileName: "详情图2",
-                type: "spart",
-                fileLog: 49,
-              },
-            ],
-            model: "商品型号",
-            spartMoney: "5641.49",
-            quantity: 23,
-          },
-        ],
-        partExplain: "说明",
-        details: "详情",
-      };
+      let params = { ...info } || {};
+      params.partExplain = [...new Set(params.partExplain)].join("/");
+      params.picList = this.picList2;
       saveSpart(params).then((res) => {
-        console.log(res);
+        if (res.status == 200) this.$router.push("/workbench/spart/spartList");
       });
-      // this.reStauts = !this.reStauts;
     },
   },
 };
@@ -341,38 +373,26 @@ export default {
     width: 99%;
     box-shadow: 0px 0px 5px rgb(235, 227, 227);
   }
-  /deep/.cell .el-upload--picture-card {
-    line-height: 90px;
-    width: 80px;
-    height: 80px;
+  .el-upload {
+    .el-icon-plus::after {
+      margin: 0 auto;
+      margin-top: 10%;
+      font-size: 13px;
+      content: "点击上传图片";
+      display: table;
+    }
   }
-  .reSuccess {
-    height: 75vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    div {
-      margin: 10px 0px;
-    }
-    div:nth-child(1) {
-      width: 50px;
-      height: 50px;
-      border-radius: 50px;
-      display: grid;
-      place-items: center;
-      background-color: #4486f6;
-      i {
-        border-radius: 50px;
-        font-size: 40px;
-        color: #ffffff;
-        background-color: #4486f6;
-      }
-    }
-    div:nth-child(2) {
-      font-size: 16px;
-      font-weight: 10;
-    }
+  .storeImg {
+    width: 150px;
+    height: 150px;
+  }
+  /deep/.cell .el-upload--picture-card {
+    // line-height: 120px;
+    // width: 120px;
+    // height: 120px;
+  }
+  /deep/.el-table__header-wrapper {
+    height: 1px;
   }
 }
 </style>

@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "33453339",
+      "name": "NaviLeft-10-attachment",
+      "font_class": "NaviLeft-10-attachment",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
       "icon_id": "31273665",
       "name": "NaviLeft-9-remain",
       "font_class": "NaviLeft-9-remain",
