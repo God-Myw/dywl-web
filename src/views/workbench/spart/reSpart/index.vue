@@ -1,6 +1,6 @@
 <template>
   <div class="reSpart">
-    <div class="box">
+    <div class="box" v-if="!reStatus">
       <Worktitle title="新增商品信息"></Worktitle>
       <el-form
         ref="form"
@@ -233,17 +233,20 @@
         </el-row>
       </el-form>
     </div>
+    <ReSuccess v-show="reStatus"></ReSuccess>
   </div>
 </template>
 <script>
 import Worktitle from "../../../../components/WorkTitle.vue";
-import { getSpartById, saveSpart } from "../../../../api/workbench";
+import ReSuccess from "./reSuccess.vue";
+import { saveSpart } from "../../../../api/workbench";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 export default {
-  components: { Worktitle, Editor, Toolbar },
+  components: { Worktitle, Editor, Toolbar, ReSuccess },
   data() {
     return {
       index: 0,
+      reStatus: false,
       form: {
         guid: "",
         tradeName: "",
@@ -351,12 +354,18 @@ export default {
     editorChange(editor) {
       this.form.details = editor.getHtml();
     },
+    reStatusChange(status) {
+      this.reStatus = status;
+    },
     onSubmit(info) {
       let params = { ...info } || {};
       params.partExplain = [...new Set(params.partExplain)].join("/");
       params.picList = this.picList2;
       saveSpart(params).then((res) => {
-        if (res.status == 200) this.$router.push("/workbench/spart/spartList");
+        if (res.status == 200) {
+          // this.$router.push("/workbench/spart/spartList");
+          this.reStatus = true;
+        }
       });
     },
   },

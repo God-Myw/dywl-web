@@ -178,7 +178,6 @@ export default {
       this.product(1);
     },
     changeHandler(active) {
-      // debugger;
       switch (active) {
         case "workbench":
           this.$router.push({
