@@ -88,7 +88,6 @@
                   <template slot-scope="scope">
                     <div @click="upLoadBefore(scope)">
                       <el-upload
-                        v-show="!scope.row.partPicList[0]"
                         action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
                         list-type="picture-card"
                         accept=".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff"
@@ -98,7 +97,7 @@
                       >
                         <i class="el-icon-plus"></i>
                       </el-upload>
-                      <img
+                      <!-- <img
                         v-show="scope.row.partPicList[0]"
                         class="storeImg"
                         :src="
@@ -106,7 +105,7 @@
                             ? scope.row.partPicList[0].url
                             : ''
                         "
-                      />
+                      /> -->
                     </div>
                   </template>
                 </el-table-column>
@@ -123,7 +122,7 @@
                 </el-table-column>
                 <el-table-column label="">
                   <template slot-scope="scope">
-                    <div>
+                    <div class="yuan">
                       <el-input
                         placeholder="请填写价格"
                         size="small"
@@ -217,7 +216,7 @@
           </el-col>
           <el-col :span="5">
             <el-form-item>
-              <el-button style="margin-right:50px">取消</el-button>
+              <el-button style="margin-right: 50px">取消</el-button>
               <el-button type="primary" @click="onSubmit(form)"
                 >确认提交</el-button
               >
@@ -405,6 +404,17 @@ export default {
     background-color: #ffffff;
     width: 99%;
     box-shadow: 0px 0px 5px rgb(235, 227, 227);
+    .yuan {
+      position: relative;
+    }
+    .yuan::after {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      content: "元";
+      display: table;
+    }
   }
   /deep/.el-upload {
     .el-icon-plus::after {

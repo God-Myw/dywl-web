@@ -120,7 +120,6 @@ export default {
           PipeDiameter: 250,
           PipeLength: "83.64",
           actualFlow: 0,
-
           targetFlow: "1.0",
         },
         {

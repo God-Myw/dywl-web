@@ -44,7 +44,7 @@
         <el-row :gutter="24" class="demo-autocomplete">
           <el-col :span="10">
             <el-form-item label="商品名称" prop="name">
-              <el-input size="small" v-model="form.tradeName"></el-input>
+              <el-input size="small" v-model="form.tradeName">s</el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -88,7 +88,6 @@
                   <template slot-scope="scope">
                     <div @click="upLoadBefore(scope)">
                       <el-upload
-                        v-show="!scope.row.partPicList[0]"
                         action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
                         list-type="picture-card"
                         accept=".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff"
@@ -98,7 +97,7 @@
                       >
                         <i class="el-icon-plus"></i>
                       </el-upload>
-                      <img
+                      <!-- <img
                         v-show="scope.row.partPicList[0]"
                         class="storeImg"
                         :src="
@@ -106,7 +105,7 @@
                             ? scope.row.partPicList[0].url
                             : ''
                         "
-                      />
+                      /> -->
                     </div>
                   </template>
                 </el-table-column>
@@ -123,7 +122,7 @@
                 </el-table-column>
                 <el-table-column label="">
                   <template slot-scope="scope">
-                    <div>
+                    <div class="yuan">
                       <el-input
                         size="small"
                         placeholder="请填写价格"
@@ -358,15 +357,31 @@ export default {
       this.reStatus = status;
     },
     onSubmit(info) {
-      let params = { ...info } || {};
-      params.partExplain = [...new Set(params.partExplain)].join("/");
-      params.picList = this.picList2;
-      saveSpart(params).then((res) => {
-        if (res.status == 200) {
-          // this.$router.push("/workbench/spart/spartList");
-          this.reStatus = true;
-        }
-      });
+      this.$confirm("您确认后,将上传商品信息", "确认提交", {
+        confirmButtonText: "确定提交",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          let params = { ...info } || {};
+          params.partExplain = [...new Set(params.partExplain)].join("/");
+          params.picList = this.picList2;
+          saveSpart(params).then((res) => {
+            if (res.status == 200) {
+              this.reStatus = true;
+            }
+          });
+          this.$message({
+            type: "success",
+            message: "提交成功!",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消",
+          });
+        });
     },
   },
 };
@@ -381,6 +396,17 @@ export default {
     background-color: #ffffff;
     width: 99%;
     box-shadow: 0px 0px 5px rgb(235, 227, 227);
+    .yuan {
+      position: relative;
+    }
+    .yuan::after {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      content: "元";
+      display: table;
+    }
   }
   .el-upload {
     .el-icon-plus::after {

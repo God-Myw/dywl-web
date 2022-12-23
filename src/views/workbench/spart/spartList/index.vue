@@ -181,6 +181,25 @@ export default {
       this.pageSize = handleSizeChange;
       this.getData();
     },
+    handleDelete(guid) {
+      this.$confirm("您确认后,现有商品将删除", "确认删除商品", {
+        confirmButtonText: "确定删除",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.$message({
+            type: "success",
+            message: "删除成功!",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    },
     shelfChange(guid) {
       let params = { guid: guid };
       shelfChange(params).then((res) => {
