@@ -83,13 +83,6 @@
                   class="iconfont icon-NaviLeft-10-attachment"
                   style="margin-right: 9px"
                 ></div>
-                <!-- <img
-                  style="width: 23px; height: 23px"
-                  src="./bejain.svg"
-                  alt=""
-                  srcset=""
-                /> -->
-                &nbsp;&nbsp;
               </template>
               <t-menu-item value="reSpart">发布船舶备件</t-menu-item>
               <t-menu-item value="spartList">船舶备件商品列表</t-menu-item>
@@ -145,7 +138,7 @@
         </t-aside>
         <t-layout>
           <t-content class="content">
-            <div class="contentInfo">
+            <div>
               <router-view></router-view>
             </div>
           </t-content>
@@ -216,9 +209,9 @@ export default {
           });
           break;
         case "myStore":
-          this.$router.push({
-            path: "/workbench/spart/myStore",
-          });
+          // this.$router.push({
+          //   path: "/workbench/spart/myStore",
+          // });
           break;
         case "bulkShip":
           this.$router.push({
@@ -250,14 +243,12 @@ export default {
     margin-right: 0px;
   }
   .content {
-    padding: 2vh 1vw 0px 1vw;
+    padding: 24px;
     .contentTitle {
       height: 100px;
       line-height: 100px;
       font-size: 22px;
     }
-    // .contentInfo {
-    // }
   }
   .icon-NaviLeft-1-workbench {
     background-color: #1890ff;
@@ -272,9 +263,24 @@ export default {
     }
   }
   .t-layout {
+    // margin-top: 64px;
+    /deep/.t-menu__item {
+      height: 48px;
+    }
+    /deep/.t-default-menu {
+      position: fixed;
+    }
+    .t-layout__sider {
+      min-width: 232px;
+    }
     .t-layout__header {
+      z-index: 9;
+      height: 64px;
       .t-menu {
         /deep/.t-head-menu__inner {
+          position: fixed;
+          width: 100%;
+          background-color: #ffffff;
           box-shadow: 0px 3px 6px 1px rgba(0, 0, 0, 0.05);
         }
         /deep/.t-menu__logo {

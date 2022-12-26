@@ -38,7 +38,7 @@ export default {
   margin-bottom: 10px;
   border-radius: 5px;
   background-color: #ffffff;
-  width: 99%;
+  width: 100%;
   box-shadow: 0px 0px 5px rgb(235, 227, 227);
   display: flex;
   flex-direction: column;

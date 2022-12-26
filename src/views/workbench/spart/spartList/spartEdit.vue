@@ -210,13 +210,21 @@
           </el-col>
         </el-row>
         <!-- 提交 -->
-        <el-row :gutter="24" class="demo-autocomplete">
-          <el-col :span="8">
+        <el-row :gutter="24" class="demo-autocomplete submitFix">
+          <el-col :span="6">
             <el-form-item> </el-form-item>
           </el-col>
-          <el-col :span="5">
+          <el-col :span="6">
             <el-form-item>
-              <el-button style="margin-right: 50px">取消</el-button>
+              <el-button
+                style="margin-right: 50px"
+                @click="
+                  () => {
+                    this.$router.push('/workbench/spart/spartList');
+                  }
+                "
+                >取消</el-button
+              >
               <el-button type="primary" @click="onSubmit(form)"
                 >确认提交</el-button
               >
@@ -398,11 +406,12 @@ export default {
 <style lang="scss" scoped>
 .spartEdit {
   .box {
+    position: relative;
     padding: 20px;
     margin-bottom: 10px;
     border-radius: 5px;
     background-color: #ffffff;
-    width: 99%;
+    width: 100%;
     box-shadow: 0px 0px 5px rgb(235, 227, 227);
     .yuan {
       position: relative;
@@ -414,6 +423,12 @@ export default {
       transform: translateY(-50%);
       content: "元";
       display: table;
+    }
+    .submitFix {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      background-color: #ffffff;
     }
   }
   /deep/.el-upload {

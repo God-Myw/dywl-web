@@ -19,7 +19,9 @@ export default {
   display: inline-block;
   height: 100px;
   line-height: 100px;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 21px;
+  font-family: Source Han Sans CN-Bold, Source Han Sans CN;
+  font-weight: bold;
+  color: #333333;
 }
 </style>

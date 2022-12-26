@@ -69,7 +69,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="tradeName" label="商品名称" />
-        <el-table-column prop="" label="所属类目" />
+        <!-- <el-table-column prop="" label="所属类目" /> -->
         <el-table-column prop="brand" label="品牌" />
         <el-table-column prop="money" label="价格(元)" />
         <el-table-column prop="quantitySum" label="库存" />
@@ -220,17 +220,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-//工作台公共样式
 .spartList {
+  max-width: 1834px;
   /deep/.el-button--primary {
     background-color: #0052db;
   }
   .box {
+    position: relative;
     padding: 20px;
     margin-bottom: 10px;
     border-radius: 5px;
     background-color: #ffffff;
-    width: 99%;
+    width: 100%;
     box-shadow: 0px 0px 5px rgb(235, 227, 227);
   }
   .shaixuan {
@@ -258,8 +259,10 @@ export default {
       }
     }
     /deep/.el-table th > .cell {
-      font-size: 18px;
-      color: black;
+      font-size: 16px;
+      font-family: Source Han Sans CN-Medium, Source Han Sans CN;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.9);
       text-align: center;
     }
     /deep/ .el-table .el-table__row .cell {
