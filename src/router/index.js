@@ -388,6 +388,12 @@ const routes = [
     name: 'h5spart',
     component: () => import('@/views/h5share/sparts.vue'),
   },
+  // 商品列表
+  {
+    path: '/h5share/storeList',
+    name: 'h5storeList',
+    component: () => import('@/views/h5share/storeList.vue'),
+  },
 ]
 
 const router = new VueRouter({

@@ -77,7 +77,7 @@
               <t-menu-item value="bulkCargo">发布散杂货</t-menu-item>
               <t-menu-item value="spart">发布船舶备件</t-menu-item>
             </t-submenu>
-            <t-submenu title="船舶备件" value="船舶备件">
+            <t-submenu title="船舶备件" value="船舶备件" v-if="status == 1">
               <template #icon>
                 <div
                   class="iconfont icon-NaviLeft-10-attachment"
@@ -86,7 +86,7 @@
               </template>
               <t-menu-item value="reSpart">发布船舶备件</t-menu-item>
               <t-menu-item value="spartList">船舶备件商品列表</t-menu-item>
-              <t-menu-item value="myStore">我的店铺</t-menu-item>
+              <!-- <t-menu-item value="myStore">我的店铺</t-menu-item> -->
             </t-submenu>
             <t-submenu title="订单列表" value="bulkShip">
               <template #icon>
@@ -151,17 +151,25 @@
 <script>
 // import { Icon } from 'tdesign-icons-vue'
 import { mapMutations } from "vuex";
+import { getIsMerchant } from "../../api/workbench";
+
 import HeaderLoginImg from "../../components/HeaderLoginImg.vue";
 export default {
   inject: ["reload"],
   data() {
-    return {};
+    return {
+      status: 0,
+    };
   },
   components: {
     HeaderLoginImg,
   },
   created() {},
-  mounted() {},
+  mounted() {
+    getIsMerchant().then((res) => {
+      this.status = res.data || 0;
+    });
+  },
 
   methods: {
     ...mapMutations(["product"]),
@@ -193,10 +201,9 @@ export default {
           });
           break;
         case "spart":
-          this.$router.push({
-            // path: "/workbench/release/spart",
-            path: "/workbench/spart/reSpart",
-          });
+          // this.$router.push({
+          //   path: "/workbench/spart/reSpart",
+          // });
           break;
         case "reSpart":
           this.$router.push({

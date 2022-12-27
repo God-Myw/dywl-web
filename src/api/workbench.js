@@ -4,7 +4,7 @@ import requestParam from "@/axios/requestParam";
 // 获取列表数据
 export function getSpartList(params) {
   return axios({
-    url: "business/spart/getSpartList",
+    url: "business/spart/getSpartListByCreater",
     method: "get",
     params: requestParam(params, "get"),
   });
@@ -40,5 +40,21 @@ export function getSpartListByMerchant(params) {
     url: "business/spart/getSpartListByMerchant",
     method: "get",
     params: requestParam(params, "get"),
+  });
+}
+// 等级分类
+export function getSpartLevel(params) {
+  return axios({
+    url: "/business/spartLevel/getSpartLevel",
+    method: "get",
+    params: requestParam(params, "get"),
+  });
+}
+// 是否申请店铺
+export function getIsMerchant() {
+  return axios({
+    url: "/business/merchant/getIsMerchant",
+    method: "get",
+    headers: { token: localStorage.getItem("token") },
   });
 }

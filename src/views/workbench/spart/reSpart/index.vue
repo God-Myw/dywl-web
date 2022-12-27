@@ -15,12 +15,10 @@
               <el-select
                 style="width: 100%"
                 size="small"
-                v-model="form.region"
+                v-model="form.oneLev"
                 placeholder=""
-                disabled
               >
-                <el-option label="热销备件" value="shanghai"></el-option>
-                <el-option label="最新备件" value="beijing"></el-option>
+                <el-option label="1级分类" value="1级分类"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -29,14 +27,12 @@
           <el-col :span="10">
             <el-form-item label="二级分类" prop="name">
               <el-select
-                disabled
                 style="width: 100%"
                 size="small"
-                v-model="form.region"
+                v-model="form.twoLev"
                 placeholder=""
               >
-                <el-option label="热销备件" value="shanghai"></el-option>
-                <el-option label="最新备件" value="beijing"></el-option>
+                <el-option label="2级分类" value="2级分类"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -255,7 +251,7 @@
 <script>
 import Worktitle from "../../../../components/WorkTitle.vue";
 import ReSuccess from "./reSuccess.vue";
-import { saveSpart } from "../../../../api/workbench";
+import { saveSpart, getSpartLevel } from "../../../../api/workbench";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 export default {
   components: { Worktitle, Editor, Toolbar, ReSuccess },
@@ -266,6 +262,8 @@ export default {
       storeImgShow: false,
       form: {
         guid: "",
+        oneLev: "1级分类",
+        twoLev: "2级分类",
         tradeName: "",
         brand: "",
         picList: [],
@@ -316,7 +314,15 @@ export default {
       mode: "default",
     };
   },
-  mounted() {},
+  mounted() {
+    getSpartLevel().then((res) => {
+      if (res.code == "0000") {
+        res.data.map((item) => {});
+      }
+      this.form.oneLev = res.data[0].oneLevelName;
+      this.form.twoLev = res.data[1].oneLevelName;
+    });
+  },
   beforeDestroy() {
     const editor = this.editor;
     if (editor == null) return;
