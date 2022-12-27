@@ -88,24 +88,33 @@
                   <template slot-scope="scope">
                     <div @click="upLoadBefore(scope)">
                       <el-upload
+                        v-show="!scope.row.partPicList[0]"
                         action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
                         list-type="picture-card"
                         accept=".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff"
                         :on-change="upLoadStore"
-                        :file-list="scope.row.partPicList"
+                        :file-list="scope.row.partPicList || [{}]"
                         :limit="1"
                       >
                         <i class="el-icon-plus"></i>
                       </el-upload>
-                      <!-- <img
+                      <div
+                        class="storeImgBox"
                         v-show="scope.row.partPicList[0]"
-                        class="storeImg"
-                        :src="
-                          scope.row.partPicList[0]
-                            ? scope.row.partPicList[0].url
-                            : ''
-                        "
-                      /> -->
+                      >
+                        <img
+                          class="storeImg"
+                          :src="
+                            scope.row.partPicList[0]
+                              ? scope.row.partPicList[0].url
+                              : ''
+                          "
+                        />
+                        <i
+                          class="el-icon-delete"
+                          @click="storeImgDel(scope)"
+                        ></i>
+                      </div>
                     </div>
                   </template>
                 </el-table-column>
@@ -254,6 +263,7 @@ export default {
     return {
       index: 0,
       reStatus: false,
+      storeImgShow: false,
       form: {
         guid: "",
         tradeName: "",
@@ -315,6 +325,11 @@ export default {
   methods: {
     upLoadBefore(index) {
       this.index = index.$index;
+    },
+    storeImgDel(index) {
+      let obj = { ...this.form.spartParts[index.$index] };
+      obj.partPicList = [];
+      this.$set(this.form.spartParts, index.$index, obj);
     },
     upLoadStore(info) {
       if (info.status == "success") {
@@ -432,14 +447,25 @@ export default {
       display: table;
     }
   }
-  .storeImg {
+  .storeImgBox {
+    display: grid;
+    place-items: center;
     width: 150px;
     height: 150px;
+    z-index: 9;
+    .storeImg {
+      width: 150px;
+      height: 150px;
+    }
+    i {
+      position: absolute;
+      font-size: 26px;
+      display: none;
+      cursor: pointer;
+    }
   }
-  /deep/.cell .el-upload--picture-card {
-    // line-height: 120px;
-    // width: 120px;
-    // height: 120px;
+  .storeImgBox:hover .el-icon-delete {
+    display: block;
   }
   /deep/.el-table__header-wrapper {
     height: 1px;
