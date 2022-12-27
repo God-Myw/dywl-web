@@ -439,6 +439,7 @@ export default {
     }
     .submitFix {
       width: 100%;
+      left: 239px;
       position: fixed;
       bottom: 0;
       background-color: #ffffff;
