@@ -459,6 +459,7 @@ export default {
     place-items: center;
     width: 150px;
     height: 150px;
+    border-radius: 10px;
     z-index: 9;
     .storeImg {
       width: 150px;
@@ -467,12 +468,18 @@ export default {
     i {
       position: absolute;
       font-size: 26px;
-      display: none;
+      opacity: 0;
       cursor: pointer;
+      color: #ffffff;
     }
   }
+  .storeImgBox:hover {
+    background-color: #00000080;
+    transition: all 0.5s;
+  }
   .storeImgBox:hover .el-icon-delete {
-    display: block;
+    opacity: 1;
+    // display: block;
   }
   /deep/.el-table__header-wrapper {
     height: 1px;

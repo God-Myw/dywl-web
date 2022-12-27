@@ -467,6 +467,7 @@ export default {
     width: 150px;
     height: 150px;
     z-index: 9;
+    border-radius: 10px;
     .storeImg {
       width: 150px;
       height: 150px;
@@ -481,10 +482,9 @@ export default {
   .storeImgBox:hover .el-icon-delete {
     display: block;
   }
-  /deep/.cell .el-upload--picture-card {
-    // line-height: 120px;
-    // width: 120px;
-    // height: 120px;
+  .storeImgBox:hover {
+    background-color: #00000080;
+    transition: all 0.5s;
   }
   /deep/.el-table__header-wrapper {
     height: 1px;
