@@ -73,9 +73,11 @@
                   style="margin-right: 9px"
                 ></div>
               </template>
-              <t-menu-item value="release">我要发布</t-menu-item>
+              <!-- <t-menu-item value="release">我要发布</t-menu-item> -->
               <t-menu-item value="bulkCargo">发布散杂货</t-menu-item>
-              <t-menu-item value="spart">发布船舶备件</t-menu-item>
+              <t-menu-item value="spart" v-if="status == 1"
+                >发布船舶备件</t-menu-item
+              >
             </t-submenu>
             <!-- v-if="status == 1" -->
             <t-submenu

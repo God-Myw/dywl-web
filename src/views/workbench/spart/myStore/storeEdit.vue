@@ -117,6 +117,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .storeEdit {
+  width: 1620px;
   .box {
     padding: 20px;
     margin-bottom: 10px;

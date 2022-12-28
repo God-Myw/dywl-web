@@ -259,7 +259,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .spartList {
-  max-width: 1635px;
+  width: 1635px;
   /deep/.el-button--primary {
     background-color: #0052db;
   }

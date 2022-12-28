@@ -68,11 +68,6 @@
         <el-row :gutter="24" class="demo-autocomplete">
           <el-col :span="10">
             <el-form-item label="商品轮播图" prop="picList">
-              <!-- <el-input
-                disabled
-                size="small"
-                placeholder="请选择上传图片"
-              ></el-input> -->
               <el-upload
                 action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
                 list-type="picture-card"
@@ -343,10 +338,10 @@ export default {
       picList2: [],
       rules: {
         oneLevelId: [
-          { required: true, message: "请输入一级分类", trigger: "blur" },
+          { required: true, message: "请输入一级分类", trigger: "change" },
         ],
         twoLevelId: [
-          { required: true, message: "请输入二级分类", trigger: "blur" },
+          { required: true, message: "请输入二级分类", trigger: "change" },
         ],
         tradeName: [
           { required: true, message: "请输入商品名称", trigger: "blur" },
@@ -532,7 +527,7 @@ export default {
 <style src="@wangeditor/editor/dist/css/style.css"></style>
 <style lang="scss" scoped>
 .reSpart {
-  min-width: 1595px;
+  width: 1620px;
   .box {
     padding: 20px;
     margin-bottom: 10px;
