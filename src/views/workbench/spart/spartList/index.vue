@@ -4,39 +4,39 @@
       <el-row :gutter="20">
         <el-col :span="5">
           <span>商品编号</span>
-          <el-input v-model="input" placeholder="请输入内容"></el-input>
+          <el-input v-model="number" placeholder="请输入内容"></el-input>
         </el-col>
         <el-col :span="5">
           <span>商品名称</span>
-          <el-input v-model="input" placeholder="请输入内容"></el-input>
+          <el-input v-model="tradeName" placeholder="请输入内容"></el-input>
         </el-col>
         <el-col :span="5">
           <span>商品类目</span>
-          <el-select v-model="input" placeholder="请选择">
+          <el-select
+            v-model="twoLevelId"
+            filterable
+            clearable
+            placeholder="请选择"
+          >
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              v-for="item in twoLevelList"
+              :key="item.twoLevelName"
+              :label="item.twoLevelName"
+              :value="item.twoLevelName"
             >
             </el-option>
           </el-select>
         </el-col>
         <el-col :span="5">
           <span>商品状态</span>
-          <el-select v-model="input" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
+          <el-select v-model="shelf" filterable clearable placeholder="请选择">
+            <el-option label="上架" value="1"> </el-option>
+            <el-option label="下架" value="2"> </el-option>
           </el-select>
         </el-col>
         <el-col :span="3">
-          <el-button type="primary">查询</el-button>
-          <el-button>重置</el-button>
+          <el-button type="primary" @click="serach">查询</el-button>
+          <el-button @click="clear">重置</el-button>
         </el-col>
       </el-row>
     </div>
@@ -69,22 +69,22 @@
           </template>
         </el-table-column>
         <el-table-column prop="tradeName" label="商品名称" />
-        <!-- <el-table-column prop="" label="所属类目" /> -->
+        <el-table-column prop="twoLevelId" label="所属类目" />
         <el-table-column prop="brand" label="品牌" />
         <el-table-column prop="money" label="价格(元)" />
         <el-table-column prop="quantitySum" label="库存" />
-        <el-table-column prop="shlef" label="状态">
+        <el-table-column prop="shelf" label="状态">
           <template slot-scope="scope">
             <div>
               <p
-                class="shlefColor"
+                class="shelfColor"
                 :style="
-                  scope.row.shlef == 1
+                  scope.row.shelf == '已上架'
                     ? 'background: #04AB75'
                     : 'background: #98979A'
                 "
               ></p>
-              {{ scope.row.shlef == 1 ? "已上架" : "未上架" }}
+              {{ scope.row.shelf == "已上架" ? "已上架" : "未上架" }}
             </div>
           </template>
         </el-table-column>
@@ -92,10 +92,10 @@
           <template slot-scope="scope">
             <div class="listEdit">
               <el-button
-                :type="scope.row.shlef2 == '上架' ? 'text' : 'text'"
-                @click="shelfChange(scope.row.guid)"
+                :type="scope.row.shelf2 == '上架' ? 'text' : 'text'"
+                @click="shelfChange(scope.row.guid, scope.row.shelf2)"
               >
-                {{ scope.row.shlef2 }}
+                {{ scope.row.shelf2 }}
               </el-button>
               <el-button type="text" @click="getSpartById(scope.row.guid)">
                 编辑
@@ -124,31 +124,41 @@
 </template>
 <script>
 import Worktitle from "../../../../components/WorkTitle.vue";
-import { getSpartList, shelfChange } from "../../../../api/workbench";
+import {
+  getSpartList,
+  shelfChange,
+  getSpartTwoLevel,
+} from "../../../../api/workbench";
 
 export default {
   data() {
     return {
       input: "",
+      number: "",
+      tradeName: "",
+      twoLevelId: "",
+      shelf: "",
       currentPage: 1,
       pageSize: 10,
       total: 0,
-      options: [
-        {
-          value: "发电机",
-          label: "发电机",
-        },
-      ],
+      twoLevelList: [],
       spartList: [],
     };
   },
   components: { Worktitle },
   mounted() {
+    getSpartTwoLevel().then((res) => {
+      if ((res.code = "0000")) this.twoLevelList = res.data;
+    });
     this.getData();
   },
   methods: {
     getData() {
       let params = {
+        number: this.number,
+        tradeName: this.tradeName,
+        twoLevelId: this.twoLevelId,
+        shelf: this.shelf,
         currentPage: this.currentPage,
         pageSize: this.pageSize,
       };
@@ -161,17 +171,28 @@ export default {
             obj.number = item.number || "";
             obj.fileName = item.fileName || "";
             obj.tradeName = item.tradeName || "";
+            obj.twoLevelId = item.twoLevelId || "";
             obj.brand = item.brand || "";
             obj.money = item.money || "";
             obj.quantitySum = item.quantitySum || "";
-            obj.shlef = item.shlef == 1 ? "已上架" : "未上架";
-            obj.shlef2 = item.shlef2 == 1 ? "下架" : "上架";
+            obj.shelf = item.shelf == 1 ? "已上架" : "未上架";
+            obj.shelf2 = item.shelf == 1 ? "下架" : "上架";
             spartList.push(obj);
           });
         }
         this.spartList = spartList || [];
         this.total = res.data.total || 0;
       });
+    },
+    serach() {
+      this.getData();
+    },
+    clear() {
+      this.number = "";
+      this.tradeName = "";
+      this.twoLevelId = "";
+      this.shelf = "";
+      this.getData();
     },
     currentChange(currentPage) {
       this.currentPage = currentPage;
@@ -200,13 +221,30 @@ export default {
           });
         });
     },
-    shelfChange(guid) {
-      let params = { guid: guid };
-      shelfChange(params).then((res) => {
-        if (res.status == 200) {
-          this.getData();
-        }
-      });
+    shelfChange(guid, shelf) {
+      this.$confirm(`您确认后,现有商品将${shelf}`, `确认${shelf}商品`, {
+        confirmButtonText: `确定${shelf}`,
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          let params = { guid: guid };
+          shelfChange(params).then((res) => {
+            if (res.status == 200) {
+              this.getData();
+            }
+          });
+          this.$message({
+            type: "success",
+            message: `${shelf}成功!`,
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: `已取消${shelf}`,
+          });
+        });
     },
     getSpartById(guid) {
       this.$router.push({
@@ -221,7 +259,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .spartList {
-  max-width: 1834px;
+  max-width: 1635px;
   /deep/.el-button--primary {
     background-color: #0052db;
   }
@@ -254,8 +292,8 @@ export default {
     /deep/.cell {
       text-align: center;
       img {
-        width: 70px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
       }
     }
     /deep/.el-table th > .cell {
@@ -270,12 +308,13 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    .shlefColor {
+    .shelfColor {
       display: inline-block;
       margin-right: 5px;
       width: 8px;
       height: 8px;
       border-radius: 8px;
+      transition: all 1s;
       // background-color: red;
     }
     .pagination {

@@ -46,11 +46,11 @@
           </ul>
         </div>
       </van-tab>
-      <van-tab title="电子系统">内容 2</van-tab>
-      <van-tab title="发动机">内容 3</van-tab>
-      <van-tab title="通讯系统">内容 4</van-tab>
-      <van-tab title="照明灯">内容 4</van-tab>
-      <van-tab title="维修工程">内容 4</van-tab>
+      <van-tab title="电子系统">电子系统</van-tab>
+      <van-tab title="发动机">发动机</van-tab>
+      <van-tab title="通讯系统">通讯系统</van-tab>
+      <van-tab title="照明灯">照明灯</van-tab>
+      <van-tab title="维修工程">维修工程</van-tab>
     </van-tabs>
   </div>
 </template>

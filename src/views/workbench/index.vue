@@ -77,7 +77,12 @@
               <t-menu-item value="bulkCargo">发布散杂货</t-menu-item>
               <t-menu-item value="spart">发布船舶备件</t-menu-item>
             </t-submenu>
-            <t-submenu title="船舶备件" value="船舶备件" v-if="status == 1">
+            <!-- v-if="status == 1" -->
+            <t-submenu
+              title="船舶备件"
+              value="船舶备件"
+              v-if="status == 1 || accountId == 'sysadmin'"
+            >
               <template #icon>
                 <div
                   class="iconfont icon-NaviLeft-10-attachment"
@@ -159,6 +164,7 @@ export default {
   data() {
     return {
       status: 0,
+      accountId: "",
     };
   },
   components: {
@@ -166,6 +172,7 @@ export default {
   },
   created() {},
   mounted() {
+    this.accountId = JSON.parse(localStorage.getItem("roleinfo")).accountId;
     getIsMerchant().then((res) => {
       this.status = res.data || 0;
     });
@@ -200,11 +207,11 @@ export default {
             path: "/workbench/release/bulkCargo",
           });
           break;
-        case "spart":
-          // this.$router.push({
-          //   path: "/workbench/spart/reSpart",
-          // });
-          break;
+        // case "spart":
+        //   this.$router.push({
+        //     path: "/workbench/spart/reSpart",
+        //   });
+        //   break;
         case "reSpart":
           this.$router.push({
             path: "/workbench/spart/reSpart",
@@ -273,6 +280,9 @@ export default {
     // margin-top: 64px;
     /deep/.t-menu__item {
       height: 48px;
+    }
+    /deep/.t-menu__item--plain {
+      height: 36px;
     }
     /deep/.t-default-menu {
       position: fixed;

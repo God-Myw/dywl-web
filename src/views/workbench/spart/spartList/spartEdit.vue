@@ -11,54 +11,63 @@
       >
         <el-row :gutter="24">
           <el-col :span="10">
-            <el-form-item label="一级分类" prop="name">
+            <el-form-item label="一级分类" prop="oneLevelId">
               <el-select
                 style="width: 100%"
                 size="small"
-                v-model="form.oneLev"
+                filterable
+                clearable
+                v-model="form.oneLevelId"
                 placeholder=""
               >
-                <el-option label="1级分类" value="1级分类"></el-option>
+                <el-option
+                  v-for="(item, index) in oneLev"
+                  :label="item.oneLevelName"
+                  :value="item.oneLevelName"
+                  :key="index"
+                ></el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="24">
           <el-col :span="10">
-            <el-form-item label="二级分类" prop="name">
+            <el-form-item label="二级分类" prop="twoLevelId">
               <el-select
                 style="width: 100%"
                 size="small"
-                v-model="form.twoLev"
+                filterable
+                clearable
+                v-model="form.twoLevelId"
                 placeholder=""
               >
-                <el-option label="2级分类" value="2级分类"></el-option>
+                <el-option
+                  v-for="(item, index) in twoLev"
+                  :label="item.twoLevelName"
+                  :value="item.twoLevelName"
+                  :key="index"
+                ></el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="24" class="demo-autocomplete">
           <el-col :span="10">
-            <el-form-item label="商品名称" prop="name">
+            <el-form-item label="商品名称" prop="tradeName">
               <el-input size="small" v-model="form.tradeName"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="24" class="demo-autocomplete">
           <el-col :span="10">
-            <el-form-item label="商品品牌" prop="name">
+            <el-form-item label="商品品牌" prop="brand">
               <el-input size="small" v-model="form.brand"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="24" class="demo-autocomplete">
           <el-col :span="10">
-            <el-form-item label="商品轮播图" prop="name">
-              <!-- <el-input
-                disabled
-                size="small"
-                placeholder="请选择上传图片"
-              ></el-input> -->
+            <el-form-item label="商品轮播图" prop="picList">
               <el-upload
                 action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
                 list-type="picture-card"
@@ -72,13 +81,10 @@
               </el-upload>
             </el-form-item>
           </el-col>
-          <el-col :span="24">
-            <el-form-item label="" prop="name"> </el-form-item>
-          </el-col>
         </el-row>
         <el-row :gutter="24" class="demo-autocomplete">
           <el-col :span="20">
-            <el-form-item label="商品型号/价格" prop="name">
+            <el-form-item label="商品型号/价格" prop="spartParts">
               <el-table :data="form.spartParts" style="width: 100%">
                 <el-table-column label="" width="260">
                   <template slot-scope="scope">
@@ -106,6 +112,7 @@
                               : ''
                           "
                         />
+                        <div class="mask"></div>
                         <i
                           class="el-icon-delete"
                           @click="storeImgDel(scope)"
@@ -171,7 +178,7 @@
         </el-row>
         <el-row :gutter="24" class="demo-autocomplete">
           <el-col :span="10">
-            <el-form-item label="说明" prop="name">
+            <el-form-item label="说明" prop="partExplain">
               <el-input
                 style="display: inline-block"
                 v-for="(item, index) in form.partExplain"
@@ -194,7 +201,7 @@
         </el-row>
         <el-row :gutter="24" class="demo-autocomplete">
           <el-col :span="24">
-            <el-form-item label="商品详情描述" prop="name">
+            <el-form-item label="商品详情描述" prop="details">
               <div style="border: 1px solid #ccc">
                 <Toolbar
                   style="border-bottom: 1px solid #ccc"
@@ -242,23 +249,71 @@
 </template>
 <script>
 import Worktitle from "../../../../components/WorkTitle.vue";
-import { getSpartById, saveSpart } from "../../../../api/workbench";
+import {
+  getSpartById,
+  saveSpart,
+  getSpartLevel,
+  getSpartTwoLevelAll,
+} from "../../../../api/workbench";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 export default {
   components: { Worktitle, Editor, Toolbar },
   data() {
+    var validatePicList = (rule, value, callback) => {
+      let rules = this.picList2[0] != undefined;
+      if (rules) {
+        callback();
+      } else {
+        callback(new Error("请上传商品轮播图图片"));
+      }
+    };
+    var validateSpartParts = (rule, value, callback) => {
+      let rules = value.every((item) => {
+        return (
+          item.model != "" &&
+          item.quantity != "" &&
+          item.spartMoney != "" &&
+          item.partPicList[0] != undefined
+        );
+      });
+      if (rules) {
+        callback();
+      } else {
+        callback(new Error("商品信息不能为空"));
+      }
+    };
+    var validatePartExplain = (rule, value, callback) => {
+      let rules = value.every((item) => {
+        return item != "";
+      });
+      if (rules && value[0] != undefined) {
+        callback();
+      } else {
+        callback(new Error("请输入说明"));
+      }
+    };
+    var validateDetails = (rule, value, callback) => {
+      let rules = this.editor.getText(value) != "";
+      if (rules) {
+        callback();
+      } else {
+        callback(new Error("请输入说明"));
+      }
+    };
     return {
       index: 0,
+      oneLev: [],
+      twoLev: [],
       form: {
         guid: "",
-        oneLev: "1级分类",
-        twoLev: "2级分类",
+        oneLevelId: "",
+        twoLevelId: "",
         tradeName: "",
         brand: "",
         picList: [],
         spartParts: [
           {
-            partPicList: [{}],
+            partPicList: [],
             model: "",
             spartMoney: "",
             quantity: "",
@@ -269,7 +324,49 @@ export default {
       },
       picList2: [],
       rules: {
-        // name: [{ required: true, message: "请输入活动名称", trigger: "blur" }],
+        oneLevelId: [
+          { required: true, message: "请输入一级分类", trigger: "blur" },
+        ],
+        twoLevelId: [
+          { required: true, message: "请输入二级分类", trigger: "blur" },
+        ],
+        tradeName: [
+          { required: true, message: "请输入商品名称", trigger: "blur" },
+        ],
+        brand: [{ required: true, message: "请输入商品品牌", trigger: "blur" }],
+        picList: [
+          {
+            required: true,
+            validator: validatePicList,
+            message: "请上传商品轮播图图片",
+            trigger: "blur",
+          },
+        ],
+        spartParts: [
+          {
+            required: true,
+            validator: validateSpartParts,
+            message: "信息不能为空",
+            trigger: "blur",
+          },
+        ],
+        partExplain: [
+          {
+            type: "array",
+            validator: validatePartExplain,
+            required: true,
+            message: "请输入说明",
+            trigger: "blur",
+          },
+        ],
+        details: [
+          {
+            required: true,
+            validator: validateDetails,
+            message: "请输入详情描述",
+            trigger: "blur",
+          },
+        ],
       },
       editor: null,
       html: "",
@@ -306,10 +403,13 @@ export default {
   mounted() {
     getSpartLevel().then((res) => {
       if (res.code == "0000") {
-        res.data.map((item) => {});
+        this.oneLev = res.data || [];
       }
-      this.form.oneLev = res.data[0].oneLevelName;
-      this.form.twoLev = res.data[1].oneLevelName;
+    });
+    getSpartTwoLevelAll().then((res) => {
+      if (res.code == "0000") {
+        this.twoLev = res.data || [];
+      }
     });
     let params = { guid: this.$route.query.guid };
     this.getData(params);
@@ -347,6 +447,8 @@ export default {
           let partExplain = res.data.partExplain.split("/").filter(Boolean);
           this.form.guid = res.data.guid || "";
           this.form.tradeName = res.data.tradeName || "";
+          this.form.oneLevelId = res.data.oneLevelId || "";
+          this.form.twoLevelId = res.data.twoLevelId || "";
           this.form.brand = res.data.brand || "";
           this.form.picList = picList || [];
           this.picList2 = res.data.picList || [];
@@ -360,7 +462,6 @@ export default {
     upLoadBefore(index) {
       this.index = index.$index;
     },
-
     storeImgDel(index) {
       let obj = { ...this.form.spartParts[index.$index] };
       obj.partPicList = [];
@@ -412,11 +513,19 @@ export default {
       this.form.details = editor.getHtml();
     },
     onSubmit(info) {
-      let params = { ...info } || {};
-      params.partExplain = [...new Set(params.partExplain)].join("/");
-      params.picList = this.picList2;
-      saveSpart(params).then((res) => {
-        if (res.status == 200) this.$router.push("/workbench/spart/spartList");
+      this.$refs["form"].validate((valid) => {
+        if (valid) {
+          let params = { ...info } || {};
+          params.partExplain = [...new Set(params.partExplain)].join("/");
+          params.picList = this.picList2;
+          saveSpart(params).then((res) => {
+            if (res.status == 200)
+              this.$router.push("/workbench/spart/spartList");
+          });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
       });
     },
   },
@@ -468,23 +577,34 @@ export default {
     height: 150px;
     z-index: 9;
     border-radius: 10px;
+    overflow: hidden;
     .storeImg {
       width: 150px;
       height: 150px;
     }
+    .mask {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background-color: #00000080;
+      border-radius: 10px;
+      opacity: 0;
+    }
     i {
       position: absolute;
       font-size: 26px;
-      display: none;
+      opacity: 0;
+      color: #ffffff;
       cursor: pointer;
     }
   }
-  .storeImgBox:hover .el-icon-delete {
-    display: block;
-  }
-  .storeImgBox:hover {
+  .storeImgBox:hover .mask {
     background-color: #00000080;
+    opacity: 1;
     transition: all 0.5s;
+  }
+  .storeImgBox:hover .el-icon-delete {
+    opacity: 1;
   }
   /deep/.el-table__header-wrapper {
     height: 1px;
