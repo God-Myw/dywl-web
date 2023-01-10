@@ -48,7 +48,7 @@
         type="primary"
         @click="
           () => {
-            this.$router.push('/workbench/spart/reSpart');
+            this.$router.push('/workbench/spart/reSpart')
           }
         "
       >
@@ -84,7 +84,7 @@
                     : 'background: #98979A'
                 "
               ></p>
-              {{ scope.row.shelf == "已上架" ? "已上架" : "未上架" }}
+              {{ scope.row.shelf == '已上架' ? '已上架' : '未上架' }}
             </div>
           </template>
         </el-table-column>
@@ -123,34 +123,34 @@
   </div>
 </template>
 <script>
-import Worktitle from "../../../../components/WorkTitle.vue";
+import Worktitle from '../../../../components/WorkTitle.vue'
 import {
   getSpartList,
   shelfChange,
   getSpartTwoLevel,
-} from "../../../../api/workbench";
+} from '../../../../api/workbench'
 
 export default {
   data() {
     return {
-      input: "",
-      number: "",
-      tradeName: "",
-      twoLevelId: "",
-      shelf: "",
+      input: '',
+      number: '',
+      tradeName: '',
+      twoLevelId: '',
+      shelf: '',
       currentPage: 1,
       pageSize: 10,
       total: 0,
       twoLevelList: [],
       spartList: [],
-    };
+    }
   },
   components: { Worktitle },
   mounted() {
     getSpartTwoLevel().then((res) => {
-      if ((res.code = "0000")) this.twoLevelList = res.data;
-    });
-    this.getData();
+      if ((res.code = '0000')) this.twoLevelList = res.data
+    })
+    this.getData()
   },
   methods: {
     getData() {
@@ -161,90 +161,90 @@ export default {
         shelf: this.shelf,
         currentPage: this.currentPage,
         pageSize: this.pageSize,
-      };
+      }
       getSpartList(params).then((res) => {
-        let spartList = [];
+        let spartList = []
         if (res.status == 200) {
           res.data.records.map((item) => {
-            let obj = {};
-            obj.guid = item.guid || "";
-            obj.number = item.number || "";
-            obj.fileName = item.fileName || "";
-            obj.tradeName = item.tradeName || "";
-            obj.twoLevelId = item.twoLevelId || "";
-            obj.brand = item.brand || "";
-            obj.money = item.money || "";
-            obj.quantitySum = item.quantitySum || "";
-            obj.shelf = item.shelf == 1 ? "已上架" : "未上架";
-            obj.shelf2 = item.shelf == 1 ? "下架" : "上架";
-            spartList.push(obj);
-          });
+            let obj = {}
+            obj.guid = item.guid || ''
+            obj.number = item.number || ''
+            obj.fileName = item.fileName || ''
+            obj.tradeName = item.tradeName || ''
+            obj.twoLevelId = item.twoLevelId || ''
+            obj.brand = item.brand || ''
+            obj.money = item.money || ''
+            obj.quantitySum = item.quantitySum || ''
+            obj.shelf = item.shelf == 1 ? '已上架' : '未上架'
+            obj.shelf2 = item.shelf == 1 ? '下架' : '上架'
+            spartList.push(obj)
+          })
         }
-        this.spartList = spartList || [];
-        this.total = res.data.total || 0;
-      });
+        this.spartList = spartList || []
+        this.total = res.data.total || 0
+      })
     },
     serach() {
-      this.getData();
+      this.getData()
     },
     clear() {
-      this.number = "";
-      this.tradeName = "";
-      this.twoLevelId = "";
-      this.shelf = "";
-      this.getData();
+      this.number = ''
+      this.tradeName = ''
+      this.twoLevelId = ''
+      this.shelf = ''
+      this.getData()
     },
     currentChange(currentPage) {
-      this.currentPage = currentPage;
-      this.getData();
+      this.currentPage = currentPage
+      this.getData()
     },
     handleSizeChange(handleSizeChange) {
-      this.pageSize = handleSizeChange;
-      this.getData();
+      this.pageSize = handleSizeChange
+      this.getData()
     },
     handleDelete(guid) {
-      this.$confirm("您确认后,现有商品将删除", "确认删除商品", {
-        confirmButtonText: "确定删除",
-        cancelButtonText: "取消",
-        type: "warning",
+      this.$confirm('您确认后,现有商品将删除', '确认删除商品', {
+        confirmButtonText: '确定删除',
+        cancelButtonText: '取消',
+        type: 'warning',
       })
         .then(() => {
           this.$message({
-            type: "success",
-            message: "删除成功!",
-          });
+            type: 'success',
+            message: '删除成功!',
+          })
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
+            type: 'info',
+            message: '已取消删除',
+          })
+        })
     },
     shelfChange(guid, shelf) {
       this.$confirm(`您确认后,现有商品将${shelf}`, `确认${shelf}商品`, {
         confirmButtonText: `确定${shelf}`,
-        cancelButtonText: "取消",
-        type: "warning",
+        cancelButtonText: '取消',
+        type: 'warning',
       })
         .then(() => {
-          let params = { guid: guid };
+          let params = { guid: guid }
           shelfChange(params).then((res) => {
             if (res.status == 200) {
-              this.getData();
+              this.getData()
             }
-          });
+          })
           this.$message({
-            type: "success",
+            type: 'success',
             message: `${shelf}成功!`,
-          });
+          })
         })
         .catch(() => {
           this.$message({
-            type: "info",
+            type: 'info',
             message: `已取消${shelf}`,
-          });
-        });
+          })
+        })
     },
     getSpartById(guid) {
       this.$router.push({
@@ -252,10 +252,10 @@ export default {
         query: {
           guid: guid,
         },
-      });
+      })
     },
   },
-};
+}
 </script>
 <style lang="scss" scoped>
 .spartList {

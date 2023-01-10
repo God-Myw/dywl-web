@@ -8,8 +8,7 @@
             class="logo"
             src="../../assets/workbench/sound.png"
             style="margin-left: 10px"
-            alt="logo"
-          />
+            alt="logo" />
           <div
             class="goback"
             @click="gohome"
@@ -19,13 +18,11 @@
               display: flex;
               align-items: center;
               cursor: pointe3r;
-            "
-          >
+            ">
             <img
               style="width: 100%; height: 100%"
               src="../../assets/workbench/组 7333@2x.png"
-              alt=""
-            />
+              alt="" />
           </div>
           <template #operations>
             <HeaderLoginImg></HeaderLoginImg>
@@ -52,8 +49,7 @@
               <template #icon>
                 <div
                   class="iconfont icon-NaviLeft-1-home"
-                  style="margin-right: 8px"
-                ></div>
+                  style="margin-right: 8px"></div>
               </template>
               工作台首页
             </t-menu-item>
@@ -61,8 +57,7 @@
               <template #icon>
                 <div
                   class="iconfont icon-NaviLeft-2-material"
-                  style="margin-right: 9px"
-                ></div>
+                  style="margin-right: 9px"></div>
               </template>
               资料认证
             </t-menu-item>
@@ -70,8 +65,7 @@
               <template #icon>
                 <div
                   class="iconfont icon-NaviLeft-3-release"
-                  style="margin-right: 9px"
-                ></div>
+                  style="margin-right: 9px"></div>
               </template>
               <!-- <t-menu-item value="release">我要发布</t-menu-item> -->
               <t-menu-item value="bulkCargo">发布散杂货</t-menu-item>
@@ -83,13 +77,11 @@
             <t-submenu
               title="船舶备件"
               value="船舶备件"
-              v-if="status == 1 || accountId == 'sysadmin'"
-            >
+              v-if="status == 1 || accountId == 'sysadmin'">
               <template #icon>
                 <div
                   class="iconfont icon-NaviLeft-10-attachment"
-                  style="margin-right: 9px"
-                ></div>
+                  style="margin-right: 9px"></div>
               </template>
               <t-menu-item value="reSpart">发布船舶备件</t-menu-item>
               <t-menu-item value="spartList">船舶备件商品列表</t-menu-item>
@@ -99,8 +91,7 @@
               <template #icon>
                 <div
                   class="iconfont icon-NaviLeft-4-order"
-                  style="margin-right: 9px"
-                ></div>
+                  style="margin-right: 9px"></div>
               </template>
               <t-menu-item value="bulkShip">散杂货订单</t-menu-item>
               <t-menu-item value="container">集装箱订单</t-menu-item>
@@ -109,8 +100,7 @@
               <template #icon>
                 <div
                   class="iconfont icon-NaviLeft-5-bill"
-                  style="margin-right: 9px"
-                ></div>
+                  style="margin-right: 9px"></div>
               </template>
               发票管理
             </t-menu-item>
@@ -118,8 +108,7 @@
               <template #icon>
                 <div
                   class="iconfont icon-NaviLeft-6-message"
-                  style="margin-right: 9px"
-                ></div>
+                  style="margin-right: 9px"></div>
               </template>
               消息区
             </t-menu-item>
@@ -127,8 +116,7 @@
               <template #icon>
                 <div
                   class="iconfont icon-NaviLeft-7-news"
-                  style="margin-right: 9px"
-                ></div>
+                  style="margin-right: 9px"></div>
               </template>
               在线留言
             </t-menu-item>
@@ -136,8 +124,7 @@
               <template #icon>
                 <div
                   class="iconfont icon-NaviLeft-8-account"
-                  style="margin-right: 9px"
-                ></div>
+                  style="margin-right: 9px"></div>
               </template>
               账号管理
             </t-menu-item>

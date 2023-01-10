@@ -7,8 +7,7 @@
         :rules="rules"
         :model="form"
         label-width="200px"
-        labelPosition="left"
-      >
+        labelPosition="left">
         <el-row :gutter="24">
           <el-col :span="10">
             <el-form-item label="一级分类" prop="oneLevelId">
@@ -18,14 +17,12 @@
                 filterable
                 clearable
                 v-model="form.oneLevelId"
-                placeholder=""
-              >
+                placeholder="">
                 <el-option
                   v-for="(item, index) in oneLev"
                   :label="item.oneLevelName"
                   :value="item.oneLevelName"
-                  :key="index"
-                ></el-option>
+                  :key="index"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -39,14 +36,12 @@
                 filterable
                 clearable
                 v-model="form.twoLevelId"
-                placeholder=""
-              >
+                placeholder="">
                 <el-option
                   v-for="(item, index) in twoLev"
                   :label="item.twoLevelName"
                   :value="item.twoLevelName"
-                  :key="index"
-                ></el-option>
+                  :key="index"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -75,8 +70,7 @@
                 :on-change="upLoadChange"
                 :on-remove="upLoadChange"
                 :file-list="form.picList"
-                :limit="5"
-              >
+                :limit="5">
                 <i class="el-icon-plus"></i>
               </el-upload>
             </el-form-item>
@@ -99,27 +93,23 @@
                         accept=".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff"
                         :on-change="upLoadStore"
                         :file-list="scope.row.partPicList || [{}]"
-                        :limit="1"
-                      >
+                        :limit="1">
                         <i class="el-icon-plus"></i>
                       </el-upload>
                       <div
                         class="storeImgBox"
-                        v-show="scope.row.partPicList[0]"
-                      >
+                        v-show="scope.row.partPicList[0]">
                         <img
                           class="storeImg"
                           :src="
                             scope.row.partPicList[0]
                               ? scope.row.partPicList[0].url
                               : ''
-                          "
-                        />
+                          " />
                         <div class="mask"></div>
                         <i
                           class="el-icon-delete"
-                          @click="storeImgDel(scope)"
-                        ></i>
+                          @click="storeImgDel(scope)"></i>
                       </div>
                     </div>
                   </template>
@@ -130,8 +120,7 @@
                       <el-input
                         size="small"
                         placeholder="请填写型号名"
-                        v-model="scope.row.model"
-                      ></el-input>
+                        v-model="scope.row.model"></el-input>
                     </div>
                   </template>
                 </el-table-column>
@@ -141,8 +130,7 @@
                       <el-input
                         size="small"
                         placeholder="请填写价格"
-                        v-model="scope.row.spartMoney"
-                      ></el-input>
+                        v-model="scope.row.spartMoney"></el-input>
                     </div>
                   </template>
                 </el-table-column>
@@ -152,8 +140,7 @@
                       <el-input
                         size="small"
                         placeholder="请填写库存数"
-                        v-model="scope.row.quantity"
-                      ></el-input>
+                        v-model="scope.row.quantity"></el-input>
                     </div>
                   </template>
                 </el-table-column>
@@ -163,8 +150,7 @@
                       <i
                         style="font-size: 27px; margin-left: 20px"
                         class="el-icon-delete"
-                        @click="storeDelete(scope)"
-                      ></i>
+                        @click="storeDelete(scope)"></i>
                     </div>
                   </template>
                 </el-table-column>
@@ -172,8 +158,7 @@
               <el-button
                 style="display: inline-block; width: 100%; border: 1px dashed"
                 size="default"
-                @click="storeListAdd"
-              >
+                @click="storeListAdd">
                 <i class="el-icon-plus">添加型号</i>
               </el-button>
             </el-form-item>
@@ -194,8 +179,7 @@
                     : index == 1
                     ? '说明二(售后服务等)'
                     : ''
-                "
-              ></el-input>
+                "></el-input>
               <el-button
                 icon="el-icon-plus"
                 size="small"
@@ -217,16 +201,14 @@
                   style="border-bottom: 1px solid #ccc"
                   :editor="editor"
                   :defaultConfig="toolbarConfig"
-                  :mode="mode"
-                />
+                  :mode="mode" />
                 <Editor
                   style="height: 500px; overflow-y: hidden"
                   v-model="html"
                   :defaultConfig="editorConfig"
                   :mode="mode"
                   @onCreated="editorCreated"
-                  @onChange="editorChange"
-                />
+                  @onChange="editorChange" />
               </div>
             </el-form-item>
           </el-col>

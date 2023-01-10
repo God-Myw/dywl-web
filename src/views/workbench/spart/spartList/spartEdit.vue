@@ -207,13 +207,13 @@
                   style="border-bottom: 1px solid #ccc"
                   :editor="editor"
                   :defaultConfig="toolbarConfig"
-                  :mode="mode"
+                  mode="default"
                 />
                 <Editor
                   style="height: 500px; overflow-y: hidden"
                   v-model="html"
                   :defaultConfig="editorConfig"
-                  :mode="mode"
+                  mode="default"
                   @onCreated="editorCreated"
                   @onChange="editorChange"
                 />
@@ -397,7 +397,6 @@ export default {
           },
         },
       },
-      mode: "default",
     };
   },
   mounted() {
