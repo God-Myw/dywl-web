@@ -74,10 +74,7 @@
               >
             </t-submenu>
             <!-- v-if="status == 1" -->
-            <t-submenu
-              title="船舶备件"
-              value="船舶备件"
-              v-if="status == 1 || accountId == 'sysadmin'">
+            <t-submenu title="船舶备件" value="船舶备件" v-if="status == 1">
               <template #icon>
                 <div
                   class="iconfont icon-NaviLeft-10-attachment"
