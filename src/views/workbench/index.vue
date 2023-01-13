@@ -209,9 +209,9 @@ export default {
           });
           break;
         case "myStore":
-          // this.$router.push({
-          //   path: "/workbench/spart/myStore",
-          // });
+          this.$router.push({
+            path: "/workbench/spart/myStore",
+          });
           break;
         case "bulkShip":
           this.$router.push({
