@@ -275,23 +275,28 @@ export default {
       /deep/.el-tabs__item {
         // display: inline-block;
         overflow: hidden;
-        padding: 0;
         font-size: 20px;
         font-weight: 200;
-        margin: 10px 60px 0px 0px;
+        padding: 10px 60px 0px 0px;
+        margin-bottom: 20px;
         cursor: pointer;
       }
       /deep/.is-active {
         font-size: 22px;
         font-weight: 700;
         color: black;
-        border-bottom: 5px #1890ff solid;
+        // border-bottom: 5px #1890ff solid;
       }
       /deep/.el-tabs__active-bar {
-        display: none;
+        margin-top: 20px;
+        height: 4px;
+        // display: none;
       }
       /deep/.el-tabs__nav-wrap::after {
-        display: none;
+        height: 4px;
+      }
+      /deep/.el-tabs__nav-wrap::after {
+        // display: none;
       }
     }
   }
@@ -318,6 +323,10 @@ export default {
           width: 100px;
           height: 100px;
           background-color: red;
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
         .storeName {
           margin-left: 30px;
@@ -344,9 +353,8 @@ export default {
       width: 100%;
       .storeClass {
         width: 10%;
-        margin: 100px 40px;
+        margin: 0px 40px;
         .cla {
-          // border-bottom: 1px solid rgb(179, 179, 179);
           padding-bottom: 30px;
           p {
             font-size: 23px;
