@@ -82,7 +82,7 @@
               </template>
               <t-menu-item value="reSpart">发布船舶备件</t-menu-item>
               <t-menu-item value="spartList">船舶备件商品列表</t-menu-item>
-              <!-- <t-menu-item value="myStore">我的店铺</t-menu-item> -->
+              <t-menu-item value="myStore">我的店铺</t-menu-item>
             </t-submenu>
             <t-submenu title="订单列表" value="bulkShip">
               <template #icon>
