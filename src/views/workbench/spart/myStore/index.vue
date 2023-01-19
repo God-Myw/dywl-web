@@ -122,7 +122,12 @@
                   <p>
                     店铺名称
                     <img
-                      src="http://58.33.34.10:10443/images/spart/1671190772217.png"
+                      v-if="storeType == 1"
+                      src="http://58.33.34.10:10443/images/spart/1670924635524.png"
+                      alt="" />
+                    <img
+                      v-if="storeType !== 2"
+                      src="http://58.33.34.10:10443/images/spart/1670924637144.png"
                       alt="" />
                   </p>
                   <p>
@@ -130,9 +135,9 @@
                     <img
                       :key="iu"
                       v-for="iu in 5"
-                      src="http://58.33.34.10:10443/images/spart/1671190772217.png"
+                      src="http://58.33.34.10:10443/images/spart/1670924109041.png"
                       alt="" />
-                    4.5
+                    5.0
                   </p>
                 </div>
               </div>
