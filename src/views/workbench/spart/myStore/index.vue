@@ -183,24 +183,22 @@
 									blueSty="store"
 									:title="type == 1 ? '营业证照' : '身份证'"
 								/>
-								<div>
-									<ul>
-										<li>
-											<img
-												src="http://58.33.34.10:10443/images/spart/1670573471742.jpg"
-												alt=""
-											/>
-											<i
-												class="el-icon-zoom-in big"
-												@click="
-													dialogVisible = true;
-													bigSrc =
-														'http://58.33.34.10:10443/images/spart/1670573471742.jpg';
-												"
-											></i>
-										</li>
-									</ul>
-								</div>
+								<ul>
+									<li>
+										<img
+											src="http://58.33.34.10:10443/images/spart/1670573471742.jpg"
+											alt=""
+										/>
+										<i
+											class="el-icon-zoom-in big"
+											@click="
+												dialogVisible = true;
+												bigSrc =
+													'http://58.33.34.10:10443/images/spart/1670573471742.jpg';
+											"
+										></i>
+									</li>
+								</ul>
 							</div>
 							<div class="storeInfo otherInfo">
 								<Worktitle blueSty="store" title="其他信息" />
@@ -252,18 +250,6 @@
 				bigSrc: "",
 				dialogVisible: false,
 				info: [
-					{
-						url: "http://58.33.34.10:10443/images/spart/1670573471742.jpg",
-						name: "CPP调距桨电力推进系统",
-						model: "HYCP38-1",
-						price: "12680",
-					},
-					{
-						url: "http://58.33.34.10:10443/images/spart/1670573471742.jpg",
-						name: "CPP调距桨电力推进系统",
-						model: "HYCP38-1",
-						price: "12680",
-					},
 					{
 						url: "http://58.33.34.10:10443/images/spart/1670573471742.jpg",
 						name: "CPP调距桨电力推进系统",
@@ -512,17 +498,15 @@
 				.license {
 					display: flex;
 					flex-direction: column;
-					div {
-						ul {
-							display: flex;
-							li {
-								position: relative;
-								width: 320px;
-								margin-left: 20px;
-								img {
-									width: 100%;
-									height: 200px;
-								}
+					ul {
+						display: flex;
+						li {
+							position: relative;
+							width: 320px;
+							margin-left: 20px;
+							img {
+								width: 100%;
+								height: 200px;
 							}
 						}
 					}
@@ -531,7 +515,7 @@
 						right: 11px;
 						top: 11px;
 						font-size: 21px;
-						background-color: #999999;
+						background-color: #00000060;
 						padding: 6px;
 						color: #ffffff;
 						cursor: pointer;

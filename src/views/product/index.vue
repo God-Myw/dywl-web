@@ -2,14 +2,11 @@
   <div class="product">
     <div class="product_bg">
       <div class="voyagetime">
-        <div class="voyagetime_title" v-if="activeName == 'first'">
-          现舱秒杀
-        </div>
-        <div class="voyagetime_title" v-if="activeName == 'second'">
-          现舱竞拍
-        </div>
         <div class="voyagetime_title" v-if="activeName == 'third'">
           集装箱订舱
+        </div>
+        <div class="voyagetime_title" v-if="activeName == 'first'">
+          现舱秒杀
         </div>
         <div class="vouagetime_seach">
           <div class="home_search_input">
@@ -46,10 +43,10 @@
     </div>
     <div class="product_tabs">
       <el-tabs v-model="activeName" @tab-click="handleClick">
+        
+					<el-tab-pane label="集装箱订舱" name="third"></el-tab-pane>
+					<el-tab-pane label="现舱秒杀" name="first"></el-tab-pane>
         <!-- <el-tab-pane label="全部" name="zero"></el-tab-pane> -->
-        <el-tab-pane label="现舱秒杀" name="first"></el-tab-pane>
-        <el-tab-pane label="现舱竞拍" name="second"></el-tab-pane>
-        <el-tab-pane label="集装箱订舱" name="third"></el-tab-pane>
       </el-tabs>
       <!-- 现仓秒杀 -->
       <div v-if="activeName == 'first'" class="product_seckill">
@@ -345,7 +342,7 @@
                 <span @click="gohint" class="item_four_top_once">立即抢舱</span>
               </div>
               <div class="item_four_bottom">
-                <span v-for="(itm, idx) in item.lables">{{ itm }}</span>
+                <span v-for="(itm, idx) in item.lables" :key="idx">{{ itm }}</span>
               </div>
             </div>
           </li>
