@@ -193,6 +193,13 @@ const routes = [
         name: "myStore",
         component: () => import("@/views/workbench/spart/myStore/index.vue"),
       },
+      // 工作台-实名认证
+      {
+        path: "/workbench/spart/realNameAut",
+        name: "realNameAut",
+        component: () =>
+          import("@/views/workbench/spart/myStore/realNameAut.vue"),
+      },
       // 工作台-订单列表
       {
         path: "/workbench/orderList",

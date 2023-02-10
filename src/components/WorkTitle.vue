@@ -26,6 +26,7 @@
 		.title {
 			position: relative;
 			padding-left: 11px;
+			font-size: 12px;
 			display: flex;
 			align-items: center;
 		}
@@ -34,7 +35,7 @@
 			left: 0;
 			content: "";
 			width: 5px;
-			height: 21px;
+			height: 12px;
 			background: #0052d9;
 			border-radius: 3px 3px 3px 3px;
 		}

@@ -57,7 +57,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="box">
+					<div v-if="empty" class="box">
 						<div class="spartInfo">
 							<div class="storeClass">
 								<div class="cla">
@@ -115,6 +115,19 @@
 							>
 							</el-pagination>
 						</div>
+					</div>
+					<div else class="box empty">
+						<img src="../../../../assets/workbench/商品为空.png" alt="" />
+						<p>您暂未上传商品</p>
+						<el-button
+							size="medium"
+							@click="
+								() => {
+									this.$router.push('/workbench/spart/reSpart');
+								}
+							"
+							>新增备件商品</el-button
+						>
 					</div>
 				</el-tab-pane>
 				<el-tab-pane label="店铺信息" name="storeInfo">
@@ -242,6 +255,7 @@
 			return {
 				type: 1,
 				status: true,
+				empty: false,
 				activeName: "myStore",
 				activeName2: "hotSpart",
 				spartActive: "",
@@ -535,6 +549,29 @@
 				align-items: center;
 				// transform: translateX(-110%);
 				// left: 100%;
+			}
+		}
+		.empty {
+			height: 630px;
+			display: grid;
+			place-items: center;
+			img {
+				border: 3px #867f7f dotted;
+				width: 381px;
+				height: 381px;
+			}
+			p {
+				font-size: 21px;
+				font-family: Source Han Sans CN-Regular, Source Han Sans CN;
+				font-weight: 400;
+				color: #37383b;
+			}
+			.el-button {
+				font-size: 21px;
+				width: 215px;
+				height: 53px;
+				background: #feffff;
+				border-radius: 4px 4px 4px 4px;
 			}
 		}
 	}
