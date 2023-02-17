@@ -18,7 +18,7 @@
 							height: 20px;
 							display: flex;
 							align-items: center;
-							cursor: pointe3r;
+							cursor: pointer;
 						"
 					>
 						<img
@@ -41,13 +41,13 @@
 				<t-aside style="border-top: 1px solid var(--component-border)">
 					<t-menu @change="changeHandler">
 						<!-- <div class="icon-NaviLeft-1-workbench">
-              <div
-                class="iconfont icon-NaviLeft-1-home"
-                style="margin-right: 8px"
-              >
-                货主/货代工作台
-              </div>
-            </div> -->
+							<div
+								class="iconfont icon-NaviLeft-1-home"
+								style="margin-right: 8px"
+							>
+								货主/货代工作台
+							</div>
+						</div> -->
 						<t-menu-item value="workbench">
 							<template #icon>
 								<div
