@@ -79,7 +79,7 @@
 								>发布船舶备件</t-menu-item
 							>
 						</t-submenu>
-						<!-- v-if="status == 1"  -->
+						<!-- v-if="status == 1" -->
 						<t-submenu title="船舶备件" value="船舶备件">
 							<template #icon>
 								<div
