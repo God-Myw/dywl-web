@@ -13,8 +13,8 @@ module.exports = {
 			//     }
 			//   }
 			"/baiduApi": {
-				target: "https://aip.baidubce.com", //API服务器的地址
-				changeOrigin: true, //是否跨域
+				target: "https://aip.baidubce.com",
+				changeOrigin: true,
 				secure: false,
 				pathRewrite: {
 					"^/baiduApi": "",

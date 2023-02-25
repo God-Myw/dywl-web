@@ -69,9 +69,18 @@ export function getSpartTwoLevelAll(params) {
 // 是否申请店铺
 export function getIsMerchant() {
 	return axios({
-		url: "/business/merchant/getIsMerchant",
+		url: "business/merchant/getIsMerchant",
 		method: "get",
 		headers: { token: localStorage.getItem("token") },
+	});
+}
+// 申请店铺
+export function saveMerchant(params) {
+	return axios({
+		url: "business/merchant/saveMerchant",
+		method: "post",
+		headers: { token: localStorage.getItem("token") },
+		params: params,
 	});
 }
 // 百度OCR获取id

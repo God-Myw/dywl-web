@@ -221,6 +221,7 @@
 		getAccessToken,
 		identification,
 		businessLicense,
+		saveMerchant,
 	} from "../../../../api/workbench";
 	import Worktitle from "../../../../components/WorkTitle.vue";
 
@@ -228,6 +229,7 @@
 		data() {
 			return {
 				act: "个人",
+				form: [],
 				id_card_side: "",
 				empty: true,
 				frontCard: [],
@@ -322,6 +324,8 @@
 				}
 			},
 			submit(from) {
+				saveMerchant({}).then((res) => {});
+
 				this.empty = false;
 			},
 		},
