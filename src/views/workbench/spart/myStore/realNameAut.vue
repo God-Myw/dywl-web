@@ -27,13 +27,19 @@
 				<el-button
 					:class="act == '个人' ? 'active' : ''"
 					size="mini"
-					@click="act = '个人'"
+					@click="
+						act = '个人';
+						form.type = 1;
+					"
 					>个人</el-button
 				>
 				<el-button
 					:class="act == '公司' ? 'active' : ''"
 					size="mini"
-					@click="act = '公司'"
+					@click="
+						act = '公司';
+						form.type = 2;
+					"
 					>公司</el-button
 				>
 				<br />
@@ -41,83 +47,6 @@
 					:title="act == '个人' ? '上传身份证' : '上传营业执照'"
 					blueSty="store"
 				/>
-				<div class="idCard">
-					<el-upload
-						v-show="!frontCard.length && act == '个人'"
-						action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
-						list-type="picture-card"
-						:on-change="idCardChange"
-						:file-list="frontCard"
-						:limit="1"
-						show-file-list="false"
-					>
-						<img
-							@click="id_card_side = 'front'"
-							src="@/assets/workbench/身份证人像页.png"
-						/>
-					</el-upload>
-					<div v-show="frontCard.length && act == '个人'" class="idCardPic">
-						<img :src="frontCard.length ? frontCard[0].url : ''" alt="" />
-						<div class="mask">
-							<i @click="frontCard = []" class="el-icon-delete"></i>
-						</div>
-					</div>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<el-upload
-						v-show="!backCard.length && act == '个人'"
-						action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
-						list-type="picture-card"
-						:on-change="idCardChange"
-						:file-list="backCard"
-						:limit="1"
-					>
-						<img
-							@click="id_card_side = 'back'"
-							src="@/assets/workbench/身份证国徽页.png"
-							alt=""
-						/>
-					</el-upload>
-					<div v-show="backCard.length && act == '个人'" class="idCardPic">
-						<img :src="backCard.length ? backCard[0].url : ''" alt="" />
-						<div class="mask">
-							<i @click="backCard = []" class="el-icon-delete"></i>
-						</div>
-					</div>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<el-upload
-						v-show="!license.length && act == '公司'"
-						action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
-						list-type="picture-card"
-						:on-change="licenseChange"
-						:file-list="license"
-						:limit="1"
-					>
-						<img
-							@click="id_card_side = 'back'"
-							src="@/assets/workbench/上传营业执照.png"
-							alt=""
-						/>
-					</el-upload>
-					<div v-show="license.length" class="idCardPic">
-						<img :src="license.length ? license[0].url : ''" alt="" />
-						<div class="mask">
-							<i @click="license = []" class="el-icon-delete"></i>
-						</div>
-					</div>
-				</div>
-				<br />
-				<Worktitle title="店铺LOGO /形象" blueSty="store" />
-				<br />
-				<el-upload
-					action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
-					list-type="picture-card"
-					:on-preview="handlePictureCardPreview"
-					:on-remove="handleRemove"
-					:limit="1"
-				>
-					<i class="el-icon-plus"></i>
-				</el-upload>
-				<Worktitle title="其它信息" blueSty="store" />
 				<el-form
 					ref="form"
 					:rules="rules"
@@ -127,9 +56,95 @@
 				>
 					<el-row :gutter="24">
 						<el-col :span="10">
-							<el-form-item label="联系人" prop="name">
+							<div class="idCard">
+								<el-upload
+									v-show="!frontCard.length && act == '个人'"
+									action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
+									list-type="picture-card"
+									:on-change="idCardChange"
+									:file-list="frontCard"
+									:limit="1"
+									:showFileList="false"
+								>
+									<img
+										@click="id_card_side = 'front'"
+										src="@/assets/workbench/身份证人像页.png"
+									/>
+								</el-upload>
+								<div
+									v-show="frontCard.length && act == '个人'"
+									class="idCardPic"
+								>
+									<img :src="frontCard.length ? frontCard[0].url : ''" alt="" />
+									<div class="mask">
+										<i @click="frontCard = []" class="el-icon-delete"></i>
+									</div>
+								</div>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<el-upload
+									v-show="!backCard.length && act == '个人'"
+									action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
+									list-type="picture-card"
+									:on-change="idCardChange"
+									:file-list="backCard"
+									:limit="1"
+								>
+									<img
+										@click="id_card_side = 'back'"
+										src="@/assets/workbench/身份证国徽页.png"
+										alt=""
+									/>
+								</el-upload>
+								<div
+									v-show="backCard.length && act == '个人'"
+									class="idCardPic"
+								>
+									<img :src="backCard.length ? backCard[0].url : ''" alt="" />
+									<div class="mask">
+										<i @click="backCard = []" class="el-icon-delete"></i>
+									</div>
+								</div>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<el-upload
+									v-show="!license.length && act == '公司'"
+									action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
+									list-type="picture-card"
+									:on-change="licenseChange"
+									:file-list="license"
+									:limit="1"
+								>
+									<img
+										@click="id_card_side = 'back'"
+										src="@/assets/workbench/上传营业执照.png"
+										alt=""
+									/>
+								</el-upload>
+								<div v-show="license.length" class="idCardPic">
+									<img :src="license.length ? license[0].url : ''" alt="" />
+									<div class="mask">
+										<i @click="license = []" class="el-icon-delete"></i>
+									</div>
+								</div>
+							</div>
+						</el-col>
+					</el-row>
+					<Worktitle title="店铺LOGO /形象" blueSty="store" />
+					<el-upload
+						action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
+						list-type="picture-card"
+						:on-remove="handleRemove"
+						:on-change="handleChange"
+						:limit="1"
+						:file-list="picStore"
+					>
+						<i class="el-icon-plus"></i>
+					</el-upload>
+					<Worktitle title="其它信息" blueSty="store" />
+					<el-row :gutter="24">
+						<el-col :span="10">
+							<el-form-item label="联系人" prop="contacter">
 								<el-input
-									v-model="a"
+									v-model="form.contacter"
 									placeholder=""
 									size="normal"
 									clearable
@@ -137,9 +152,9 @@
 							</el-form-item>
 						</el-col>
 						<el-col :span="10">
-							<el-form-item label="店铺简介" prop="jj">
+							<el-form-item label="店铺简介" prop="storeRemark">
 								<el-input
-									v-model="a"
+									v-model="form.storeRemark"
 									type="textarea"
 									placeholder=""
 									size="normal"
@@ -150,9 +165,9 @@
 					</el-row>
 					<el-row :gutter="24">
 						<el-col :span="10">
-							<el-form-item label="店铺名" prop="name">
+							<el-form-item label="店铺名" prop="storeName">
 								<el-input
-									v-model="a"
+									v-model="form.storeName"
 									placeholder=""
 									size="normal"
 									clearable
@@ -162,9 +177,9 @@
 					</el-row>
 					<el-row :gutter="24">
 						<el-col :span="10">
-							<el-form-item label="联系电话" prop="name">
+							<el-form-item label="联系电话" prop="phoneNumber">
 								<el-input
-									v-model="a"
+									v-model="form.phoneNumber"
 									placeholder=""
 									size="normal"
 									clearable
@@ -174,9 +189,9 @@
 					</el-row>
 					<el-row :gutter="24" v-if="act == '公司'">
 						<el-col :span="10">
-							<el-form-item label="客服电话" prop="name">
+							<el-form-item label="客服电话" prop="customerPhoneNumber">
 								<el-input
-									v-model="a"
+									v-model="form.customerPhoneNumber"
 									placeholder=""
 									size="normal"
 									clearable
@@ -184,9 +199,9 @@
 							</el-form-item>
 						</el-col>
 						<el-col :span="10">
-							<el-form-item label="公司地址" prop="name">
+							<el-form-item label="公司地址" prop="companyAddress">
 								<el-input
-									v-model="a"
+									v-model="form.companyAddress"
 									placeholder=""
 									size="normal"
 									clearable
@@ -217,6 +232,7 @@
 </template>
 
 <script>
+	import { stringify } from "qs";
 	import {
 		getAccessToken,
 		identification,
@@ -229,12 +245,37 @@
 		data() {
 			return {
 				act: "个人",
-				form: [],
+				form: {
+					type: 1,
+					contacter: "",
+					storeRemark: "",
+					storeName: "",
+					phoneNumber: "",
+					customerPhoneNumber: "",
+					companyAddress: "",
+					picList: [],
+				},
+				rules: {
+					contacter: [
+						{ required: true, message: "请输入联系人", trigger: "blur" },
+					],
+					storeRemark: [
+						{ required: true, message: "请输入店铺简介", trigger: "blur" },
+					],
+					storeName: [
+						{ required: true, message: "请输入店铺名", trigger: "blur" },
+					],
+					phoneNumber: [
+						{ required: true, message: "请输入联系电话", trigger: "blur" },
+					],
+				},
+				checked: false,
 				id_card_side: "",
 				empty: true,
 				frontCard: [],
 				backCard: [],
 				license: [],
+				picStore: [],
 			};
 		},
 		mounted() {
@@ -274,10 +315,20 @@
 								this.frontCard = [
 									{ name: file.response.data.fileName, url: cardUrl },
 								];
+								this.form.picList.push({
+									fileLog: 50,
+									fileName: file.response.data.fileName,
+									type: "merchant",
+								});
 							} else if (id_card_side == "back") {
 								this.backCard = [
 									{ name: file.response.data.fileName, url: cardUrl },
 								];
+								this.form.picList.push({
+									fileLog: 50,
+									fileName: file.response.data.fileName,
+									type: "merchant",
+								});
 							}
 						} else {
 							if (id_card_side == "front") {
@@ -312,6 +363,11 @@
 							this.license = [
 								{ name: file.response.data.fileName, url: cardUrl },
 							];
+							this.form.picList.push({
+								fileLog: 51,
+								fileName: file.response.data.fileName,
+								type: "merchant",
+							});
 						} else {
 							this.license = [
 								{
@@ -323,13 +379,46 @@
 					});
 				}
 			},
-			submit(from) {
-				saveMerchant({}).then((res) => {});
-
-				this.empty = false;
+			handleRemove() {
+				this.form.picList =
+					this.form.picList.filter((el) => el.fileLog !== 52) || [];
+			},
+			handleChange(file, fileList) {
+				if (file.status == "success") {
+					this.form.picList.push({
+						fileLog: 52,
+						fileName: file.response.data.fileName,
+						type: "merchant",
+					});
+				}
+			},
+			submit(form) {
+				if (this.checked) {
+					form = JSON.parse(JSON.stringify(form));
+					console.log(form);
+				}
+				// saveMerchant(form).then((res) => {});
+				// this.empty = false;
 			},
 		},
 		destroyed() {},
+		watch: {
+			act(newV, oldV) {
+				let type = 1;
+				if (newV == "个人") type = 1;
+				if (newV == "公司") type = 2;
+				this.form = {
+					type: type,
+					contacter: "",
+					storeRemark: "",
+					storeName: "",
+					phoneNumber: "",
+					customerPhoneNumber: "",
+					companyAddress: "",
+					picList: [],
+				};
+			},
+		},
 		components: { Worktitle },
 	};
 </script>

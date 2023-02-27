@@ -3,6 +3,8 @@ import router from "@/router";
 import qs from "qs";
 import config from "@/config/config";
 import { Message } from "element-ui";
+import nprogress from "nprogress";
+import 'nprogress/nprogress.css';
 
 var baseURL = "";
 if (process.env.NODE_ENV === "development") {
@@ -28,6 +30,7 @@ service.interceptors.request.use(
 		if (localStorage.getItem("token")) {
 			config.headers.token = localStorage.getItem("token");
 		}
+		nprogress.start();
 		return config;
 	},
 	(error) => {
@@ -42,6 +45,7 @@ service.interceptors.response.use(
 		// dataAxios 是 axios 返回数据中的 data
 		const dataAxios = response.data;
 		// 这个状态码是和后端约定的
+		nprogress.done();
 		return dataAxios;
 		const { code } = dataAxios;
 		// // 根据 code 进行判断

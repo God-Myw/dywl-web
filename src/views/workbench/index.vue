@@ -87,7 +87,7 @@
 									style="margin-right: 9px"
 								></div>
 							</template>
-							<t-menu-item v-if="status !== 1" value="applyStore"
+							<t-menu-item v-if="status == 1" value="applyStore"
 								>申请开店</t-menu-item
 							>
 							<t-menu-item v-if="status == 1" value="reSpart"

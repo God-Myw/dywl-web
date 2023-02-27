@@ -144,7 +144,6 @@ export default {
           this.$router.push({
             path: '/index',
           })
-
           this.$message.success('登录成功')
         }
       }
