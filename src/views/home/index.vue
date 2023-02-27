@@ -117,9 +117,9 @@
       <div class="container_title">国际、国内集装箱</div>
       <div class="container_tabs">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="现舱秒杀" name="first"></el-tab-pane>
-          <el-tab-pane label="现舱竞拍" name="second"></el-tab-pane>
           <el-tab-pane label="集装箱订舱" name="third"></el-tab-pane>
+          <el-tab-pane label="现舱秒杀" name="first"></el-tab-pane>
+          <!-- <el-tab-pane label="现舱竞拍" name="second"></el-tab-pane> -->
         </el-tabs>
       </div>
       <!-- 现舱秒杀  -->
