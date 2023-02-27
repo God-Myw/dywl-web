@@ -49,7 +49,7 @@
         <el-row :gutter="24" class="demo-autocomplete">
           <el-col :span="10">
             <el-form-item label="商品名称" prop="tradeName">
-              <el-input size="small" v-model="form.tradeName">s</el-input>
+              <el-input size="small" v-model="form.tradeName"></el-input>
             </el-form-item>
           </el-col>
         </el-row>

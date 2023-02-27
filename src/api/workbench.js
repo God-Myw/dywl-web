@@ -45,7 +45,7 @@ export function getSpartListByMerchant(params) {
 // 一级分类
 export function getSpartLevel(params) {
 	return axios({
-		url: "/business/spartLevel/getSpartLevel",
+		url: "business/spartLevel/getSpartLevel",
 		method: "get",
 		params: requestParam(params, "get"),
 	});

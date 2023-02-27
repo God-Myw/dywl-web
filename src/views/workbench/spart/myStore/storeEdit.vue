@@ -8,7 +8,7 @@
 				list-type="picture-card"
 				:on-preview="handlePictureCardPreview"
 				:on-remove="handleRemove"
-				limit="1"
+				:limit="1"
 			>
 				<i class="el-icon-plus"></i>
 			</el-upload>
