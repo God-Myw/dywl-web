@@ -395,7 +395,7 @@ export default {
           wx.ready(function () {
             var s_title = "船舶类型:" + title, // 分享标题
               s_link =
-                "https://www.dylnet.cn/#/h5share/intervoyageinland?" + id, // 分享链接
+                "https://www.dylnet.cn/h5share/intervoyageinland?" + id, // 分享链接
               s_desc = "航线:" + beg + "→" + end, //分享描述
               s_imgUrl = "https://www.dylnet.cn/container/img/组 5714.png"; // 分享图标
             wx.updateAppMessageShareData({

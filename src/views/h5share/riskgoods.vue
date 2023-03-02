@@ -287,7 +287,7 @@ export default {
           // eslint-disable-next-line no-undef
           wx.ready(function () {
             var s_title = '危化品集装箱', // 分享标题
-              s_link = 'https://www.dylnet.cn/#/h5share/riskgoods', // 分享链接
+              s_link = 'https://www.dylnet.cn/h5share/riskgoods', // 分享链接
               s_desc = '全球危化品箱运输，进出口一站式服务', //分享描述
               s_imgUrl = 'https://www.dylnet.cn/container/img/蒙版组 369.png' // 分享图标
             // eslint-disable-next-line no-undef

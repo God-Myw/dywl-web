@@ -204,7 +204,7 @@ export default {
           });
           wx.ready(function () {
             var s_title = "上海道裕物流-个人招商", // 分享标题
-              s_link = "https://www.dylnet.cn/#/h5share/leagueus", // 分享链接
+              s_link = "https://www.dylnet.cn/h5share/leagueus", // 分享链接
               s_desc =
                 "塑环境，优服务，打造道裕全球物流平台，让世界没有难运的货", //分享描述
               s_imgUrl = "https://www.dylnet.cn/container/img/蒙版组 359.png"; // 分享图标

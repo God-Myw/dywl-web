@@ -199,7 +199,7 @@ export default {
       //拉取授权页面
       let APPID = "wxe76e2cf87e4bb1a9";
       let REDIRECT_URI = encodeURIComponent(
-        "https://www.dylnet.cn/#/perfection"
+        "https://www.dylnet.cn/perfection"
       );
       // https://open.weixin.qq.com/connect/qrconnect?appid=wxe76e2cf87e4bb1a9&redirect_uri=https://www.dylnet.cn&response_type=code&scope=snsapi_login&state=dywl
       location.href = `https://open.weixin.qq.com/connect/qrconnect?appid=${APPID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect`;

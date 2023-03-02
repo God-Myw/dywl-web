@@ -336,7 +336,7 @@ export default {
           });
           wx.ready(function () {
             var s_title = "货物名称:" + title, // 分享标题
-              s_link = "https://www.dylnet.cn/#/h5share/contIntpallet?" + id, // 分享链接
+              s_link = "https://www.dylnet.cn/h5share/contIntpallet?" + id, // 分享链接
               s_desc = "起始港、目的港:" + beg + "→" + end, //分享描述
               s_imgUrl = "https://www.dylnet.cn/container/img/组 5715@2x.png"; // 分享图标
 

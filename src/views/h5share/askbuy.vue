@@ -195,7 +195,7 @@ export default {
           wx.ready(function () {
             var s_title = "道裕物流—船舶求购", // 分享标题
               s_link =
-                "https://www.dylnet.cn/#/h5share/askbuy?token=" +
+                "https://www.dylnet.cn/h5share/askbuy?token=" +
                 token +
                 "&buyerGuid=" +
                 buyerGuid, // 分享链接

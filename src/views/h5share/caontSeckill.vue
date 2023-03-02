@@ -327,7 +327,7 @@ export default {
           });
           wx.ready(function () {
             var s_title = "集装箱现舱秒杀", // 分享标题
-              s_link = "https://www.dylnet.cn/#/h5share/caontSeckill", // 分享链接
+              s_link = "https://www.dylnet.cn/h5share/caontSeckill", // 分享链接
               s_desc = "卖家自主发布全球集装箱现舱，买家限时秒杀抢低价舱位。", //分享描述
               s_imgUrl =
                 "https://www.dylnet.cn/container/img/20211102162112.jpg"; // 分享图标

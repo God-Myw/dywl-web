@@ -183,7 +183,7 @@ export default {
           wx.ready(function () {
             var s_title = '特种车船租赁出售', // 分享标题
               s_link =
-                'https://www.dylnet.cn/#/h5share/oilstationdet?token=' +
+                'https://www.dylnet.cn/h5share/oilstationdet?token=' +
                 token +
                 '&Guid=' +
                 Guid +

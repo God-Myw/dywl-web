@@ -177,7 +177,7 @@ export default {
         width: 116, // 设置宽度，单位像素
         height: 116, // 设置高度，单位像素
         text:
-          "https://www.dylnet.cn/#/h5share/h5register?InvitationCode=" +
+          "https://www.dylnet.cn/h5share/h5register?InvitationCode=" +
           this.promotionNumber, // 设置二维码内容或跳转地址
       });
     },

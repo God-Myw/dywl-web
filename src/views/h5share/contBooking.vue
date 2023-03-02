@@ -171,7 +171,7 @@ export default {
           });
           wx.ready(function () {
             var s_title = "集装箱订舱", // 分享标题
-              s_link = "https://www.dylnet.cn/#/h5share/contBooking", // 分享链接
+              s_link = "https://www.dylnet.cn/h5share/contBooking", // 分享链接
               s_desc = "国际、国内集装箱现舱限时特价抢舱。", //分享描述
               s_imgUrl = "https://www.dylnet.cn/container/img/蒙版组 180.png"; // 分享图标
 

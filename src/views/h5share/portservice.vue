@@ -261,7 +261,7 @@ export default {
           // eslint-disable-next-line no-undef
           wx.ready(function () {
             var s_title = "道裕物流—集港/地面服务", // 分享标题
-              s_link = "https://www.dylnet.cn/#/h5share/portservice", // 分享链接
+              s_link = "https://www.dylnet.cn/h5share/portservice", // 分享链接
               s_desc =
                 "为全球货主提供从货物出库到港口、地面及航运等全方位的货物运输服务", //分享描述
               s_imgUrl = "https://www.dylnet.cn/container/img/蒙版组 348.png"; // 分享图标

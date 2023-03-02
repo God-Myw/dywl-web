@@ -320,7 +320,7 @@ export default {
           // eslint-disable-next-line no-undef
           wx.ready(function () {
             var s_title = "海运费垫付金融产品", // 分享标题
-              s_link = "https://www.dylnet.cn/#/h5share/hypothecate", // 分享链接
+              s_link = "https://www.dylnet.cn/h5share/hypothecate", // 分享链接
               s_desc =
                 "银行为货代提供年化3-5%的无抵押授信，见票即垫付。申请简便，额度上不封顶", //分享描述
               s_imgUrl = "https://www.dylnet.cn/container/img/蒙版组 360.png"; // 分享图标

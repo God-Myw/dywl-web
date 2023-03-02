@@ -223,7 +223,7 @@ export default {
           wx.ready(function () {
             var s_title = "道裕物流—船舶挂牌出售", // 分享标题
               s_link =
-                "https://www.dylnet.cn/#/h5share/shipDeal?token=" + token, // 分享链接
+                "https://www.dylnet.cn/h5share/shipDeal?token=" + token, // 分享链接
               s_desc = "船舶卖家向全球买家自主发布国内、国际热销船舶出售信息。", //分享描述
               s_imgUrl = "https://www.dylnet.cn/container/img/蒙版组 329.png"; // 分享图标
             // eslint-disable-next-line no-undef

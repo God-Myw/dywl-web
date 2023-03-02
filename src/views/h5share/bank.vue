@@ -50,7 +50,7 @@ export default {
           // eslint-disable-next-line no-undef
           wx.ready(function () {
             var s_title = "宁波银行抗疫助企一站式全线上", // 分享标题
-              s_link = "https://www.dylnet.cn/#/h5share/bank", // 分享链接
+              s_link = "https://www.dylnet.cn/h5share/bank", // 分享链接
             s_desc =
               "外汇交易送补济/薪酬代发有福利日常结算领惊喜/各项优惠等您领取截图微信扫码，在线申请", //分享描述
               s_imgUrl =

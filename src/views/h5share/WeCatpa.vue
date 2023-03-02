@@ -123,7 +123,7 @@ export default {
           });
           wx.ready(function () {
             var s_title = "中国-北美线集装箱租赁", // 分享标题
-              s_link = "https://www.dylnet.cn/#/h5share/WeCatpa", // 分享链接
+              s_link = "https://www.dylnet.cn/h5share/WeCatpa", // 分享链接
               s_desc = "出租：中国各大主港；还箱：美国、加拿大各大主港", //分享描述
               s_imgUrl =
                 "https://www.dylnet.cn/container/img/20210805152547.png"; // 分享图标

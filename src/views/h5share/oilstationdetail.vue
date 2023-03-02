@@ -209,7 +209,7 @@ export default {
           wx.ready(function () {
             var s_title = "道裕物流", // 分享标题
               s_link =
-                "https://www.dylnet.cn/#/h5share/oilstationdetail?token=" +
+                "https://www.dylnet.cn/h5share/oilstationdetail?token=" +
                 token +
                 "&oilGuid=" +
                 oilGuid +

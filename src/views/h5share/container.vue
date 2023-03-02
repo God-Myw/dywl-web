@@ -176,7 +176,7 @@ export default {
           });
           wx.ready(function () {
             var s_title = "全新、二手集装箱出售", // 分享标题
-              s_link = "https://www.dylnet.cn/#/h5share/container", // 分享链接
+              s_link = "https://www.dylnet.cn/h5share/container", // 分享链接
               s_desc = "上海、天津、宁波、青岛、大连等各大港口自提箱", //分享描述
               s_imgUrl = "https://www.dylnet.cn/container/img/蒙版组 178.png"; // 分享图标
 

@@ -328,7 +328,7 @@ export default {
           });
           wx.ready(function () {
             var s_title = "集装箱现舱竞拍", // 分享标题
-              s_link = "https://www.dylnet.cn/#/h5share/caontAuction", // 分享链接
+              s_link = "https://www.dylnet.cn/h5share/caontAuction", // 分享链接
               s_desc = "卖家自主发布全球集装箱舱位，买家限时抢超低价舱位。", //分享描述
               s_imgUrl =
                 "https://www.dylnet.cn/container/img/7dd00d8c9699b98687c0d7a8369b3d1.jpg"; // 分享图标
