@@ -4,7 +4,7 @@ import requestParam from "@/axios/requestParam";
 // 获取列表数据
 export function getSpartList(params) {
 	return axios({
-		url: "business/spart/getSpartListByWeb",
+		url: "api/business/spart/getSpartListByWeb",
 		method: "get",
 		params: requestParam(params, "get"),
 	});
@@ -12,7 +12,7 @@ export function getSpartList(params) {
 // 新增
 export function saveSpart(params) {
 	return axios({
-		url: "business/spart/saveSpart",
+		url: "api/business/spart/saveSpart",
 		method: "post",
 		headers: { token: localStorage.getItem("token") },
 		data: requestParam(params, "post"),
@@ -21,7 +21,7 @@ export function saveSpart(params) {
 // 编辑
 export function getSpartById(params) {
 	return axios({
-		url: "business/spart/getSpartById",
+		url: "api/business/spart/getSpartById",
 		method: "get",
 		params: requestParam(params, "get"),
 	});
@@ -29,7 +29,7 @@ export function getSpartById(params) {
 // 上下架
 export function shelfChange(params) {
 	return axios({
-		url: "business/spart/upPartShelf",
+		url: "api/business/spart/upPartShelf",
 		method: "get",
 		params: requestParam(params, "get"),
 	});
@@ -37,7 +37,7 @@ export function shelfChange(params) {
 // 商铺
 export function getSpartListByMerchant(params) {
 	return axios({
-		url: "business/spart/getSpartListByMerchant",
+		url: "api/business/spart/getSpartListByMerchant",
 		method: "get",
 		params: requestParam(params, "get"),
 	});
@@ -45,7 +45,7 @@ export function getSpartListByMerchant(params) {
 // 一级分类
 export function getSpartLevel(params) {
 	return axios({
-		url: "business/spartLevel/getSpartLevel",
+		url: "api/business/spartLevel/getSpartLevel",
 		method: "get",
 		params: requestParam(params, "get"),
 	});
@@ -53,7 +53,7 @@ export function getSpartLevel(params) {
 // 已发布的二级分类
 export function getSpartTwoLevel(params) {
 	return axios({
-		url: "business/spartLevel/getSpartTwoLevel",
+		url: "api/business/spartLevel/getSpartTwoLevel",
 		method: "get",
 		params: requestParam(params, "get"),
 	});
@@ -61,7 +61,7 @@ export function getSpartTwoLevel(params) {
 // 所有二级分类
 export function getSpartTwoLevelAll(params) {
 	return axios({
-		url: "business/spartLevel/getSpartTwoLevelAll",
+		url: "api/business/spartLevel/getSpartTwoLevelAll",
 		method: "get",
 		params: requestParam(params, "get"),
 	});
@@ -69,7 +69,7 @@ export function getSpartTwoLevelAll(params) {
 // 是否申请店铺
 export function getIsMerchant() {
 	return axios({
-		url: "business/merchant/getIsMerchant",
+		url: "api/business/merchant/getIsMerchant",
 		method: "get",
 		headers: { token: localStorage.getItem("token") },
 	});
@@ -77,7 +77,7 @@ export function getIsMerchant() {
 // 申请店铺
 export function saveMerchant(params) {
 	return axios({
-		url: "business/merchant/saveMerchant",
+		url: "api/business/merchant/saveMerchant",
 		method: "post",
 		headers: { token: localStorage.getItem("token") },
 		params: params,
@@ -86,7 +86,7 @@ export function saveMerchant(params) {
 // 百度OCR获取id
 export function getAccessToken(params) {
 	return axios({
-		url: "http://192.168.1.114:9527/baiduApi/oauth/2.0/token",
+		url: "baiduApi/oauth/2.0/token",
 		method: "post",
 		params: params,
 	});
@@ -94,7 +94,7 @@ export function getAccessToken(params) {
 // 百度OCR身份证识别
 export function identification(params) {
 	return axios({
-		url: "http://192.168.1.114:9527/baiduApi/rest/2.0/ocr/v1/idcard",
+		url: "baiduApi/rest/2.0/ocr/v1/idcard",
 		method: "post",
 		params: params,
 	});
@@ -102,7 +102,7 @@ export function identification(params) {
 // 百度OCR营业执照识别
 export function businessLicense(params) {
 	return axios({
-		url: "http://192.168.1.114:9527/baiduApi/rest/2.0/ocr/v1/business_license",
+		url: "baiduApi/rest/2.0/ocr/v1/business_license",
 		method: "post",
 		params: params,
 	});

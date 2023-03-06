@@ -4,7 +4,7 @@ import requestParam from '@/axios/requestParam'
 // 获取国际国内方法
 export function postPallet(data) {
   return axios({
-    url: 'business/pallet/postPallet',
+    url: 'api/business/pallet/postPallet',
     method: 'post',
     data: requestParam(data, 'post'),
   })
@@ -12,7 +12,7 @@ export function postPallet(data) {
 // 加盟商提交
 export function saveUserApply(data) {
   return axios({
-    url: 'business/userApply/saveUserApply',
+    url: 'api/business/userApply/saveUserApply',
     method: 'post',
     data: requestParam(data, 'post'),
   })
@@ -20,7 +20,7 @@ export function saveUserApply(data) {
 // 获取列表
 export function getUserApplyList(params) {
   return axios({
-    url: 'business/userApply/getUserApplyList',
+    url: 'api/business/userApply/getUserApplyList',
     method: 'get',
     params: requestParam(params, 'get')
   })

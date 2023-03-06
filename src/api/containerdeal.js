@@ -3,7 +3,7 @@ import requestParam from '@/axios/requestParam'
 // 集装箱买卖地区
 export function getContainerTradingMainList(params) {
   return axios({
-    url: 'business/shipBooking/getContainerTradingMainList',
+    url: 'api/business/shipBooking/getContainerTradingMainList',
     method: 'get',
     params: requestParam(params, 'get')
   })
@@ -11,7 +11,7 @@ export function getContainerTradingMainList(params) {
 // 集装箱买卖内容
 export function getContainerTradingSecondary(params) {
   return axios({
-    url: 'business/shipBooking/getContainerTradingSecondary',
+    url: 'api/business/shipBooking/getContainerTradingSecondary',
     method: 'get',
     params: requestParam(params, 'get')
   })

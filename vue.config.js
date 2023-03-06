@@ -5,13 +5,13 @@ module.exports = {
 		port: 9527,
 		open: true,
 		proxy: {
-			//   '/api': {
-			//     target: 'http://192.168.10.134:8086', //API服务器的地址
-			//     changeOrigin: true, //是否跨域
-			//     pathRewrite: {
-			//       '^/api': ''
-			//     }
-			//   }
+			"/api": {
+				target: "http://39.105.35.83:10443/api", //API服务器的地址
+				changeOrigin: true, //是否跨域
+				pathRewrite: {
+					"^/api": "",
+				},
+			},
 			"/baiduApi": {
 				target: "https://aip.baidubce.com",
 				changeOrigin: true,

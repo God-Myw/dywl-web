@@ -4,7 +4,7 @@ import requestParam from '@/axios/requestParam'
 // 首页数据
 export function getHomeInformation(params) {
   return axios({
-    url: 'sys/apply/getHomeInformation',
+    url: 'api/sys/apply/getHomeInformation',
     method: 'get',
     params: requestParam(params, 'get')
   })
@@ -13,7 +13,7 @@ export function getHomeInformation(params) {
 // 用户列表查询
 export function getSubordinateList(params) {
   return axios({
-    url: 'sys/user/getSubordinateList',
+    url: 'api/sys/user/getSubordinateList',
     method: 'get',
     params: requestParam(params, 'get')
   })
@@ -21,7 +21,7 @@ export function getSubordinateList(params) {
 // 用户列表删除
 export function updatejms(data) {
   return axios({
-    url: 'sys/user/updatejms',
+    url: 'api/sys/user/updatejms',
     method: 'post',
     params: requestParam(data, 'post')
   })
@@ -29,7 +29,7 @@ export function updatejms(data) {
 // 账户余额查询
 export function applyAebate(params) {
   return axios({
-    url: 'business/userRebate/applyAebate',
+    url: 'api/business/userRebate/applyAebate',
     method: 'get',
     params: requestParam(params, 'get')
   })

@@ -3,7 +3,7 @@ import requestParam from '@/axios/requestParam'
 // 通过config接口注入权限验证配置
 export function webGetWXDetail(params) {
   return axios({
-    url: 'business/weChatPay/webGetWXDetail',
+    url: 'api/business/weChatPay/webGetWXDetail',
     method: 'get',
     params: requestParam(params, 'get')
   })
@@ -11,7 +11,7 @@ export function webGetWXDetail(params) {
 // 集装箱租赁
 export function getContainerSpikeById(params) {
   return axios({
-    url: 'business/containerSpike/getContainerSpikeById',
+    url: 'api/business/containerSpike/getContainerSpikeById',
     method: 'get',
     params: requestParam(params, 'get')
   })
@@ -19,7 +19,7 @@ export function getContainerSpikeById(params) {
 // 集装箱买卖
 export function getContainerTradingSecondary(params) {
   return axios({
-    url: 'business/shipBooking/getContainerTradingSecondary',
+    url: 'api/business/shipBooking/getContainerTradingSecondary',
     method: 'get',
     params: requestParam(params, 'get')
   })
@@ -27,7 +27,7 @@ export function getContainerTradingSecondary(params) {
 // 集装箱买卖
 export function getContainerTradingMainList(params) {
   return axios({
-    url: 'business/shipBooking/getContainerTradingMainList',
+    url: 'api/business/shipBooking/getContainerTradingMainList',
     method: 'get',
     params: requestParam(params, 'get')
   })
@@ -35,7 +35,7 @@ export function getContainerTradingMainList(params) {
 // 集装箱秒杀
 export function getContainerSpikeList(params) {
   return axios({
-    url: 'business/containerSpike/getContainerSpikeList',
+    url: 'api/business/containerSpike/getContainerSpikeList',
     method: 'get',
     params: requestParam(params, 'get')
   })
@@ -43,7 +43,7 @@ export function getContainerSpikeList(params) {
 // 集装箱竞拍
 export function getAuctionCustomerList(params) {
   return axios({
-    url: 'business/auctionCustomer/getAuctionCustomerList',
+    url: 'api/business/auctionCustomer/getAuctionCustomerList',
     method: 'get',
     params: requestParam(params, 'get')
   })
@@ -51,7 +51,7 @@ export function getAuctionCustomerList(params) {
 // 集装箱竞拍详情
 export function getAuctionCustomerById(params) {
   return axios({
-    url: 'business/auctionCustomer/getAuctionCustomerById',
+    url: 'api/business/auctionCustomer/getAuctionCustomerById',
     method: 'get',
     params: requestParam(params, 'get')
   })
