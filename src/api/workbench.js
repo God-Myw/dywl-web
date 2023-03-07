@@ -80,7 +80,7 @@ export function saveMerchant(params) {
 		url: "api/business/merchant/saveMerchant",
 		method: "post",
 		headers: { token: localStorage.getItem("token") },
-		params: params,
+		data: params,
 	});
 }
 // 百度OCR获取id

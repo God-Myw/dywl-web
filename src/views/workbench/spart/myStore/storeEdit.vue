@@ -4,7 +4,11 @@
 			<Worktitle blueSty="store" title="修改店铺LOGO /形象"></Worktitle>(选填)
 			<br />
 			<el-upload
-				action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
+				:action="
+					source == 1
+						? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
+						: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/shiptrade'
+				"
 				list-type="picture-card"
 				:on-preview="handlePictureCardPreview"
 				:on-remove="handleRemove"

@@ -4,13 +4,15 @@ import qs from "qs";
 import config from "@/config/config";
 import { Message } from "element-ui";
 import nprogress from "nprogress";
-import 'nprogress/nprogress.css';
+import "nprogress/nprogress.css";
 
 var baseURL = "";
 if (process.env.NODE_ENV === "development") {
 	baseURL = config.development;
+	localStorage.setItem("source", 1);
 } else {
 	baseURL = config.production;
+	localStorage.setItem("source", 2);
 }
 
 // 创建一个 axios 实例

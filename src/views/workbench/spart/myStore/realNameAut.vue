@@ -59,7 +59,11 @@
 							<div class="idCard">
 								<el-upload
 									v-show="!frontCard.length && act == '个人'"
-									action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
+									:action="
+										source == 1
+											? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
+											: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/shiptrade'
+									"
 									list-type="picture-card"
 									:on-change="idCardChange"
 									:file-list="frontCard"
@@ -83,7 +87,11 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<el-upload
 									v-show="!backCard.length && act == '个人'"
-									action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
+									:action="
+										source == 1
+											? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
+											: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/shiptrade'
+									"
 									list-type="picture-card"
 									:on-change="idCardChange"
 									:file-list="backCard"
@@ -107,7 +115,11 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<el-upload
 									v-show="!license.length && act == '公司'"
-									action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
+									:action="
+										source == 1
+											? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
+											: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/shiptrade'
+									"
 									list-type="picture-card"
 									:on-change="licenseChange"
 									:file-list="license"
@@ -130,7 +142,11 @@
 					</el-row>
 					<Worktitle title="店铺LOGO /形象" blueSty="store" />
 					<el-upload
-						action="http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart"
+						:action="
+							source == 1
+								? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
+								: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/shiptrade'
+						"
 						list-type="picture-card"
 						:on-remove="handleRemove"
 						:on-change="handleChange"
@@ -245,6 +261,7 @@
 		data() {
 			return {
 				act: "个人",
+				source: 1,
 				form: {
 					type: 1,
 					contacter: "",
@@ -252,6 +269,8 @@
 					storeName: "",
 					phoneNumber: "",
 					customerPhoneNumber: "",
+					idCardDetails: "",
+					idCardDetailsOther: "",
 					companyAddress: "",
 					picList: [],
 				},
@@ -279,6 +298,7 @@
 			};
 		},
 		mounted() {
+			this.source = localStorage.getItem("source");
 			let params = {
 				grant_type: "client_credentials",
 				client_id: "WlKLoiOb9Pjsf4jKh1CWccWg",
@@ -293,7 +313,12 @@
 			idCardChange(file, fileList) {
 				let id_card_side = this.id_card_side || "";
 				if (file.status == "success" && file.response.code == "0000") {
-					let cardUrl = `http://58.33.34.10:10443/images/spart/${file.response.data.fileName}`;
+					let cardUrl =
+						this.source == 1
+							? "http://58.33.34.10:10443/images/spart/" +
+							  file.response.data.fileName
+							: "http://39.105.35.83:10443/images/shiptrade/" +
+							  file.response.data.fileName;
 					let params = {
 						access_token: localStorage.getItem("access_token"),
 						id_card_side: id_card_side,
@@ -330,6 +355,9 @@
 									type: "merchant",
 								});
 							}
+							this.form.idCardDetails = JSON.stringify(res.words_result) || "";
+							this.form.idCardDetailsOther =
+								JSON.stringify(res.words_result) || "";
 						} else {
 							if (id_card_side == "front") {
 								this.frontCard = [
@@ -368,6 +396,9 @@
 								fileName: file.response.data.fileName,
 								type: "merchant",
 							});
+							this.form.idCardDetails = JSON.stringify(res.words_result) || "";
+							this.form.idCardDetailsOther =
+								JSON.stringify(res.words_result) || "";
 						} else {
 							this.license = [
 								{
@@ -396,9 +427,12 @@
 				if (this.checked) {
 					form = JSON.parse(JSON.stringify(form));
 					console.log(form);
+					// form.source = this.source;
+					saveMerchant(form).then((res) => {
+						console.log(res);
+					});
+					// this.empty = false;
 				}
-				// saveMerchant(form).then((res) => {});
-				// this.empty = false;
 			},
 		},
 		destroyed() {},
@@ -415,8 +449,14 @@
 					phoneNumber: "",
 					customerPhoneNumber: "",
 					companyAddress: "",
+					idCardDetails: "",
+					idCardDetailsOther: "",
 					picList: [],
 				};
+				this.picStore = [];
+				this.frontCard = [];
+				this.backCard = [];
+				this.license = [];
 			},
 		},
 		components: { Worktitle },
