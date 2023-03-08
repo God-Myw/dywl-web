@@ -65,7 +65,7 @@
 								source == 1
 									? 'http://58.33.34.10:10443/images/spart/' +
 									  scope.row.fileName
-									: 'http://39.105.35.83:10443/images/shiptrade/' +
+									: 'http://39.105.35.83:10443/images/spart/' +
 									  scope.row.fileName
 							"
 							alt=""

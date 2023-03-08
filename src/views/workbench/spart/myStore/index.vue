@@ -40,7 +40,7 @@
 							</div>
 							<div class="search">
 								<el-input
-									v-model="s"
+									v-model="search"
 									placeholder="搜索船舶备件"
 									size="normal"
 									clearable
@@ -254,6 +254,8 @@
 		data() {
 			return {
 				type: 1,
+				storeType: 1,
+				search: "",
 				status: true,
 				empty: false,
 				activeName: "myStore",

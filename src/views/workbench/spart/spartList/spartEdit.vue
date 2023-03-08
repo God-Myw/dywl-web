@@ -72,7 +72,7 @@
 								:action="
 									source == 1
 										? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
-										: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/shiptrade'
+										: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
 								"
 								list-type="picture-card"
 								accept=".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff"
@@ -98,7 +98,7 @@
 												:action="
 													source == 1
 														? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
-														: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/shiptrade'
+														: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
 												"
 												list-type="picture-card"
 												accept=".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff"
@@ -443,16 +443,23 @@
 											fileName: item.fileName,
 										},
 									},
-									url: `http://58.33.34.10:10443/images/spart/${item.fileName}`,
+									url:
+										this.source == 1
+											? "http://58.33.34.10:10443/images/spart/" + item.fileName
+											: "http://39.105.35.83:10443/images/spart/" +
+											  item.fileName,
 								};
 							});
 						}
 						if (res.data.spartParts) {
 							res.data.spartParts.map((item, index, arr) => {
 								if (item.partPicList) {
-									arr[
-										index
-									].partPicList[0].url = `http://58.33.34.10:10443/images/spart/${item.partPicList[0].fileName}`;
+									arr[index].partPicList[0].url =
+										this.source == 1
+											? "http://58.33.34.10:10443/images/spart/" +
+											  item.partPicList[0].fileName
+											: "http://39.105.35.83:10443/images/spart/" +
+											  item.partPicList[0].fileName;
 								}
 							});
 						}
@@ -486,12 +493,8 @@
 							fileName: info.response.data.fileName,
 							type: "spart",
 							fileLog: 49,
-							url:
-								this.source == 1
-									? "http://58.33.34.10:10443/images/spart/" +
-									  info.response.data.fileName
-									: "http://39.105.35.83:10443/images/shiptrade/" +
-									  info.response.data.fileName,
+							url: info.url,
+							source: this.source,
 						},
 					];
 				}
@@ -503,6 +506,7 @@
 							fileName: item.response.data.fileName,
 							type: "spart",
 							fileLog: 48,
+							source: this.source,
 						};
 					});
 				}
@@ -537,7 +541,16 @@
 						let params = { ...info } || {};
 						params.partExplain = [...new Set(params.partExplain)].join("/");
 						params.picList = this.picList2;
-						params.source = this.source;
+						params.spartParts.map((el, i, arr) => {
+							delete arr[i].partPicList[0].url;
+							delete arr[i].partPicList[0].status;
+							delete arr[i].partPicList[0].uid;
+							// this.source == 1
+							// 	? "http://58.33.34.10:10443/images/spart/" +
+							// 	  arr[i].partPicList[0].fileName
+							// 	: "http://39.105.35.83:10443/images/shiptrade/" +
+							// 	  arr[i].partPicList[0].fileName;
+						});
 						saveSpart(params).then((res) => {
 							if (res.status == 200)
 								this.$router.push("/workbench/spart/spartList");

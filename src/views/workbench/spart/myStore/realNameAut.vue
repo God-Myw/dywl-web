@@ -62,7 +62,7 @@
 									:action="
 										source == 1
 											? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
-											: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/shiptrade'
+											: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
 									"
 									list-type="picture-card"
 									:on-change="idCardChange"
@@ -90,7 +90,7 @@
 									:action="
 										source == 1
 											? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
-											: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/shiptrade'
+											: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
 									"
 									list-type="picture-card"
 									:on-change="idCardChange"
@@ -118,7 +118,7 @@
 									:action="
 										source == 1
 											? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
-											: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/shiptrade'
+											: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
 									"
 									list-type="picture-card"
 									:on-change="licenseChange"
@@ -145,7 +145,7 @@
 						:action="
 							source == 1
 								? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
-								: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/shiptrade'
+								: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
 						"
 						list-type="picture-card"
 						:on-remove="handleRemove"
@@ -344,6 +344,7 @@
 									fileLog: 50,
 									fileName: file.response.data.fileName,
 									type: "merchant",
+									source: this.source,
 								});
 							} else if (id_card_side == "back") {
 								this.backCard = [
@@ -353,6 +354,7 @@
 									fileLog: 50,
 									fileName: file.response.data.fileName,
 									type: "merchant",
+									source: this.source,
 								});
 							}
 							this.form.idCardDetails = JSON.stringify(res.words_result) || "";
@@ -395,6 +397,7 @@
 								fileLog: 51,
 								fileName: file.response.data.fileName,
 								type: "merchant",
+								source: this.source,
 							});
 							this.form.idCardDetails = JSON.stringify(res.words_result) || "";
 							this.form.idCardDetailsOther =
@@ -420,6 +423,7 @@
 						fileLog: 52,
 						fileName: file.response.data.fileName,
 						type: "merchant",
+						source: this.source,
 					});
 				}
 			},
