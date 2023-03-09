@@ -57,24 +57,28 @@
 					<el-row :gutter="24">
 						<el-col :span="10">
 							<div class="idCard">
-								<el-upload
+								<el-form-item
 									v-show="!frontCard.length && act == '个人'"
-									:action="
-										source == 1
-											? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
-											: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
-									"
-									list-type="picture-card"
-									:on-change="idCardChange"
-									:file-list="frontCard"
-									:limit="1"
-									:showFileList="false"
+									prop="frontCard"
 								>
-									<img
-										@click="id_card_side = 'front'"
-										src="@/assets/workbench/身份证人像页.png"
-									/>
-								</el-upload>
+									<el-upload
+										:action="
+											source == 1
+												? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
+												: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
+										"
+										list-type="picture-card"
+										:on-change="idCardChange"
+										:file-list="frontCard"
+										:limit="1"
+										:showFileList="false"
+									>
+										<img
+											@click="id_card_side = 'front'"
+											src="@/assets/workbench/身份证人像页.png"
+										/>
+									</el-upload>
+								</el-form-item>
 								<div
 									v-show="frontCard.length && act == '个人'"
 									class="idCardPic"
@@ -84,25 +88,28 @@
 										<i @click="frontCard = []" class="el-icon-delete"></i>
 									</div>
 								</div>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<el-upload
+								<el-form-item
 									v-show="!backCard.length && act == '个人'"
-									:action="
-										source == 1
-											? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
-											: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
-									"
-									list-type="picture-card"
-									:on-change="idCardChange"
-									:file-list="backCard"
-									:limit="1"
+									prop="backCard"
 								>
-									<img
-										@click="id_card_side = 'back'"
-										src="@/assets/workbench/身份证国徽页.png"
-										alt=""
-									/>
-								</el-upload>
+									<el-upload
+										:action="
+											source == 1
+												? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
+												: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
+										"
+										list-type="picture-card"
+										:on-change="idCardChange"
+										:file-list="backCard"
+										:limit="1"
+									>
+										<img
+											@click="id_card_side = 'back'"
+											src="@/assets/workbench/身份证国徽页.png"
+											alt=""
+										/>
+									</el-upload>
+								</el-form-item>
 								<div
 									v-show="backCard.length && act == '个人'"
 									class="idCardPic"
@@ -112,25 +119,28 @@
 										<i @click="backCard = []" class="el-icon-delete"></i>
 									</div>
 								</div>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<el-upload
+								<el-form-item
 									v-show="!license.length && act == '公司'"
-									:action="
-										source == 1
-											? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
-											: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
-									"
-									list-type="picture-card"
-									:on-change="licenseChange"
-									:file-list="license"
-									:limit="1"
+									prop="license"
 								>
-									<img
-										@click="id_card_side = 'back'"
-										src="@/assets/workbench/上传营业执照.png"
-										alt=""
-									/>
-								</el-upload>
+									<el-upload
+										:action="
+											source == 1
+												? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
+												: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
+										"
+										list-type="picture-card"
+										:on-change="licenseChange"
+										:file-list="license"
+										:limit="1"
+									>
+										<img
+											@click="id_card_side = 'back'"
+											src="@/assets/workbench/上传营业执照.png"
+											alt=""
+										/>
+									</el-upload>
+								</el-form-item>
 								<div v-show="license.length" class="idCardPic">
 									<img :src="license.length ? license[0].url : ''" alt="" />
 									<div class="mask">
@@ -141,20 +151,24 @@
 						</el-col>
 					</el-row>
 					<Worktitle title="店铺LOGO /形象" blueSty="store" />
-					<el-upload
-						:action="
-							source == 1
-								? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
-								: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
-						"
-						list-type="picture-card"
-						:on-remove="handleRemove"
-						:on-change="handleChange"
-						:limit="1"
-						:file-list="picStore"
-					>
-						<i class="el-icon-plus"></i>
-					</el-upload>
+					<div class="idCard">
+						<el-form-item prop="picStore">
+							<el-upload
+								:action="
+									source == 1
+										? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
+										: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
+								"
+								list-type="picture-card"
+								:on-remove="handleRemove"
+								:on-change="handleChange"
+								:limit="1"
+								:file-list="picStore"
+							>
+								<i class="el-icon-plus"></i>
+							</el-upload>
+						</el-form-item>
+					</div>
 					<Worktitle title="其它信息" blueSty="store" />
 					<el-row :gutter="24">
 						<el-col :span="10">
@@ -229,8 +243,10 @@
 			</div>
 			<div class="foot">
 				<el-checkbox v-model="checked"
-					>同意备件商品成交后，每单收取成交金额
-					<span>平台服务费3%</span></el-checkbox
+					><div :class="isChecked ? '' : 'ischecked'">
+						同意备件商品成交后，每单收取成交金额
+						<span>平台服务费3%</span>
+					</div></el-checkbox
 				>
 				<el-button
 					style="margin: 0 auto; background-color: #0052d9"
@@ -275,6 +291,69 @@
 					picList: [],
 				},
 				rules: {
+					frontCard: [
+						{
+							required: this.act == "个人" ? true : false,
+							validator: (rule, value, callback) => {
+								if (
+									(this.frontCard.length &&
+										this.frontCard[0].name != "识别错误") ||
+									this.act == "公司"
+								) {
+									callback();
+								} else {
+									callback(new Error("请上传正确的图片"));
+								}
+							},
+							trigger: "blur",
+						},
+					],
+					backCard: [
+						{
+							required: this.act == "个人" ? true : false,
+							trigger: "blur",
+							validator: (rule, value, callback) => {
+								if (
+									(this.backCard.length &&
+										this.backCard[0].name != "识别错误") ||
+									this.act == "公司"
+								) {
+									callback();
+								} else {
+									callback(new Error("请上传正确的图片"));
+								}
+							},
+						},
+					],
+					license: [
+						{
+							required: this.act == "公司" ? true : false,
+							validator: (rule, value, callback) => {
+								if (
+									(this.license.length && this.license[0].name != "识别错误") ||
+									this.act == "个人"
+								) {
+									callback();
+								} else {
+									callback(new Error("请上传正确的图片"));
+								}
+							},
+							trigger: "blur",
+						},
+					],
+					picStore: [
+						{
+							required: true,
+							validator: (rule, value, callback) => {
+								if (this.form.picList.length) {
+									callback();
+								} else {
+									callback(new Error("请上传正确的图片"));
+								}
+							},
+							trigger: "blur",
+						},
+					],
 					contacter: [
 						{ required: true, message: "请输入联系人", trigger: "blur" },
 					],
@@ -287,8 +366,15 @@
 					phoneNumber: [
 						{ required: true, message: "请输入联系电话", trigger: "blur" },
 					],
+					customerPhoneNumber: [
+						{ required: true, message: "请输入联系电话", trigger: "blur" },
+					],
+					companyAddress: [
+						{ required: true, message: "请输入联系电话", trigger: "blur" },
+					],
 				},
 				checked: false,
+				isChecked: true,
 				id_card_side: "",
 				empty: true,
 				frontCard: [],
@@ -364,14 +450,14 @@
 							if (id_card_side == "front") {
 								this.frontCard = [
 									{
-										name: file.response.data.fileName,
+										name: "识别错误",
 										url: require("@/assets/workbench/识别错误.png"),
 									},
 								];
 							} else {
 								this.backCard = [
 									{
-										name: file.response.data.fileName,
+										name: "识别错误",
 										url: require("@/assets/workbench/识别错误.png"),
 									},
 								];
@@ -405,7 +491,7 @@
 						} else {
 							this.license = [
 								{
-									name: file.response.data.fileName,
+									name: "识别错误",
 									url: require("@/assets/workbench/识别错误.png"),
 								},
 							];
@@ -419,6 +505,10 @@
 			},
 			handleChange(file, fileList) {
 				if (file.status == "success") {
+					this.picStore.push({
+						fileName: file.response.data.fileName,
+						url: file.url,
+					});
 					this.form.picList.push({
 						fileLog: 52,
 						fileName: file.response.data.fileName,
@@ -429,34 +519,45 @@
 			},
 			submit(form) {
 				if (this.checked) {
-					form = JSON.parse(JSON.stringify(form));
-					console.log(form);
-					// form.source = this.source;
-					saveMerchant(form).then((res) => {
-						console.log(res);
+					this.$refs["form"].validate((valid) => {
+						if (valid) {
+							this.$confirm("您确认后,将上传商品信息", "确认提交", {
+								confirmButtonText: "确定提交",
+								cancelButtonText: "取消",
+								type: "warning",
+							})
+								.then(() => {
+									form = JSON.parse(JSON.stringify(form));
+									// saveMerchant(form).then((res) => {
+									// 	console.log(res);
+									// });
+									// this.empty = false;
+									// console.log(form);
+									this.$message({
+										type: "success",
+										message: "提交成功!",
+									});
+								})
+								.catch(() => {
+									this.$message({
+										type: "info",
+										message: "已取消",
+									});
+								});
+						}
 					});
-					// this.empty = false;
+				} else {
+					this.isChecked = false;
+					setTimeout(() => {
+						this.isChecked = true;
+					}, 1000);
 				}
 			},
 		},
 		destroyed() {},
 		watch: {
 			act(newV, oldV) {
-				let type = 1;
-				if (newV == "个人") type = 1;
-				if (newV == "公司") type = 2;
-				this.form = {
-					type: type,
-					contacter: "",
-					storeRemark: "",
-					storeName: "",
-					phoneNumber: "",
-					customerPhoneNumber: "",
-					companyAddress: "",
-					idCardDetails: "",
-					idCardDetailsOther: "",
-					picList: [],
-				};
+				this.$refs["form"].resetFields();
 				this.picStore = [];
 				this.frontCard = [];
 				this.backCard = [];
@@ -504,6 +605,7 @@
 					position: relative;
 					width: 201px;
 					height: 139px;
+					margin-right: 36px;
 					img {
 						width: 100%;
 						height: 100%;
@@ -532,6 +634,9 @@
 					width: 201px;
 					height: 139px;
 				}
+				/deep/.el-form-item__content {
+					margin-left: 0px !important;
+				}
 			}
 		}
 		.foot {
@@ -544,6 +649,25 @@
 			span {
 				color: #0052d9;
 				margin-right: 30px;
+			}
+			.ischecked {
+				animation: slidein 0.3s;
+				span {
+					animation: slidein 0.3s;
+				}
+				@keyframes slidein {
+					0% {
+						color: red;
+					}
+					50% {
+						font-size: 18px;
+						color: red;
+					}
+					100% {
+						font-size: 14px;
+						color: red;
+					}
+				}
 			}
 			.el-button {
 				height: 30px;
