@@ -528,10 +528,10 @@
 							})
 								.then(() => {
 									form = JSON.parse(JSON.stringify(form));
-									// saveMerchant(form).then((res) => {
-									// 	console.log(res);
-									// });
-									// this.empty = false;
+									saveMerchant(form).then((res) => {
+										console.log(res);
+									});
+									this.empty = false;
 									// console.log(form);
 									this.$message({
 										type: "success",
