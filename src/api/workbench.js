@@ -1,6 +1,7 @@
 import axios from "@/axios";
 import requestParam from "@/axios/requestParam";
-
+let soure = localStorage.getItem("source");
+let OCRUrl = soure == 1 ? "baiduApi" : "https://aip.baidubce.com";
 // 获取列表数据
 export function getSpartList(params) {
 	return axios({
@@ -84,17 +85,16 @@ export function saveMerchant(params) {
 	});
 }
 // 百度OCR获取id
-export function getAccessToken(params) {
+export function getAccessToken() {
 	return axios({
-		url: "baiduApi/oauth/2.0/token",
-		method: "post",
-		params: params,
+		url: `api/business/weChatPay/getBaiDuAccessToken`,
+		method: "get",
 	});
 }
 // 百度OCR身份证识别
 export function identification(params) {
 	return axios({
-		url: "baiduApi/rest/2.0/ocr/v1/idcard",
+		url: `${OCRUrl}/rest/2.0/ocr/v1/idcard`,
 		method: "post",
 		params: params,
 	});
@@ -102,7 +102,7 @@ export function identification(params) {
 // 百度OCR营业执照识别
 export function businessLicense(params) {
 	return axios({
-		url: "baiduApi/rest/2.0/ocr/v1/business_license",
+		url: `${OCRUrl}/rest/2.0/ocr/v1/business_license`,
 		method: "post",
 		params: params,
 	});

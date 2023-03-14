@@ -262,7 +262,6 @@
 		</div>
 	</div>
 </template>
-
 <script>
 	import { stringify } from "qs";
 	import {
@@ -272,7 +271,6 @@
 		saveMerchant,
 	} from "../../../../api/workbench";
 	import Worktitle from "../../../../components/WorkTitle.vue";
-
 	export default {
 		data() {
 			return {
@@ -385,12 +383,7 @@
 		},
 		mounted() {
 			this.source = localStorage.getItem("source");
-			let params = {
-				grant_type: "client_credentials",
-				client_id: "WlKLoiOb9Pjsf4jKh1CWccWg",
-				client_secret: "4Z709eQluGowF3pRoqa4qXcBLd6znXm4",
-			};
-			getAccessToken(params).then((res) => {
+			getAccessToken().then((res) => {
 				localStorage.setItem("access_token", res.access_token);
 			});
 		},
@@ -403,7 +396,7 @@
 						this.source == 1
 							? "http://58.33.34.10:10443/images/spart/" +
 							  file.response.data.fileName
-							: "http://39.105.35.83:10443/images/shiptrade/" +
+							: "http://39.105.35.83:10443/images/spart/" +
 							  file.response.data.fileName;
 					let params = {
 						access_token: localStorage.getItem("access_token"),
@@ -424,7 +417,7 @@
 						if (res.image_status == "normal") {
 							if (id_card_side == "front") {
 								this.frontCard = [
-									{ name: file.response.data.fileName, url: cardUrl },
+									{ name: file.response.data.fileName, url: file.url },
 								];
 								this.form.picList.push({
 									fileLog: 50,
@@ -434,7 +427,7 @@
 								});
 							} else if (id_card_side == "back") {
 								this.backCard = [
-									{ name: file.response.data.fileName, url: cardUrl },
+									{ name: file.response.data.fileName, url: file.url },
 								];
 								this.form.picList.push({
 									fileLog: 50,
@@ -469,7 +462,12 @@
 			// 营业执照识别
 			licenseChange(file, fileList) {
 				if (file.status == "success" && file.response.code == "0000") {
-					let cardUrl = `http://58.33.34.10:10443/images/spart/${file.response.data.fileName}`;
+					let cardUrl =
+						this.source == 1
+							? "http://58.33.34.10:10443/images/spart/" +
+							  file.response.data.fileName
+							: "http://39.105.35.83:10443/images/spart/" +
+							  file.response.data.fileName;
 					let params = {
 						access_token: localStorage.getItem("access_token"),
 						url: cardUrl,
@@ -477,7 +475,7 @@
 					businessLicense(params).then((res) => {
 						if (!res.error_msg) {
 							this.license = [
-								{ name: file.response.data.fileName, url: cardUrl },
+								{ name: file.response.data.fileName, url: file.url },
 							];
 							this.form.picList.push({
 								fileLog: 51,

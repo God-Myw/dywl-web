@@ -24,13 +24,16 @@ const service = axios.create({
 		"Content-Type": "application/json",
 	},
 	tack_exceptionCheck: true,
-	withCredentials: true,
+	withCredentials: false,
 });
 // 请求拦截器
 service.interceptors.request.use(
 	(config) => {
 		if (localStorage.getItem("token")) {
 			config.headers.token = localStorage.getItem("token");
+			if (config.url.includes("rest/2.0/ocr/v1")) {
+				delete config.headers.token;
+			}
 		}
 		nprogress.start();
 		return config;
