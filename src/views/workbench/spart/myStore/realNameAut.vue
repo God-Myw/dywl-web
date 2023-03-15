@@ -55,7 +55,7 @@
 					labelPosition="left"
 				>
 					<el-row :gutter="24">
-						<el-col :span="10">
+						<el-col :span="24">
 							<div class="idCard">
 								<el-form-item
 									v-show="!frontCard.length && act == '个人'"
@@ -102,6 +102,7 @@
 										:on-change="idCardChange"
 										:file-list="backCard"
 										:limit="1"
+										:showFileList="false"
 									>
 										<img
 											@click="id_card_side = 'back'"
@@ -133,6 +134,7 @@
 										:on-change="licenseChange"
 										:file-list="license"
 										:limit="1"
+										:showFileList="false"
 									>
 										<img
 											@click="id_card_side = 'back'"
@@ -151,24 +153,28 @@
 						</el-col>
 					</el-row>
 					<Worktitle title="店铺LOGO /形象" blueSty="store" />
-					<div class="idCard">
-						<el-form-item prop="picStore">
-							<el-upload
-								:action="
-									source == 1
-										? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
-										: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
-								"
-								list-type="picture-card"
-								:on-remove="handleRemove"
-								:on-change="handleChange"
-								:limit="1"
-								:file-list="picStore"
-							>
-								<i class="el-icon-plus"></i>
-							</el-upload>
-						</el-form-item>
-					</div>
+					<el-row :gutter="24">
+						<el-col :span="24">
+							<div class="idCard">
+								<el-form-item prop="picStore">
+									<el-upload
+										:action="
+											source == 1
+												? 'http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart'
+												: 'https://www.dylnet.cn/api/sys/file/upLoadFuJian/spart'
+										"
+										list-type="picture-card"
+										:on-remove="handleRemove"
+										:on-change="handleChange"
+										:limit="1"
+										:file-list="picStore"
+									>
+										<i class="el-icon-plus"></i>
+									</el-upload>
+								</el-form-item>
+							</div>
+						</el-col>
+					</el-row>
 					<Worktitle title="其它信息" blueSty="store" />
 					<el-row :gutter="24">
 						<el-col :span="10">
@@ -634,6 +640,9 @@
 				}
 				/deep/.el-form-item__content {
 					margin-left: 0px !important;
+				}
+				/deep/.el-form-item {
+					margin-bottom: 0px !important;
 				}
 			}
 		}
