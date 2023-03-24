@@ -406,6 +406,18 @@ const routes = [
     name: "h5storeList",
     component: () => import("@/views/h5share/storeList.vue"),
   },
+  // 紧急修理详情页
+  {
+    path: "/h5share/adDetail",
+    name: "adDetail",
+    component: () => import("@/views/h5share/adDetail.vue"),
+  },
+  // 申请融资
+  {
+    path: "/h5share/applyFinanc",
+    name: "applyFinanc",
+    component: () => import("@/views/h5share/applyFinanc.vue"),
+  },
 ];
 
 const router = new VueRouter({

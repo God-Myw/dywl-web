@@ -349,7 +349,10 @@
 						{
 							required: true,
 							validator: (rule, value, callback) => {
-								if (this.form.picList.length) {
+								let picStore = this.form.picList.filter(
+									(item) => item.fileLog == 52,
+								);
+								if (picStore.length) {
 									callback();
 								} else {
 									callback(new Error("请上传正确的图片"));
@@ -536,7 +539,6 @@
 										console.log(res);
 									});
 									this.empty = false;
-									// console.log(form);
 									this.$message({
 										type: "success",
 										message: "提交成功!",

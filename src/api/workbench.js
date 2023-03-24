@@ -107,3 +107,14 @@ export function businessLicense(params) {
 		params: params,
 	});
 }
+// 上传文件
+export function upLoadFuJian(params) {
+	return axios({
+		url:
+			localStorage.getItem("source") == 1
+				? "http://58.33.34.10:10443/api/sys/file/upLoadFuJian/financial"
+				: "https://www.dylnet.cn/api/sys/file/upLoadFuJian/financial",
+		method: "post",
+		data: params,
+	});
+}
