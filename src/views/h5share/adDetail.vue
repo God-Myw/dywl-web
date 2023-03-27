@@ -6,26 +6,31 @@
 		</div>
 		<div class="pic">
 			<el-carousel height="150px">
-				<el-carousel-item v-for="item in 4" :key="item">
-					<img src="@/assets/h5share/组_12256@2x.png" alt="" />
+				<el-carousel-item v-for="item in companypic" :key="item.fileName">
+					<img
+						:src="`http://58.33.34.10:10443/images/${item.type}/${item.fileName}`"
+						alt=""
+					/>
 				</el-carousel-item>
 			</el-carousel>
 		</div>
 		<div class="content">
 			<div class="name menu">
 				<div class="logo">
-					<img src="@/assets/h5share/组_12256@2x.png" alt="" />
+					<img
+						:src="`http://58.33.34.10:10443/images/companylogo/${companylogo}`"
+						alt=""
+					/>
 				</div>
 				<div class="gsname">
-					<p>千星国际仓储(上海)有限公司</p>
-					<p>后置三摄组合让您轻松拍出专业大片般的视效画面。</p>
+					<p>{{ companyName }}</p>
+					<p>{{ contacts }}</p>
 				</div>
 			</div>
 			<div class="intr menu">
 				<div class="title">公司简介</div>
 				<div class="deinfo">
-					千星国际仓储(上海)有限公司是千诺国际上海分公司，专业从事进出口代理，进口代理，出口代理，进出口报关、报检等一站式全程服务及相关商务咨询的公司。
-					每个国家都有自己的进出口贸易管理制度，在进出口贸易操作上原理简单但手续复杂，稍有不当会对整个贸易进程起到阻碍作用。千通国际拥有从事国际贸易和国际国内运输多年工作经验的专业人才，熟悉进出口流程中的各个环节。涉及的产品广泛用于石油、化工、电力、冶金、机械、纺织、汽车、环保、网络和医疗器械等行业。全心全意为客户服务是千通国际服务的宗旨。千通国际将利用丰富的业务经验，良好
+					{{ companyRemark }}
 				</div>
 			</div>
 			<div class="info menu">
@@ -39,11 +44,11 @@
 						<li>查看地图</li>
 					</ul>
 					<ul class="second">
-						<li>报关 | 报检 | 进出口代理</li>
-						<li>上海市虹口区杨树浦路248号瑞丰国际大厦1001室</li>
-						<li></li>
-						<li></li>
-						<li></li>
+						<li>{{ companyBusiness }}</li>
+						<li>{{ address }}</li>
+						<li>{{ contacts }}</li>
+						<li>{{ phoneCode + phoneNumber }}</li>
+						<li>点击查看 ></li>
 					</ul>
 				</div>
 			</div>
@@ -54,23 +59,49 @@
 	</div>
 </template>
 <script>
-	import { a } from "@/api/h5share";
+	import { webGetWXDetail, getAdsById } from "../../api/h5share";
 	import CallApp from "callapp-lib";
 	export default {
 		data() {
 			return {
 				clientSide: false,
 				show: false,
+				companypic: [],
+				companylogo: [],
+				companyName: "",
+				contacts: "",
+				companyRemark: "",
+				companyBusiness: "",
+				address: "",
+				contacts: "",
+				phoneCode: "",
+				phoneNumber: "",
 			};
 		},
 		mounted() {
-			this.guid =
+			let guid =
 				new URLSearchParams(window.location.href.split("?")[1]).get("guid") ||
 				false;
-			this.getData();
+			this.getweChatPay();
+			let params = guid;
+			getAdsById(params).then((res) => {
+				if ((res.code = "0000")) {
+					this.companypic = res.data.companypic;
+					this.companylogo = res.data.companylogo[0]
+						? res.data.companylogo[0].fileName
+						: "";
+					this.companyName = res.data.adsDto.companyName;
+					this.contacts = res.data.adsDto.contacts;
+					this.companyRemark = res.data.adsDto.companyRemark;
+					this.companyBusiness = res.data.adsDto.companyBusiness;
+					this.address = res.data.adsDto.address;
+					this.contacts = res.data.adsDto.contacts;
+					this.phoneNumber = res.data.adsDto.phoneNumber;
+					this.phoneCode = res.data.adsDto.phoneCode;
+				}
+			});
 		},
 		methods: {
-			getData() {},
 			phone() {
 				window.location.href = "tel:400-9009-618";
 			},
@@ -78,17 +109,76 @@
 				const options = {
 					scheme: {
 						// 用来配置 URL Scheme 所必须的那些字段
-						protocol: "DYLogisticsApp://", // APP 协议，就是你要打开的 APP 的标识 DYLogisticsApp://
+						protocol: "tencent1110877537://", // APP 协议，就是你要打开的 APP 的标识 DYLogisticsApp://
+					},
+					intent: {
+						package: "com.luhaisco.dywl",
+						scheme: "tencent1110877537://",
 					},
 					appstore: "https://apps.apple.com/cn/app/id1493154544", // appstore的下载地址
 					yingyongbao:
 						"https://a.app.qq.com/o/simple.jsp?pkgname=com.luhaisco.dywl&fromcase=40003", // 应用宝的下载地址
-					fallback:
-						"https://a.app.qq.com/o/simple.jsp?pkgname=com.luhaisco.dywl&fromcase=40003", // 唤端失败后跳转的地址
+					// fallback:
+					// 	"https://a.app.qq.com/o/simple.jsp?pkgname=com.luhaisco.dywl&fromcase=40003", // 唤端失败后跳转的地址
 				};
 				new CallApp(options).open({ path: "" });
 				// window.location.href = "DYLogisticsApp://";
 				// window.location.href = "tencent1110877537://";
+			},
+			async getweChatPay() {
+				webGetWXDetail({
+					url: window.location.href.split("#")[0],
+				}).then((res) => {
+					if (res.code == "0000") {
+						//通过config接口注入权限验证配置
+						// eslint-disable-next-line no-undef
+						wx.config({
+							debug: false,
+							appId: "wx3c5d7c6f964f3094",
+							timestamp: res.data.timestamp,
+							nonceStr: res.data.noncestr,
+							signature: res.data.sign,
+							jsApiList: [
+								"updateAppMessageShareData",
+								"updateTimelineShareData",
+							],
+							openTagList: ["wx-open-launch-app"],
+						});
+						// eslint-disable-next-line no-undef
+						wx.ready(function () {
+							var title = "道裕物流联合各金融机构助力航运和物流企业", // 分享标题
+								link = "https://www.dylnet.cn/h5share/applyFinanc", // 分享链接
+								desc =
+									"道裕物流联合各金融机构为航运、物流企业；为船东提供买/造船舶、在航抵押融资和海运垫付服务", //分享描述
+								imgUrl = "https://www.dylnet.cn/images/spart/1679656260837.png"; // 分享图标
+							// eslint-disable-next-line no-undef
+							wx.updateAppMessageShareData({
+								title: title, // 分享标题
+								desc: desc, // 分享描述
+								link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+								imgUrl: imgUrl, // 分享图标
+								success: function () {
+									console.log("s");
+								},
+								cancel: function () {
+									console.log("f");
+								},
+							});
+							wx.updateTimelineShareData({
+								title: title, // 分享标题
+								desc: desc, // 分享描述
+								link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+								imgUrl: imgUrl, // 分享图标
+								success: function () {
+									console.log("s");
+								},
+								cancel: function () {
+									console.log("f");
+								},
+							});
+						});
+					}
+				});
 			},
 		},
 	};
@@ -209,6 +299,7 @@
 				}
 				.first {
 					li {
+						height: 40px;
 						width: 76px;
 						font-size: 14px;
 						font-family: 苹方-简-常规体, 苹方-简;
@@ -218,6 +309,7 @@
 				}
 				.second {
 					li {
+						height: 40px;
 						font-size: 14px;
 						font-family: 苹方-简-常规体, 苹方-简;
 						font-weight: normal;

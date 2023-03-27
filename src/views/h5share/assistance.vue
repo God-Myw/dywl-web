@@ -27,11 +27,15 @@
 			};
 		},
 		mounted() {
-			this.isShare =
-				new URLSearchParams(window.location.href.split("?")[1]).get(
-					"isShare",
-				) || false;
+			// this.isShare =
+			// 	new URLSearchParams(window.location.href.split("?")[1]).get(
+			// 		"isShare",
+			// 	) || false;
 			this.getweChatPay();
+			//是否在app内打开
+			this.isShare = navigator.userAgent
+				.toLowerCase()
+				.indexOf("110.0.5481.153");
 		},
 		created() {
 			if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
@@ -68,6 +72,7 @@
 							nonceStr: res.data.noncestr,
 							signature: res.data.sign,
 							jsApiList: [
+								"checkJsApi",
 								"updateAppMessageShareData",
 								"updateTimelineShareData",
 							],
@@ -75,9 +80,10 @@
 						});
 						// eslint-disable-next-line no-undef
 						wx.ready(function () {
-							var s_title = "道裕物流联合各金融机构抗疫助企", // 分享标题
-								s_link = "https://www.dylnet.cn/h5share/assistance", // 分享链接
-								s_desc = "道裕物流联合各金融机构抗疫助力全国和上海各物流企业", //分享描述
+							var s_title = "道裕物流联合各金融机构助企", // 分享标题
+								s_link =
+									"https://www.dylnet.cn/h5share/assistance", // 分享链接
+								s_desc = "道裕物流联合各金融机构助力全国和上海各物流企业", //分享描述
 								s_imgUrl = "https://www.dylnet.cn/container/img/蒙版组 362.png"; // 分享图标
 							// eslint-disable-next-line no-undef
 							wx.updateAppMessageShareData({

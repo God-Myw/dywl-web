@@ -56,19 +56,19 @@ export function getAuctionCustomerById(params) {
 		params: requestParam(params, "get"),
 	});
 }
-// a
-export function a(params) {
-	return axios({
-		url: "/api/business/financing/saveFinancing",
-		method: "get",
-		params: params,
-	});
-}
 // 保存融资
 export function saveFinancing(params) {
 	return axios({
 		url: "/api/business/financing/saveFinancing",
 		method: "post",
 		data: params,
+	});
+}
+// 广告详情页
+export function getAdsById(params) {
+	return axios({
+		url: "/api/business/ads/getAdsById/" + params,
+		method: "get",
+		// params: params,
 	});
 }

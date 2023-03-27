@@ -1,7 +1,8 @@
 <template>
 	<div class="applyFinanc">
 		<div class="content">
-			<img src="@/assets/h5share/立即申请ddd.jpg" alt="" />
+			<img v-if="isShare != -1" src="@/assets/h5share/app内部.png" alt="" />
+			<img else src="@/assets/h5share/立即申请ddd.jpg" alt="" />
 		</div>
 		<div class="foot">
 			<van-action-sheet v-model="show" title="申请融资">
@@ -153,6 +154,7 @@
 		identification,
 	} from "@/api/workbench.js";
 	import { saveFinancing } from "@/api/h5share.js";
+	import { webGetWXDetail } from "../../api/h5share";
 
 	export default {
 		data() {
@@ -160,6 +162,7 @@
 				source: 1,
 				accessToken: "",
 				maskShow: false,
+				isShare: false,
 				upType: "",
 				show: false,
 				disabled: false,
@@ -177,12 +180,69 @@
 			};
 		},
 		mounted() {
+			// this.isShare =
+			// 	new URLSearchParams(window.location.href.split("?")[1]).get(
+			// 		"isShare",
+			// 	) || false;
+			//是否在app内打开
+			this.isShare =
+				navigator.userAgent.toLowerCase().indexOf("110.0.5481.153") || -1;
 			this.source = localStorage.getItem("source");
 			getAccessToken().then((res) => {
 				this.accessToken = res.access_token || "1";
 			});
+			this.getweChatPay();
 		},
 		methods: {
+			async getweChatPay() {
+				webGetWXDetail({
+					url: window.location.href.split("#")[0],
+				}).then((res) => {
+					if (res.code == "0000") {
+						//通过config接口注入权限验证配置
+						// eslint-disable-next-line no-undef
+						wx.config({
+							debug: false,
+							appId: "wx3c5d7c6f964f3094",
+							timestamp: res.data.timestamp,
+							nonceStr: res.data.noncestr,
+							signature: res.data.sign,
+							jsApiList: [
+								"updateAppMessageShareData",
+								"updateTimelineShareData",
+							],
+							openTagList: ["wx-open-launch-app"],
+						});
+
+						// eslint-disable-next-line no-undef
+						wx.ready(function () {
+							var s_title = "购/造船融资租赁服务", // 分享标题
+								s_link = "https://www.dylnet.cn/h5share/applyFinanc", // 分享链接
+								s_desc =
+									"为服务于国内船舶物流企业，道裕联合第三方金融公司为船东人提供购买/建造船舶融资租赁服务。", //分享描述
+								s_imgUrl =
+									"http://39.105.35.83:10443/images/spart/1679656260837.png"; // 分享图标
+							// eslint-disable-next-line no-undef
+							wx.updateAppMessageShareData({
+								title: s_title, // 分享标题
+								desc: s_desc, // 分享描述
+								link: s_link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+								imgUrl: s_imgUrl, // 分享图标
+								success: function () {},
+							});
+							wx.updateTimelineShareData({
+								title: s_desc, // 分享标题
+								// desc: s_desc, // 分享描述
+								link: s_link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+								imgUrl: s_imgUrl, // 分享图标
+								success: function () {
+									// 设置成功
+								},
+							});
+						});
+					}
+				});
+			},
 			valicense() {
 				return this.picList.filter((item) => item.fileLog == 53).length != 0;
 			},
