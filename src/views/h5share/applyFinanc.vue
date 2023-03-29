@@ -1,8 +1,13 @@
 <template>
 	<div class="applyFinanc">
 		<div class="content">
-			<img v-if="isShare != -1" src="@/assets/h5share/app内部.png" alt="" />
-			<img else src="@/assets/h5share/立即申请ddd.jpg" alt="" />
+			<img v-if="isShare" src="@/assets/h5share/app外部.jpg" alt="" />
+			<img v-else src="@/assets/h5share/app内部.jpg" alt="" />
+			<img
+				style="margin-bottom: 30px"
+				src="@/assets/h5share/secondFinanc.jpg"
+				alt=""
+			/>
 		</div>
 		<div class="foot">
 			<van-action-sheet v-model="show" title="申请融资">
@@ -155,7 +160,6 @@
 	} from "@/api/workbench.js";
 	import { saveFinancing } from "@/api/h5share.js";
 	import { webGetWXDetail } from "../../api/h5share";
-
 	export default {
 		data() {
 			return {
@@ -180,14 +184,10 @@
 			};
 		},
 		mounted() {
-			// this.isShare =
-			// 	new URLSearchParams(window.location.href.split("?")[1]).get(
-			// 		"isShare",
-			// 	) || false;
-			//是否在app内打开
 			this.isShare =
-				navigator.userAgent.toLowerCase().indexOf("110.0.5481.153") || -1;
-			this.source = localStorage.getItem("source");
+				new URLSearchParams(window.location.href.split("?")[1]).get(
+					"isShare",
+				) || false;
 			getAccessToken().then((res) => {
 				this.accessToken = res.access_token || "1";
 			});
@@ -265,7 +265,7 @@
 				formData.append("file", file.file);
 				upLoadFuJian(formData).then((res) => {
 					let cardUrl =
-						this.source == 1
+						localStorage.getItem("source") == 1
 							? "http://58.33.34.10:10443/images/financial/" + res.data.fileName
 							: "http://39.105.35.83:10443/images/financial/" +
 							  res.data.fileName;
@@ -428,9 +428,12 @@
 
 <style lang="scss" scoped>
 	.content {
-		padding-bottom: 50px;
+		display: flex;
+		flex-direction: column;
 		img {
 			width: 100%;
+			margin: 0px;
+			padding: 0px;
 		}
 	}
 	.foot {
@@ -438,6 +441,7 @@
 		border-top: #efefef 1px solid;
 		position: fixed;
 		bottom: 0;
+		left: 0;
 		text-align: center;
 		background-color: #ffffff;
 		.van-button {
@@ -448,7 +452,7 @@
 		.van-action-sheet__content {
 			position: relative;
 			padding: 26px 26px 99px 26px;
-			height: 100vh;
+			// height: 100vh;
 		}
 		.content {
 			text-align: center;

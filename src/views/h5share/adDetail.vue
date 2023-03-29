@@ -48,13 +48,22 @@
 						<li>{{ address }}</li>
 						<li>{{ contacts }}</li>
 						<li>{{ phoneCode + phoneNumber }}</li>
-						<li>点击查看 ></li>
+						<li @click="mapShow = true">点击查看 ></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 		<div class="foot">
 			<img src="@/assets/h5share/组_12256@2x.png" @click="phone" alt="" />
+		</div>
+		<div class="closeMap" v-show="mapShow">
+			<baidu-map
+				class="mapBaidu"
+				v-show="mapShow"
+				:center="center"
+				:zoom="zoom"
+			></baidu-map>
+			<van-icon name="cross" @click="mapShow = false" />
 		</div>
 	</div>
 </template>
@@ -66,6 +75,7 @@
 			return {
 				clientSide: false,
 				show: false,
+				mapShow: false,
 				companypic: [],
 				companylogo: [],
 				companyName: "",
@@ -76,6 +86,8 @@
 				contacts: "",
 				phoneCode: "",
 				phoneNumber: "",
+				center: "",
+				zoom: 15,
 			};
 		},
 		mounted() {
@@ -83,8 +95,7 @@
 				new URLSearchParams(window.location.href.split("?")[1]).get("guid") ||
 				false;
 			this.getweChatPay();
-			let params = guid;
-			getAdsById(params).then((res) => {
+			getAdsById(guid).then((res) => {
 				if ((res.code = "0000")) {
 					this.companypic = res.data.companypic;
 					this.companylogo = res.data.companylogo[0]
@@ -98,6 +109,7 @@
 					this.contacts = res.data.adsDto.contacts;
 					this.phoneNumber = res.data.adsDto.phoneNumber;
 					this.phoneCode = res.data.adsDto.phoneCode;
+					this.center = res.data.adsDto.address || "上海";
 				}
 			});
 		},
@@ -328,6 +340,26 @@
 		img {
 			margin-top: 10px;
 			width: 90%;
+		}
+	}
+	.closeMap {
+		width: 100%;
+		height: 100vh;
+		position: fixed;
+		z-index: 99;
+		top: 0;
+		.mapBaidu {
+			width: 100%;
+			height: 100vh;
+		}
+		.van-icon {
+			background-color: #ffffff;
+			border-radius: 50px;
+			position: absolute;
+			font-size: 20px;
+			padding: 5px;
+			top: 10px;
+			right: 10px;
 		}
 	}
 </style>

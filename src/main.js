@@ -22,11 +22,15 @@ import "./assets/icon/iconfont.css";
 import TDesign from "tdesign-vue";
 // 引入组件库全局样式资源
 import "tdesign-vue/es/style/index.css";
+import BaiduMap from "vue-baidu-map";
 
 // 导出excel
 import JsonExcel from "vue-json-excel";
 Vue.component("downloadExcel", JsonExcel);
 
+Vue.use(BaiduMap, {
+	ak: "rARCKgtSDxF9kIUODBey9oQK3Bt4EO5i",
+});
 Vue.use(TDesign);
 // Vue.prototype.$echarts = echarts
 Vue.prototype.$Viewer = Viewer;
@@ -44,6 +48,7 @@ import {
 	Radio,
 	RadioGroup,
 	Cell,
+	Icon,
 	CellGroup,
 	List,
 	ActionSheet,
@@ -54,6 +59,7 @@ import {
 Vue.use(List);
 Vue.use(Uploader);
 Vue.use(Cell);
+Vue.use(Icon);
 Vue.use(CellGroup);
 Vue.use(Radio);
 Vue.use(RadioGroup);

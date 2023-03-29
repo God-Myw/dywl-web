@@ -69,6 +69,8 @@ export function getAdsById(params) {
 	return axios({
 		url: "/api/business/ads/getAdsById/" + params,
 		method: "get",
+		headers: { token: localStorage.getItem("token") },
+		params: requestParam({}, "get"),
 		// params: params,
 	});
 }
