@@ -1,7 +1,7 @@
 <template>
 	<div class="h5Editor">
 		<div class="content">
-			<h1>招考内河一级游艇证B1A</h1>
+			<h1>{{ title }}</h1>
 			<img src="@/assets/h5share/分割线.png" alt="" />
 			<Editor
 				style="height: 100%; overflow-y: auto; padding-left: 10px"
@@ -16,23 +16,27 @@
 </template>
 <script>
 	import { Editor } from "@wangeditor/editor-for-vue";
+	import { webGetWXDetail, getCultivateById } from "../../api/h5share";
 	export default {
 		data() {
 			return {
 				editor: null,
 				html: "",
+				title: "",
 				editorConfig: {
 					readOnly: true,
 				},
 			};
 		},
 		mounted() {
-			setTimeout(() => {
-				this.editor.setHtml(
-					"<p><span style='color: rgb(225, 60, 57)'>电子海图引擎 NR2008 ECDIS Kernel</span></p><img src='https://fanyi-cdn.cdn.bcebos.com/static/translation/img/header/logo_e835568.png' alt='' />",
-				);
-				this.editor.disable();
-			}, 0);
+			let guid = new URLSearchParams(window.location.href.split("?")[1]).get("guid");
+			let params = { guid: guid };
+			getCultivateById(params).then((res) => {
+				if (res.code == "0000") {
+					this.title = res.data.title;
+					this.editor.setHtml(res.data.content);
+				}
+			});
 		},
 		methods: {
 			editorCreated(editor) {
@@ -60,9 +64,9 @@
 		}
 		.content {
 			padding-top: 10px;
-			margin: -20px auto;
+			margin: auto;
 			background-color: #ffffff;
-			width: 95%;
+			width: 100%;
 			border-top-left-radius: 10px;
 			border-top-right-radius: 10px;
 			height: 100%;

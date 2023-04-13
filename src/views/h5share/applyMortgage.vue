@@ -1,10 +1,11 @@
 <template>
 	<div>
 		<div class="menu">
-			<img v-if="isShare" src="@/assets/h5share/抵押外部.jpg" alt="" />
+			<img v-if="isShare == 'true'" src="@/assets/h5share/抵押外部.jpg" alt="" />
 			<img v-else src="@/assets/h5share/抵押内部.jpg" alt="" />
+			<div v-if="isShare == 'true'" class="box"></div>
 		</div>
-		<div class="relation">
+		<div v-if="isShare == 'true'" class="relation">
 			<div class="phone" @click="phone">
 				<div></div>
 				<div>拨打400热线</div>
@@ -25,7 +26,7 @@
 		mounted() {
 			this.isShare =
 				new URLSearchParams(window.location.href.split("?")[1]).get("isShare") || false;
-			// this.getweChatPay();
+			this.getweChatPay();
 		},
 		methods: {
 			phone() {
@@ -53,7 +54,6 @@
 				}).then((res) => {
 					if (res.code == "0000") {
 						//通过config接口注入权限验证配置
-						// afa(res).then((res) => console.log(res));
 						wx.config({
 							debug: false,
 							appId: "wx3c5d7c6f964f3094",
@@ -65,27 +65,11 @@
 						});
 						// eslint-disable-next-line no-undef
 						wx.ready(function () {
-							var s_title = "申请抵押", // 分享标题
+							var s_title = "在航船融资抵押服务", // 分享标题
 								s_link = "https://www.dylnet.cn/h5share/applyFinanc", // 分享链接
 								s_desc =
 									"为服务于国内船舶物流企业，道裕联合第三方金融公司为船东人提供购买/建造船舶融资租赁服务。", //分享描述
 								s_imgUrl = "http://39.105.35.83:10443/images/spart/1679656260837.png"; // 分享图标
-							// eslint-disable-next-line no-undef
-							// wx.chooseWXPay({
-							// 	appId: "wx3c5d7c6f964f3094",
-							// 	timestamp: res.data.timestamp,
-							// 	nonceStr: res.data.noncestr,
-							// 	package: "com.luhaisco.dywl",
-							// 	signType: "MD5",
-							// 	paySign: res.data.sign,
-							// 	success: (res) => {
-							// 		console.log(res);
-							// 		// 支付成功
-							// 	},
-							// 	fail: (res) => {
-							// 		// 支付失败
-							// 	},
-							// });
 							wx.updateAppMessageShareData({
 								title: s_title, // 分享标题
 								desc: s_desc, // 分享描述
@@ -113,11 +97,14 @@
 	.menu {
 		display: flex;
 		flex-direction: column;
-		padding-bottom: 50px;
 		img {
 			width: 100%;
 			margin: 0px;
 			padding: 0px;
+		}
+		.box {
+			height: 50px;
+			width: 100%;
 		}
 	}
 	.relation {

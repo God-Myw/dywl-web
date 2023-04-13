@@ -71,6 +71,21 @@ export function getAdsById(params) {
 		method: "get",
 		headers: { token: localStorage.getItem("token") },
 		params: requestParam({}, "get"),
-		// params: params,
+	});
+}
+// 船员培训详情
+export function getCultivateById(params) {
+	return axios({
+		url: "/api/business/Cultivate/getCultivateById",
+		method: "get",
+		params: params,
+	});
+}
+// 船员培训列表
+export function getCultivateList(params) {
+	return axios({
+		url: "/api/business/Cultivate/getCultivateList",
+		method: "get",
+		params: params,
 	});
 }

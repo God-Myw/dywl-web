@@ -4,6 +4,9 @@
 			<div @click="goapplyFinanc">
 				<img src="../../assets/h5share/融资租赁.png" alt="" />
 			</div>
+			<div @click="goMor">
+				<img src="../../assets/h5share/在航船抵押融资服务.png" alt="" />
+			</div>
 			<div @click="gosea">
 				<img src="../../assets/container/蒙版组 355@2x.png" alt="" />
 			</div>
@@ -33,9 +36,7 @@
 			// 	) || false;
 			this.getweChatPay();
 			//是否在app内打开
-			this.isShare = navigator.userAgent
-				.toLowerCase()
-				.indexOf("110.0.5481.153");
+			this.isShare = navigator.userAgent.toLowerCase().indexOf("110.0.5481.153");
 		},
 		created() {
 			if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
@@ -58,6 +59,9 @@
 			gosea() {
 				window.location.href = "https://www.dylnet.cn/h5share/hypothecate";
 			},
+			goMor() {
+				window.location.href = "https://www.dylnet.cn/h5share/applyMortgage?isShare=true";
+			},
 			async getweChatPay() {
 				webGetWXDetail({
 					url: window.location.href.split("#")[0],
@@ -71,18 +75,13 @@
 							timestamp: res.data.timestamp,
 							nonceStr: res.data.noncestr,
 							signature: res.data.sign,
-							jsApiList: [
-								"checkJsApi",
-								"updateAppMessageShareData",
-								"updateTimelineShareData",
-							],
+							jsApiList: ["checkJsApi", "updateAppMessageShareData", "updateTimelineShareData"],
 							openTagList: ["wx-open-launch-app"],
 						});
 						// eslint-disable-next-line no-undef
 						wx.ready(function () {
 							var s_title = "道裕物流联合各金融机构助企", // 分享标题
-								s_link =
-									"https://www.dylnet.cn/h5share/assistance", // 分享链接
+								s_link = "https://www.dylnet.cn/h5share/assistance", // 分享链接
 								s_desc = "道裕物流联合各金融机构助力全国和上海各物流企业", //分享描述
 								s_imgUrl = "https://www.dylnet.cn/container/img/蒙版组 362.png"; // 分享图标
 							// eslint-disable-next-line no-undef

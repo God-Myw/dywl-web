@@ -1,12 +1,12 @@
 <template>
 	<div class="crewTraining">
 		<div class="header"></div>
-		<div class="content">
-			<h1>招考内河一级游艇证B1A</h1>
+		<div class="content" v-for="item in crewList" :key="item.guid">
+			<h1>{{ item.title }}</h1>
 			<img src="@/assets/h5share/分割线.png" alt="" />
 			<Editor
 				style="height: 100%; overflow-y: auto; padding-left: 10px"
-				v-model="html"
+				v-model="item.content"
 				:defaultConfig="editorConfig"
 				mode="default"
 				min-height="500px"
@@ -18,11 +18,14 @@
 </template>
 <script>
 	import { Editor } from "@wangeditor/editor-for-vue";
+	import { webGetWXDetail, getCultivateList } from "@/api/h5share";
 	import CallApp from "callapp-lib";
 	export default {
 		data() {
 			return {
 				editor: null,
+				title: "",
+				crewList: [],
 				html: "",
 				editorConfig: {
 					readOnly: true,
@@ -30,12 +33,13 @@
 			};
 		},
 		mounted() {
-			setTimeout(() => {
-				this.editor.setHtml(
-					"<p><span style='color: rgb(225, 60, 57)'>电子海图引擎 NR2008 ECDIS Kernel</span></p><img src='https://fanyi-cdn.cdn.bcebos.com/static/translation/img/header/logo_e835568.png' alt='' />",
-				);
-				this.editor.disable();
-			}, 0);
+			let params = { currentPage: 1, pageSize: 999 };
+			getCultivateList(params).then((res) => {
+				if (res.code == "0000") {
+					this.crewList = res.data.records;
+				}
+			});
+			this.getweChatPay();
 		},
 		methods: {
 			editorCreated(editor) {
@@ -56,6 +60,50 @@
 					fallback: "https://a.app.qq.com/o/simple.jsp?pkgname=com.luhaisco.dywl&fromcase=40003", // 唤端失败后跳转的地址
 				};
 				new CallApp(options).open({ path: "" });
+			},
+			async getweChatPay() {
+				webGetWXDetail({
+					url: window.location.href.split("#")[0],
+				}).then((res) => {
+					if (res.code == "0000") {
+						//通过config接口注入权限验证配置
+						// afa(res).then((res) => console.log(res));
+						wx.config({
+							debug: false,
+							appId: "wx3c5d7c6f964f3094",
+							timestamp: res.data.timestamp,
+							nonceStr: res.data.noncestr,
+							signature: res.data.sign,
+							jsApiList: ["updateAppMessageShareData", "updateTimelineShareData", "chooseWXPay"],
+							openTagList: ["wx-open-launch-app"],
+						});
+						// eslint-disable-next-line no-undef
+						wx.ready(function () {
+							var s_title = "船员培训正在火热报名中", // 分享标题
+								s_link = "https://www.dylnet.cn/h5share/crewTraining", // 分享链接
+								s_desc =
+									"环游世界的同时，享受大海的浩瀚， 同时又拥有一份报酬高、包吃住、有年假的稳定工作。", //分享描述
+								s_imgUrl = "http://39.105.35.83:10443/images/financial/1681370808216.png"; // 分享图标
+							// eslint-disable-next-line no-undef
+							wx.updateAppMessageShareData({
+								title: s_title, // 分享标题
+								desc: s_desc, // 分享描述
+								link: s_link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+								imgUrl: s_imgUrl, // 分享图标
+								success: function () {},
+							});
+							wx.updateTimelineShareData({
+								title: s_desc, // 分享标题
+								// desc: s_desc, // 分享描述
+								link: s_link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+								imgUrl: s_imgUrl, // 分享图标
+								success: function () {
+									// 设置成功
+								},
+							});
+						});
+					}
+				});
 			},
 		},
 		beforeDestroy() {
@@ -82,9 +130,10 @@
 			margin: -20px auto;
 			background-color: #ffffff;
 			width: 95%;
-			border-top-left-radius: 10px;
-			border-top-right-radius: 10px;
-			height: 100%;
+			border-radius: 10px;
+			margin-bottom: 30px;
+			// border-top-right-radius: 10px;
+			// height: 100%;
 			img {
 				width: 100%;
 			}

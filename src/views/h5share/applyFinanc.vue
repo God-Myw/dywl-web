@@ -3,11 +3,7 @@
 		<div class="menu">
 			<img v-if="isShare" src="@/assets/h5share/app外部.jpg" alt="" />
 			<img v-else src="@/assets/h5share/app内部.jpg" alt="" />
-			<img
-				style="margin-bottom: 30px"
-				src="@/assets/h5share/secondFinanc.jpg"
-				alt=""
-			/>
+			<img style="margin-bottom: 30px" src="@/assets/h5share/secondFinanc.jpg" alt="" />
 		</div>
 		<div class="foot">
 			<van-action-sheet v-model="show" title="申请融资">
@@ -125,24 +121,14 @@
 						/>
 						<div class="su">
 							<p><span>*</span>以上申请信息请真实填写，才能保证审核通过</p>
-							<van-button
-								:disabled="disabled"
-								round
-								block
-								type="info"
-								native-type="submit"
+							<van-button :disabled="disabled" round block type="info" native-type="submit"
 								>确认</van-button
 							>
 						</div>
 					</van-form>
 				</div>
 			</van-action-sheet>
-			<img
-				class="apply"
-				src="@/assets/h5share/立即申请.png"
-				@click="show = true"
-				alt=""
-			/>
+			<img class="apply" src="@/assets/h5share/立即申请.png" @click="show = true" alt="" />
 		</div>
 		<van-overlay :show="maskShow">
 			<div class="wrapper">
@@ -158,8 +144,7 @@
 		businessLicense,
 		identification,
 	} from "@/api/workbench.js";
-	import { saveFinancing } from "@/api/h5share.js";
-	import { webGetWXDetail } from "../../api/h5share";
+	import { saveFinancing, webGetWXDetail } from "@/api/h5share.js";
 	export default {
 		data() {
 			return {
@@ -185,9 +170,7 @@
 		},
 		mounted() {
 			this.isShare =
-				new URLSearchParams(window.location.href.split("?")[1]).get(
-					"isShare",
-				) || false;
+				new URLSearchParams(window.location.href.split("?")[1]).get("isShare") || false;
 			getAccessToken().then((res) => {
 				this.accessToken = res.access_token || "1";
 			});
@@ -207,11 +190,7 @@
 							timestamp: res.data.timestamp,
 							nonceStr: res.data.noncestr,
 							signature: res.data.sign,
-							jsApiList: [
-								"updateAppMessageShareData",
-								"updateTimelineShareData",
-								"chooseWXPay",
-							],
+							jsApiList: ["updateAppMessageShareData", "updateTimelineShareData", "chooseWXPay"],
 							openTagList: ["wx-open-launch-app"],
 						});
 						// eslint-disable-next-line no-undef
@@ -220,8 +199,7 @@
 								s_link = "https://www.dylnet.cn/h5share/applyFinanc", // 分享链接
 								s_desc =
 									"为服务于国内船舶物流企业，道裕联合第三方金融公司为船东人提供购买/建造船舶融资租赁服务。", //分享描述
-								s_imgUrl =
-									"http://39.105.35.83:10443/images/spart/1679656260837.png"; // 分享图标
+								s_imgUrl = "http://39.105.35.83:10443/images/spart/1679656260837.png"; // 分享图标
 							// eslint-disable-next-line no-undef
 							// wx.chooseWXPay({
 							// 	appId: "wx3c5d7c6f964f3094",
@@ -262,11 +240,7 @@
 				return this.picList.filter((item) => item.fileLog == 53).length != 0;
 			},
 			vafication() {
-				return (
-					this.picList.filter(
-						(item) => item.fileLog == 54 || item.fileLog == 55,
-					).length == 2
-				);
+				return this.picList.filter((item) => item.fileLog == 54 || item.fileLog == 55).length == 2;
 			},
 			vaMents() {
 				return this.picList.filter((item) => item.fileLog == 56).length != 0;
@@ -282,8 +256,7 @@
 					let cardUrl =
 						localStorage.getItem("source") == 1
 							? "http://58.33.34.10:10443/images/financial/" + res.data.fileName
-							: "http://39.105.35.83:10443/images/financial/" +
-							  res.data.fileName;
+							: "http://39.105.35.83:10443/images/financial/" + res.data.fileName;
 					if (this.upType == "营业执照") {
 						let params = {
 							access_token: this.accessToken,
