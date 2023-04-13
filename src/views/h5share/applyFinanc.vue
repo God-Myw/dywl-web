@@ -1,6 +1,6 @@
 <template>
 	<div class="applyFinanc">
-		<div class="content">
+		<div class="menu">
 			<img v-if="isShare" src="@/assets/h5share/app外部.jpg" alt="" />
 			<img v-else src="@/assets/h5share/app内部.jpg" alt="" />
 			<img
@@ -200,7 +200,7 @@
 				}).then((res) => {
 					if (res.code == "0000") {
 						//通过config接口注入权限验证配置
-						// eslint-disable-next-line no-undef
+						// afa(res).then((res) => console.log(res));
 						wx.config({
 							debug: false,
 							appId: "wx3c5d7c6f964f3094",
@@ -210,10 +210,10 @@
 							jsApiList: [
 								"updateAppMessageShareData",
 								"updateTimelineShareData",
+								"chooseWXPay",
 							],
 							openTagList: ["wx-open-launch-app"],
 						});
-
 						// eslint-disable-next-line no-undef
 						wx.ready(function () {
 							var s_title = "购/造船融资租赁服务", // 分享标题
@@ -223,6 +223,21 @@
 								s_imgUrl =
 									"http://39.105.35.83:10443/images/spart/1679656260837.png"; // 分享图标
 							// eslint-disable-next-line no-undef
+							// wx.chooseWXPay({
+							// 	appId: "wx3c5d7c6f964f3094",
+							// 	timestamp: res.data.timestamp,
+							// 	nonceStr: res.data.noncestr,
+							// 	package: "com.luhaisco.dywl",
+							// 	signType: "MD5",
+							// 	paySign: res.data.sign,
+							// 	success: (res) => {
+							// 		console.log(res);
+							// 		// 支付成功
+							// 	},
+							// 	fail: (res) => {
+							// 		// 支付失败
+							// 	},
+							// });
 							wx.updateAppMessageShareData({
 								title: s_title, // 分享标题
 								desc: s_desc, // 分享描述
@@ -427,7 +442,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.content {
+	.menu {
 		display: flex;
 		flex-direction: column;
 		img {

@@ -7,20 +7,14 @@
 		<div class="pic">
 			<el-carousel height="150px">
 				<el-carousel-item v-for="item in companypic" :key="item.fileName">
-					<img
-						:src="`http://58.33.34.10:10443/images/${item.type}/${item.fileName}`"
-						alt=""
-					/>
+					<img :src="`http://58.33.34.10:10443/images/${item.type}/${item.fileName}`" alt="" />
 				</el-carousel-item>
 			</el-carousel>
 		</div>
 		<div class="content">
 			<div class="name menu">
 				<div class="logo">
-					<img
-						:src="`http://58.33.34.10:10443/images/companylogo/${companylogo}`"
-						alt=""
-					/>
+					<img :src="`http://58.33.34.10:10443/images/companylogo/${companylogo}`" alt="" />
 				</div>
 				<div class="gsname">
 					<p>{{ companyName }}</p>
@@ -57,12 +51,7 @@
 			<img src="@/assets/h5share/组_12256@2x.png" @click="phone" alt="" />
 		</div>
 		<div class="closeMap" v-show="mapShow">
-			<baidu-map
-				class="mapBaidu"
-				v-show="mapShow"
-				:center="center"
-				:zoom="zoom"
-			></baidu-map>
+			<baidu-map class="mapBaidu" v-show="mapShow" :center="center" :zoom="zoom"></baidu-map>
 			<van-icon name="cross" @click="mapShow = false" />
 		</div>
 	</div>
@@ -91,16 +80,12 @@
 			};
 		},
 		mounted() {
-			let guid =
-				new URLSearchParams(window.location.href.split("?")[1]).get("guid") ||
-				false;
+			let guid = new URLSearchParams(window.location.href.split("?")[1]).get("guid") || false;
 			this.getweChatPay();
 			getAdsById(guid).then((res) => {
 				if ((res.code = "0000")) {
 					this.companypic = res.data.companypic;
-					this.companylogo = res.data.companylogo[0]
-						? res.data.companylogo[0].fileName
-						: "";
+					this.companylogo = res.data.companylogo[0] ? res.data.companylogo[0].fileName : "";
 					this.companyName = res.data.adsDto.companyName;
 					this.contacts = res.data.adsDto.contacts;
 					this.companyRemark = res.data.adsDto.companyRemark;
@@ -128,14 +113,10 @@
 						scheme: "tencent1110877537://",
 					},
 					appstore: "https://apps.apple.com/cn/app/id1493154544", // appstore的下载地址
-					yingyongbao:
-						"https://a.app.qq.com/o/simple.jsp?pkgname=com.luhaisco.dywl&fromcase=40003", // 应用宝的下载地址
-					// fallback:
-					// 	"https://a.app.qq.com/o/simple.jsp?pkgname=com.luhaisco.dywl&fromcase=40003", // 唤端失败后跳转的地址
+					yingyongbao: "https://a.app.qq.com/o/simple.jsp?pkgname=com.luhaisco.dywl&fromcase=40003", // 应用宝的下载地址
+					fallback: "https://a.app.qq.com/o/simple.jsp?pkgname=com.luhaisco.dywl&fromcase=40003", // 唤端失败后跳转的地址
 				};
 				new CallApp(options).open({ path: "" });
-				// window.location.href = "DYLogisticsApp://";
-				// window.location.href = "tencent1110877537://";
 			},
 			async getweChatPay() {
 				webGetWXDetail({
@@ -150,10 +131,7 @@
 							timestamp: res.data.timestamp,
 							nonceStr: res.data.noncestr,
 							signature: res.data.sign,
-							jsApiList: [
-								"updateAppMessageShareData",
-								"updateTimelineShareData",
-							],
+							jsApiList: ["updateAppMessageShareData", "updateTimelineShareData"],
 							openTagList: ["wx-open-launch-app"],
 						});
 						// eslint-disable-next-line no-undef
