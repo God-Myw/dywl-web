@@ -310,6 +310,12 @@ const routes = [
 		name: "contBooking",
 		component: () => import("@/views/h5share/contBooking.vue"),
 	},
+	// 集装箱订舱详情
+	{
+		path: "/h5share/contBookingDetail",
+		name: "contBookingDetail",
+		component: () => import("@/views/h5share/contBookingDetail.vue"),
+	},
 	// 集装箱买卖
 	{
 		path: "/h5share/container",

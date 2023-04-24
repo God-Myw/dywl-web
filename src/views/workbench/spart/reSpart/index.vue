@@ -2,13 +2,7 @@
 	<div class="reSpart">
 		<div class="box" v-if="!reStatus">
 			<Worktitle title="新增商品信息"></Worktitle>
-			<el-form
-				ref="form"
-				:rules="rules"
-				:model="form"
-				label-width="200px"
-				labelPosition="left"
-			>
+			<el-form ref="form" :rules="rules" :model="form" label-width="200px" labelPosition="left">
 				<el-row :gutter="24">
 					<el-col :span="10">
 						<el-form-item label="一级分类" prop="oneLevelId">
@@ -111,23 +105,13 @@
 											>
 												<i class="el-icon-plus"></i>
 											</el-upload>
-											<div
-												class="storeImgBox"
-												v-show="scope.row.partPicList[0]"
-											>
+											<div class="storeImgBox" v-show="scope.row.partPicList[0]">
 												<img
 													class="storeImg"
-													:src="
-														scope.row.partPicList[0]
-															? scope.row.partPicList[0].url
-															: ''
-													"
+													:src="scope.row.partPicList[0] ? scope.row.partPicList[0].url : ''"
 												/>
 												<div class="mask"></div>
-												<i
-													class="el-icon-delete"
-													@click="storeImgDel(scope)"
-												></i>
+												<i class="el-icon-delete" @click="storeImgDel(scope)"></i>
 											</div>
 										</div>
 									</template>
@@ -197,11 +181,7 @@
 								v-model="form.partExplain[index]"
 								:key="index"
 								:placeholder="
-									index == 0
-										? '说明一(品牌宣传语)'
-										: index == 1
-										? '说明二(售后服务等)'
-										: ''
+									index == 0 ? '说明一(品牌宣传语)' : index == 1 ? '说明二(售后服务等)' : ''
 								"
 							></el-input>
 							<el-button
@@ -255,9 +235,7 @@
 								"
 								>取消</el-button
 							>
-							<el-button type="primary" @click="onSubmit(form)"
-								>确认提交</el-button
-							>
+							<el-button type="primary" @click="onSubmit(form)">确认提交</el-button>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -269,11 +247,7 @@
 <script>
 	import Worktitle from "../../../../components/WorkTitle.vue";
 	import ReSuccess from "./reSuccess.vue";
-	import {
-		saveSpart,
-		getSpartLevel,
-		getSpartTwoLevelAll,
-	} from "../../../../api/workbench";
+	import { saveSpart, getSpartLevel, getSpartTwoLevelAll } from "../../../../api/workbench";
 	import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 	export default {
 		components: { Worktitle, Editor, Toolbar, ReSuccess },
@@ -346,18 +320,10 @@
 				},
 				picList2: [],
 				rules: {
-					oneLevelId: [
-						{ required: true, message: "请输入一级分类", trigger: "change" },
-					],
-					twoLevelId: [
-						{ required: true, message: "请输入二级分类", trigger: "change" },
-					],
-					tradeName: [
-						{ required: true, message: "请输入商品名称", trigger: "blur" },
-					],
-					brand: [
-						{ required: true, message: "请输入商品品牌", trigger: "blur" },
-					],
+					oneLevelId: [{ required: true, message: "请输入一级分类", trigger: "change" }],
+					twoLevelId: [{ required: true, message: "请输入二级分类", trigger: "change" }],
+					tradeName: [{ required: true, message: "请输入商品名称", trigger: "blur" }],
+					brand: [{ required: true, message: "请输入商品品牌", trigger: "blur" }],
 					picList: [
 						{
 							required: true,
@@ -398,8 +364,7 @@
 				editorConfig: {
 					MENU_CONF: {
 						uploadImage: {
-							server:
-								"http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart",
+							server: "http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart",
 							fieldName: "file",
 							headers: {
 								// accept: ".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff",
@@ -449,6 +414,7 @@
 			},
 			upLoadStore(info) {
 				if (info.status == "success") {
+					console.log(info);
 					this.form.spartParts[this.index].partPicList = [
 						{
 							fileName: info.response.data.fileName,
@@ -474,9 +440,7 @@
 			},
 			storeDelete(info) {
 				let arr = [...this.form.spartParts];
-				this.form.spartParts = arr.filter(
-					(item, index) => index != info.$index,
-				);
+				this.form.spartParts = arr.filter((item, index) => index != info.$index);
 			},
 			storeListAdd() {
 				let index = this.index++;

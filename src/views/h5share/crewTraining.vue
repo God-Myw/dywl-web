@@ -1,7 +1,12 @@
 <template>
 	<div class="crewTraining">
 		<div class="header"></div>
-		<div class="content" v-for="item in crewList" :key="item.guid">
+		<div
+			class="content"
+			v-for="item in crewList"
+			@click="getGuidWk(item.guid, item.title)"
+			:key="item.guid"
+		>
 			<h1>{{ item.title }}</h1>
 			<img src="@/assets/h5share/分割线.png" alt="" />
 			<Editor
@@ -12,8 +17,9 @@
 				min-height="500px"
 				@onCreated="editorCreated"
 			/>
+			<div v-if="ios !== 'YES'" class="foot" @click="app">APP内报名</div>
+			<div v-else class="foot" @click="app">立即报名</div>
 		</div>
-		<div class="foot" @click="app">APP内报名</div>
 	</div>
 </template>
 <script>
@@ -27,12 +33,14 @@
 				title: "",
 				crewList: [],
 				html: "",
+				ios: "",
 				editorConfig: {
 					readOnly: true,
 				},
 			};
 		},
 		mounted() {
+			this.ios = new URLSearchParams(window.location.href.split("?")[1]).get("ios");
 			let params = { currentPage: 1, pageSize: 999 };
 			getCultivateList(params).then((res) => {
 				if (res.code == "0000") {
@@ -44,6 +52,10 @@
 		methods: {
 			editorCreated(editor) {
 				this.editor = Object.seal(editor);
+			},
+			getGuidWk(guid, title) {
+				let json = { guid: guid, title: title };
+				window.webkit.messageHandlers.getGuid.postMessage(JSON.stringify(json));
 			},
 			app() {
 				const options = {
@@ -126,7 +138,8 @@
 			}
 		}
 		.content {
-			padding-top: 10px;
+			position: relative;
+			padding: 10px 0px 30px;
 			margin: -20px auto;
 			background-color: #ffffff;
 			width: 95%;
@@ -144,22 +157,21 @@
 				font-weight: bold;
 				color: #333333;
 			}
-		}
-		.foot {
-			text-align: center;
-			line-height: 44px;
-			position: fixed;
-			left: 50%;
-			transform: translateX(-50%);
-			bottom: 0;
-			font-size: 18px;
-			font-family: 苹方-简-中粗体, 苹方-简;
-			font-weight: normal;
-			color: #333333;
-			width: 168px;
-			height: 44px;
-			background: #70dcff;
-			border-radius: 22px;
+			.foot {
+				text-align: center;
+				line-height: 28px;
+				position: absolute;
+				right: 18px;
+				bottom: 18px;
+				font-size: 14px;
+				font-family: 苹方-简-中粗体, 苹方-简;
+				font-weight: 700;
+				color: #333333;
+				width: 94px;
+				height: 28px;
+				background: #70dcff;
+				border-radius: 22px;
+			}
 		}
 	}
 </style>

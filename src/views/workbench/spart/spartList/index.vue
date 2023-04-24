@@ -12,12 +12,7 @@
 				</el-col>
 				<el-col :span="5">
 					<span>商品类目</span>
-					<el-select
-						v-model="twoLevelId"
-						filterable
-						clearable
-						placeholder="请选择"
-					>
+					<el-select v-model="twoLevelId" filterable clearable placeholder="请选择">
 						<el-option
 							v-for="item in twoLevelList"
 							:key="item.twoLevelName"
@@ -63,10 +58,8 @@
 						<img
 							:src="
 								source == 1
-									? 'http://58.33.34.10:10443/images/spart/' +
-									  scope.row.fileName
-									: 'http://39.105.35.83:10443/images/spart/' +
-									  scope.row.fileName
+									? 'http://58.33.34.10:10443/images/spart/' + scope.row.fileName
+									: 'http://39.105.35.83:10443/images/spart/' + scope.row.fileName
 							"
 							alt=""
 						/>
@@ -82,11 +75,7 @@
 						<div>
 							<p
 								class="shelfColor"
-								:style="
-									scope.row.shelf == '已上架'
-										? 'background: #04AB75'
-										: 'background: #98979A'
-								"
+								:style="scope.row.shelf == '已上架' ? 'background: #04AB75' : 'background: #98979A'"
 							></p>
 							{{ scope.row.shelf == "已上架" ? "已上架" : "未上架" }}
 						</div>
@@ -101,12 +90,8 @@
 							>
 								{{ scope.row.shelf2 }}
 							</el-button>
-							<el-button type="text" @click="getSpartById(scope.row.guid)">
-								编辑
-							</el-button>
-							<el-button type="text" @click="handleDelete(scope.row.guid)">
-								删除
-							</el-button>
+							<el-button type="text" @click="getSpartById(scope.row.guid)"> 编辑 </el-button>
+							<el-button type="text" @click="handleDelete(scope.row.guid)"> 删除 </el-button>
 						</div>
 					</template>
 				</el-table-column>
@@ -128,11 +113,7 @@
 </template>
 <script>
 	import Worktitle from "../../../../components/WorkTitle.vue";
-	import {
-		getSpartList,
-		shelfChange,
-		getSpartTwoLevel,
-	} from "../../../../api/workbench";
+	import { getSpartList, shelfChange, getSpartTwoLevel } from "../../../../api/workbench";
 
 	export default {
 		data() {
@@ -154,7 +135,7 @@
 		mounted() {
 			this.source = localStorage.getItem("source");
 			getSpartTwoLevel().then((res) => {
-				if ((res.code = "0000")) this.twoLevelList = res.data;
+				if (res.code == "0000") this.twoLevelList = res.data;
 			});
 			this.getData();
 		},

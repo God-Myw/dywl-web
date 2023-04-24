@@ -11,6 +11,7 @@
 				min-height="500px"
 				@onCreated="editorCreated"
 			/>
+			<div class="foot">立即报名</div>
 		</div>
 	</div>
 </template>
@@ -23,15 +24,16 @@
 				editor: null,
 				html: "",
 				title: "",
+				guid: "",
 				editorConfig: {
 					readOnly: true,
 				},
 			};
 		},
 		mounted() {
-			let guid = new URLSearchParams(window.location.href.split("?")[1]).get("guid");
-			let params = { guid: guid };
-			getCultivateById(params).then((res) => {
+			this.guid = new URLSearchParams(window.location.href.split("?")[1]).get("guid");
+			let params = { guid: this.guid };
+			 getCultivateById(params).then((res) => {
 				if (res.code == "0000") {
 					this.title = res.data.title;
 					this.editor.setHtml(res.data.content);
@@ -63,12 +65,11 @@
 			}
 		}
 		.content {
-			padding-top: 10px;
+			position: relative;
+			padding: 10px 0px 30px;
 			margin: auto;
 			background-color: #ffffff;
 			width: 100%;
-			border-top-left-radius: 10px;
-			border-top-right-radius: 10px;
 			height: 100%;
 			img {
 				width: 100%;
@@ -80,22 +81,21 @@
 				font-weight: bold;
 				color: #333333;
 			}
-		}
-		.foot {
-			text-align: center;
-			line-height: 44px;
-			position: fixed;
-			left: 50%;
-			transform: translateX(-50%);
-			bottom: 0;
-			font-size: 18px;
-			font-family: 苹方-简-中粗体, 苹方-简;
-			font-weight: normal;
-			color: #333333;
-			width: 168px;
-			height: 44px;
-			background: #70dcff;
-			border-radius: 22px;
+			.foot {
+				text-align: center;
+				line-height: 28px;
+				position: absolute;
+				right: 18px;
+				bottom: 18px;
+				font-size: 14px;
+				font-family: 苹方-简-中粗体, 苹方-简;
+				font-weight: 700;
+				color: #333333;
+				width: 94px;
+				height: 28px;
+				background: #70dcff;
+				border-radius: 22px;
+			}
 		}
 	}
 </style>
