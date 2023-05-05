@@ -89,3 +89,11 @@ export function getCultivateList(params) {
 		params: params,
 	});
 }
+// 订舱详情
+export function getShipBookingDetailsForApp(params) {
+	return axios({
+		url: "/api/business/shipBooking/getShipBookingDetailsForApp",
+		method: "get",
+		params: params,
+	});
+}

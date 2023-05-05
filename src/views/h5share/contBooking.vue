@@ -66,22 +66,26 @@
 						<div class="cc-gp">
 							<div class="cc-hq">
 								<p>20GP</p>
-								<p>$810</p>
+								<p>{{ item.haiyunFortyGpTejia }}</p>
 							</div>
 							<span></span>
 							<div class="cc-hq">
 								<p>40GP</p>
-								<p>$860</p>
+								<p>{{ item.haiyunTwentyGpTejia }}</p>
 							</div>
 							<span></span>
 							<div class="cc-hq">
 								<p>40HQ</p>
-								<p>$1000</p>
+								<p>{{ item.haiyunFortyHqTejia }}</p>
 							</div>
 						</div>
 					</div>
 					<div class="cc-nav-c-r tyzt-zht">
-						<img src="../../assets/container/班轮订舱MAERSK.png" alt="" />
+						<img
+							v-if="item.shipCompanyLogo"
+							:src="`http://58.33.34.10:10443/images/shipCompany/${item.shipCompanyLogo}`"
+							alt=""
+						/>
 						<!-- <p>{{ item.voyage }}天 航程</p>
 						<p></p> -->
 					</div>
@@ -198,9 +202,9 @@
 							openTagList: ["wx-open-launch-app"],
 						});
 						wx.ready(function () {
-							var s_title = "集装箱订舱", // 分享标题
+							var s_title = "全球集装箱班轮订舱", // 分享标题
 								s_link = "https://www.dylnet.cn/h5share/contBooking", // 分享链接
-								s_desc = "国际、国内集装箱现舱限时特价抢舱。", //分享描述
+								s_desc = "汇集全球知名船公司，可运到世界各港口的集装箱班轮订舱", //分享描述
 								s_imgUrl = "https://www.dylnet.cn/container/img/蒙版组 180.png"; // 分享图标
 
 							wx.updateAppMessageShareData({

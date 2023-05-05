@@ -2,50 +2,46 @@
 	<div class="contBookingDetail" @click="openApp">
 		<div class="search">
 			<div class="search-o">
-				<div>请选择</div>
-				<div>请选择</div>
+				<div>{{ startPortEn }}</div>
+				<div>{{ endPortEn }}</div>
 			</div>
 			<div class="search-t">
-				<div>起始港</div>
+				<div>{{ startPortCn }}</div>
 				<div class="cc-nav-t-c">
 					<div class="cc-nav-c-r tyzt-zht">
-						<p>1天 航程</p>
+						<p>{{ voyage }}天 航程</p>
 					</div>
 				</div>
-				<div>目的港</div>
+				<div>{{ endPortCn }}</div>
 			</div>
 			<div class="cc-szr">
 				<p>船期</p>
-				<p class="tyzt-zht">{{ "8月14日" }}</p>
-				<p class="tyzt-zht">{{ "周六" }}</p>
+				<p class="tyzt-zht">{{ sailingTimeString }}</p>
+				<p class="tyzt-zht">{{ sailingTimeWeek }}</p>
 			</div>
 			<div class="cc-nav-c-rs">
-				<img src="../../assets/container/班轮订舱MAERSK.png" alt="" />
+				<img v-if="shipCompanyLogo" :src="shipCompanyLogo" alt="" />
 			</div>
 		</div>
 		<div class="demand">
 			<div class="name">
 				<p class="nameTitle">订舱需求</p>
-				<p>编号：DYSH001004591</p>
+				<p>编号：{{ dyNumber }}</p>
 			</div>
 			<div class="title">
 				<p>箱型</p>
 				<p>海运费(单价)</p>
 				<p>选择舱位</p>
 			</div>
-			<div class="content" v-for="value in demandList" :key="value">
-				<p>{{ value }}</p>
-				<p>$800</p>
-				<p><van-stepper v-model="stepperValue" /></p>
+			<div class="content" v-for="item in demandList" :key="item.name">
+				<p>{{ item.name }}</p>
+				<p>{{ item.value }}</p>
+				<p><van-stepper v-model="stepperValue" min="0" disable-plus/></p>
 			</div>
 		</div>
 		<div class="remark">
 			<div class="nameTitle">备注</div>
-			<div class="content">
-				美国船东，美国国旗；
-				美国休斯敦自有码头；重吊，一装一载直达休斯敦、航速快;本船为MPP船，可载件杂货、重大件（Max800吨）如有需求请致电
-				13262688288
-			</div>
+			<div class="content">{{ remark }}</div>
 		</div>
 		<div class="other">
 			<div class="nameTitle">其他费用</div>
@@ -56,11 +52,11 @@
 					<p>40GP</p>
 					<p>40HQ</p>
 				</div>
-				<div class="table" v-for="value in otherList" :key="value">
-					<p>{{ value }}</p>
-					<p>￥450/票</p>
-					<p>￥450/票</p>
-					<p>￥450/票</p>
+				<div class="table" v-for="item in otherList" :key="item.name">
+					<p>{{ item.name }}</p>
+					<p>￥{{ item.value[0] || "--" }}</p>
+					<p>￥{{ item.value[1] || "--" }}</p>
+					<p>￥{{ item.value[2] || "--" }}</p>
 				</div>
 			</div>
 		</div>
@@ -75,7 +71,7 @@
 </template>
 
 <script>
-	import { webGetWXDetail } from "../../api/h5share";
+	import { webGetWXDetail, getShipBookingDetailsForApp } from "../../api/h5share";
 	import Vue from "vue";
 	import { Stepper } from "vant";
 	Vue.use(Stepper);
@@ -83,15 +79,81 @@
 	export default {
 		data() {
 			return {
-				stepperValue: 0,
-				demandList: ["20GP", "40GP", "40HQ"],
-				otherList: ["文件费", "订舱费", "船代操作费", "EIR", "THC", "封志费", "舱单费"],
+				stepperValue: "0",
+				demandList: [],
+				otherList: [],
+				startPortCn: "",
+				startPortEn: "",
+				endPortCn: "",
+				endPortEn: "",
+				voyage: "",
+				sailingTimeString: "",
+				sailingTimeWeek: "",
+				shipCompanyLogo: "",
+				dyNumber: "",
+				remark: "",
 			};
 		},
 		mounted() {
 			this.getweChatPay();
+			this.getData();
 		},
 		methods: {
+			getData() {
+				let guid = new URLSearchParams(window.location.href.split("?")[1]).get("guid") || "";
+				getShipBookingDetailsForApp({ guid: guid }).then((res) => {
+					if (res.code == "0000") {
+						let data = res.data;
+						this.shipCompanyLogo = data.shipCompanyLogo
+							? `http://58.33.34.10:10443/images/shipCompany/` + data.shipCompanyLogo
+							: "";
+						this.dyNumber = data.dyNumber;
+						this.sailingTimeString = data.sailingTimeString;
+						this.sailingTimeWeek = data.sailingTimeWeek;
+						this.startPortCn = data.startPortCn;
+						this.startPortEn = data.startPortEn;
+						this.endPortCn = data.endPortCn;
+						this.endPortEn = data.endPortEn;
+						this.demandList = [
+							{ name: "20GP", value: data.haiyunFortyGpTejia },
+							{ name: "40GP", value: data.haiyunFortyHqTejia },
+							{ name: "40HQ", value: data.haiyunTwentyGpTejia },
+						];
+						this.voyage = data.voyage;
+						this.remark = data.remark;
+						this.otherList = [
+							{
+								name: "文件费",
+								value: [data.wenjianFortyGp, data.wenjianTwentyGp, data.wenjianFortyHq],
+							},
+							{
+								name: "订舱费",
+								value: [data.dingcangFortyGp, data.dingcangTwentyGp, data.dingcangFortyHq],
+							},
+							{
+								name: "船代操作费",
+								value: [data.caozuoFortyGp, data.caozuoTwentyGp, data.caozuoFortyHq],
+							},
+							{
+								name: "EIR",
+								value: [data.eirFortyGp, data.eirTwentyGp, data.eirFortyHq],
+							},
+							{
+								name: "THC",
+								value: [data.thcFortyGp, data.thcTwentyGp, data.thcFortyHq],
+							},
+							{
+								name: "封志费",
+								value: [data.fengzhiFortyGp, data.fengzhiFortyHq, data.fengzhiTwentyGp],
+							},
+							{
+								name: "舱单费",
+								value: [data.chuandanFortyGp, data.chuandanTwentyGp, data.chuandanFortyHq],
+							},
+						];
+					}
+				});
+			},
 			openApp() {
 				const options = {
 					scheme: {
@@ -119,11 +181,10 @@
 							openTagList: ["wx-open-launch-app"],
 						});
 						wx.ready(function () {
-							var s_title = "集装箱订舱详情", // 分享标题
-								s_link = "https://www.dylnet.cn/h5share/contBooking", // 分享链接
-								s_desc = "国际、国内集装箱现舱限时特价抢舱。", //分享描述
-								s_imgUrl = "https://www.dylnet.cn/container/img/蒙版组 180.png"; // 分享图标
-
+							var s_title = "全球集装箱班轮订舱", // 分享标题
+								s_link = "https://www.dylnet.cn/h5share/contBookingDetail", // 分享链接
+								s_desc = `(${this.startPortEn})+${this.startPortCn} — (${this.endPortEn})+${this.endPortCn} 集装箱班轮订舱`, //分享描述
+								s_imgUrl = "http://58.33.34.10:10443/images/financial/1682567526426.png"; // 分享图标
 							wx.updateAppMessageShareData({
 								title: s_title, // 分享标题
 								desc: s_desc, // 分享描述
@@ -151,14 +212,16 @@
 
 <style lang="scss" scoped>
 	.contBookingDetail {
-		padding: 20px 20px 80px 20px;
+		width: 375px;
+		margin: 0 auto;
+		padding: 20px 10px 80px 10px;
 		background: linear-gradient(0deg, #f1f3f5, 90%, #005cfa);
 		.search,
 		.demand,
 		.remark,
 		.other {
 			position: relative;
-			margin: 0 0 24px 0;
+			margin: 0 0 12px 0;
 			padding: 20px 24px 20px 24px;
 			background: #fff;
 			border-radius: 12px;
@@ -298,7 +361,7 @@
 		.other {
 			.content {
 				div {
-					margin: 20px 0px;
+					margin: 10px 0px;
 				}
 				.gp {
 					width: 100%;
@@ -314,7 +377,7 @@
 					}
 					p:nth-child(1) {
 						background-color: #ffffff;
-						width: 26%;
+						width: 23%;
 					}
 				}
 				.table {
@@ -322,6 +385,7 @@
 					display: flex;
 					justify-content: space-between;
 					p {
+						padding: 3px 8px;
 						font-size: 14px;
 						font-family: 苹方-简-常规体, 苹方-简;
 						font-weight: normal;
@@ -329,8 +393,10 @@
 						text-align: center;
 					}
 					p:nth-child(1) {
+						padding-left: 0;
 						text-align: left;
-						width: 26%;
+						width: 23%;
+						white-space: nowrap;
 						color: #000000;
 					}
 				}
@@ -341,9 +407,10 @@
 			justify-content: space-between;
 			position: fixed;
 			bottom: 0;
-			left: 0;
+			left: 50%;
+			transform: translateX(-50%);
 			padding: 20px 24px 20px 24px;
-			width: 100%;
+			width: 375px;
 			background-color: #ffffff;
 			.price {
 				p:nth-child(1) {

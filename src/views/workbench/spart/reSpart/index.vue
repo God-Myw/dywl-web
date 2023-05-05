@@ -60,7 +60,7 @@
 					</el-col>
 				</el-row>
 				<el-row :gutter="24" class="demo-autocomplete">
-					<el-col :span="10">
+					<el-col :span="24">
 						<el-form-item label="商品轮播图" prop="picList">
 							<el-upload
 								:action="
@@ -73,7 +73,7 @@
 								:on-change="upLoadChange"
 								:on-remove="upLoadChange"
 								:file-list="form.picList"
-								:limit="5"
+								:limit="10"
 							>
 								<i class="el-icon-plus"></i>
 							</el-upload>
