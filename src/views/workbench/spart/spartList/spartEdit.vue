@@ -1,14 +1,8 @@
 <template>
 	<div class="spartEdit">
 		<div class="box">
-			<Worktitle title="编辑船舶备件"></Worktitle>
-			<el-form
-				ref="form"
-				:rules="rules"
-				:model="form"
-				label-width="200px"
-				labelPosition="left"
-			>
+			<Worktitle title="编辑船舶供应"></Worktitle>
+			<el-form ref="form" :rules="rules" :model="form" label-width="200px" labelPosition="left">
 				<el-row :gutter="24">
 					<el-col :span="10">
 						<el-form-item label="一级分类" prop="oneLevelId">
@@ -18,6 +12,7 @@
 								filterable
 								clearable
 								v-model="form.oneLevelId"
+								@change="oneLvChange"
 								placeholder=""
 							>
 								<el-option
@@ -61,7 +56,79 @@
 				<el-row :gutter="24" class="demo-autocomplete">
 					<el-col :span="10">
 						<el-form-item label="商品品牌" prop="brand">
-							<el-input size="small" v-model="form.brand"></el-input>
+							<!-- <el-input size="small" v-model="form.brand"></el-input> -->
+							<el-select
+								style="width: 100%"
+								v-model="form.brand"
+								filterable
+								clearable
+								placeholder="请选择"
+							>
+								<div
+									style="
+										font-size: 14px;
+										padding: 0 20px;
+										margin: 5px 0px;
+										position: relative;
+										white-space: nowrap;
+										overflow: hidden;
+										text-overflow: ellipsis;
+										color: #606266;
+										height: 34px;
+										line-height: 34px;
+										box-sizing: border-box;
+										cursor: pointer;
+									"
+								>
+									<el-input
+										style="float: left; width: 35%"
+										size="small"
+										v-model="brandAddName"
+										placeholder="请输入新增品牌名称"
+									></el-input>
+									<el-select
+										disabled
+										size="small"
+										style="width: 40%"
+										v-model="form.oneLevelId"
+										placeholder="请选择一级分类"
+									>
+										<el-option
+											v-for="(item, index) in oneLev"
+											:label="item.oneLevelName"
+											:value="item.guid"
+											:key="index"
+										></el-option>
+									</el-select>
+									<span
+										@click="brandAdd"
+										style="
+											float: right;
+											font-size: 12px;
+											background: #409eff;
+											color: #fff;
+											border-radius: 5px;
+											padding: 0px 10px;
+										"
+										><i class="el-icon-plus"></i> 新增品牌</span
+									>
+								</div>
+								<el-option
+									style="display: none"
+									key="item.value"
+									label="item.label"
+									value="item.value"
+								>
+								</el-option>
+								<el-option
+									v-for="item in brandAddNameList"
+									:key="item.brand + item.levelId"
+									:label="item.brand"
+									:value="item.brand"
+								>
+									<span style="font-size: 13px">{{ item.brand }}</span>
+								</el-option>
+							</el-select>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -108,23 +175,13 @@
 											>
 												<i class="el-icon-plus"></i>
 											</el-upload>
-											<div
-												class="storeImgBox"
-												v-show="scope.row.partPicList[0]"
-											>
+											<div class="storeImgBox" v-show="scope.row.partPicList[0]">
 												<img
 													class="storeImg"
-													:src="
-														scope.row.partPicList[0]
-															? scope.row.partPicList[0].url
-															: ''
-													"
+													:src="scope.row.partPicList[0] ? scope.row.partPicList[0].url : ''"
 												/>
 												<div class="mask"></div>
-												<i
-													class="el-icon-delete"
-													@click="storeImgDel(scope)"
-												></i>
+												<i class="el-icon-delete" @click="storeImgDel(scope)"></i>
 											</div>
 										</div>
 									</template>
@@ -245,9 +302,7 @@
 								"
 								>取消</el-button
 							>
-							<el-button type="primary" @click="onSubmit(form)"
-								>确认提交</el-button
-							>
+							<el-button type="primary" @click="onSubmit(form)">确认提交</el-button>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -262,6 +317,9 @@
 		saveSpart,
 		getSpartLevel,
 		getSpartTwoLevelAll,
+		getSpartTwoLevel,
+		getSpartBandList,
+		saveSpartBand,
 	} from "../../../../api/workbench";
 	import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 	export default {
@@ -333,17 +391,23 @@
 				},
 				picList2: [],
 				rules: {
-					oneLevelId: [
-						{ required: true, message: "请输入一级分类", trigger: "blur" },
-					],
-					twoLevelId: [
-						{ required: true, message: "请输入二级分类", trigger: "blur" },
-					],
-					tradeName: [
-						{ required: true, message: "请输入商品名称", trigger: "blur" },
-					],
+					oneLevelId: [{ required: true, message: "请输入一级分类", trigger: "blur" }],
+					twoLevelId: [{ required: true, message: "请输入二级分类", trigger: "blur" }],
+					tradeName: [{ required: true, message: "请输入商品名称", trigger: "blur" }],
 					brand: [
-						{ required: true, message: "请输入商品品牌", trigger: "blur" },
+						{
+							required: true,
+							validator: (rule, value, callback) => {
+								let rules = this.form.brand != "";
+								if (rules) {
+									callback();
+								} else {
+									callback(new Error("请输入说明"));
+								}
+							},
+							message: "请输入商品品牌",
+							trigger: "change",
+						},
 					],
 					picList: [
 						{
@@ -382,11 +446,12 @@
 				editor: null,
 				html: "",
 				toolbarConfig: {},
+				brandAddName: "",
+				brandAddNameList: [],
 				editorConfig: {
 					MENU_CONF: {
 						uploadImage: {
-							server:
-								"http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart",
+							server: "http://58.33.34.10:10443/api/sys/file/upLoadFuJian/spart",
 							fieldName: "file",
 							headers: {
 								// accept: ".gif,.bmp,.png,.img,.jpeg,.jpg,.tiff",
@@ -423,6 +488,7 @@
 					this.twoLev = res.data || [];
 				}
 			});
+			this.getSpartBandList();
 			let params = { guid: this.$route.query.guid };
 			this.getData(params);
 		},
@@ -432,6 +498,46 @@
 			editor.destroy(); // 组件销毁时，及时销毁编辑器
 		},
 		methods: {
+			getSpartBandList(params) {
+				getSpartBandList(params).then((res) => {
+					if (res.code == "0000") {
+						this.brandAddNameList = res.data || [];
+					}
+				});
+			},
+			oneLvChange(id) {
+				id = this.oneLev.filter((item) => item.oneLevelName == id);
+				let params = { level: id[0].guid };
+				let paramsBand = { keyword: id[0].guid };
+				getSpartTwoLevel(params).then((res) => {
+					if (res.code == "0000") {
+						this.twoLev = res.data || [];
+					}
+				});
+				this.getSpartBandList(paramsBand);
+			},
+			brandAdd() {
+				let f = this.brandAddNameList.every((v) => v.value != this.brandAddName);
+				if (!this.form.oneLevelId) {
+					this.$message.error("请选择一级分类");
+				} else {
+					if (this.brandAddName && f) {
+						let params = {
+							brand: this.brandAddName,
+							levelId: this.form.oneLevelId || "",
+						};
+						saveSpartBand(params).then((res) => {
+							if (res.code == "0000") {
+								this.brandAddName = "";
+							}
+						});
+						this.getSpartBandList();
+						this.brandAddName = "";
+					} else {
+						this.$message.error("品牌名称不能重复或为空");
+					}
+				}
+			},
 			getData(params) {
 				getSpartById(params).then((res) => {
 					if (res.status == 200) {
@@ -446,8 +552,7 @@
 									url:
 										this.source == 1
 											? "http://58.33.34.10:10443/images/spart/" + item.fileName
-											: "http://39.105.35.83:10443/images/spart/" +
-											  item.fileName,
+											: "http://39.105.35.83:10443/images/spart/" + item.fileName,
 								};
 							});
 						}
@@ -456,10 +561,8 @@
 								if (item.partPicList) {
 									arr[index].partPicList[0].url =
 										this.source == 1
-											? "http://58.33.34.10:10443/images/spart/" +
-											  item.partPicList[0].fileName
-											: "http://39.105.35.83:10443/images/spart/" +
-											  item.partPicList[0].fileName;
+											? "http://58.33.34.10:10443/images/spart/" + item.partPicList[0].fileName
+											: "http://39.105.35.83:10443/images/spart/" + item.partPicList[0].fileName;
 								}
 							});
 						}
@@ -513,9 +616,7 @@
 			},
 			storeDelete(info) {
 				let arr = [...this.form.spartParts];
-				this.form.spartParts = arr.filter(
-					(item, index) => index != info.$index,
-				);
+				this.form.spartParts = arr.filter((item, index) => index != info.$index);
 			},
 			storeListAdd() {
 				let index = this.index++;
@@ -552,8 +653,7 @@
 							// 	  arr[i].partPicList[0].fileName;
 						});
 						saveSpart(params).then((res) => {
-							if (res.status == 200)
-								this.$router.push("/workbench/spart/spartList");
+							if (res.status == 200) this.$router.push("/workbench/spart/spartList");
 						});
 					} else {
 						console.log("error submit!!");

@@ -1,9 +1,9 @@
 <template>
   <div class="myStore">
-    <Worktitle title="发布船舶备件"></Worktitle>
+    <Worktitle title="发布船舶供应"></Worktitle>
     <div class="box">
       <div class="icon box2"><i class="el-icon-check"></i></div>
-      <div class="msg box2">恭喜，您的船舶备件已发布成功！</div>
+      <div class="msg box2">恭喜，您的船舶供应已发布成功！</div>
       <div class="button box2">
         <el-button plain type="primary" size="default" @click="goList"
           >返回备件管理</el-button

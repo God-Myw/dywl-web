@@ -54,7 +54,7 @@ export function getSpartLevel(params) {
 // 已发布的二级分类
 export function getSpartTwoLevel(params) {
 	return axios({
-		url: "api/business/spartLevel/getSpartTwoLevel",
+		url: "api/business/spartLevel/getSpartLevel",
 		method: "get",
 		params: requestParam(params, "get"),
 	});
@@ -116,5 +116,22 @@ export function upLoadFuJian(params) {
 				: "https://www.dylnet.cn/api/sys/file/upLoadFuJian/financial",
 		method: "post",
 		data: params,
+	});
+}
+// 获取商品品牌
+export function getSpartBandList(params) {
+	return axios({
+		url: `api/business/spartBand/getSpartBandList`,
+		method: "get",
+		params: params,
+	});
+}
+// 新增商品品牌
+export function saveSpartBand(params) {
+	return axios({
+		url: `api/business/spartBand/saveSpartBand`,
+		method: "post",
+		data: params,
+		headers: { token: localStorage.getItem("token") },
 	});
 }

@@ -11,6 +11,7 @@
 								size="small"
 								filterable
 								clearable
+								@change="oneLvChange"
 								v-model="form.oneLevelId"
 								placeholder=""
 							>
@@ -55,7 +56,72 @@
 				<el-row :gutter="24" class="demo-autocomplete">
 					<el-col :span="10">
 						<el-form-item label="商品品牌" prop="brand">
-							<el-input size="small" v-model="form.brand"></el-input>
+							<!-- <el-input size="small" v-model="form.brand"></el-input> -->
+							<el-select
+								style="width: 100%"
+								v-model="form.brand"
+								filterable
+								clearable
+								placeholder="请选择"
+							>
+								<div
+									style="
+										font-size: 14px;
+										padding: 0 20px;
+										margin: 5px 0px;
+										position: relative;
+										white-space: nowrap;
+										overflow: hidden;
+										text-overflow: ellipsis;
+										color: #606266;
+										height: 34px;
+										line-height: 34px;
+										box-sizing: border-box;
+										cursor: pointer;
+									"
+								>
+									<el-input
+										style="float: left; width: 35%"
+										size="small"
+										v-model="brandAddName"
+										placeholder="请输入新增品牌名称"
+									></el-input>
+									<el-select
+										disabled
+										size="small"
+										style="width: 40%"
+										v-model="form.oneLevelId"
+										placeholder="请选择一级分类"
+									>
+										<el-option
+											v-for="(item, index) in oneLev"
+											:label="item.oneLevelName"
+											:value="item.guid"
+											:key="index"
+										></el-option>
+									</el-select>
+									<span
+										@click="brandAdd"
+										style="
+											float: right;
+											font-size: 12px;
+											background: #409eff;
+											color: #fff;
+											border-radius: 5px;
+											padding: 0px 10px;
+										"
+										><i class="el-icon-plus"></i> 新增品牌</span
+									>
+								</div>
+								<el-option
+									v-for="item in brandAddNameList"
+									:key="item.brand + item.levelId"
+									:label="item.brand"
+									:value="item.brand"
+								>
+									<span style="font-size: 13px">{{ item.brand }}</span>
+								</el-option>
+							</el-select>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -247,7 +313,14 @@
 <script>
 	import Worktitle from "../../../../components/WorkTitle.vue";
 	import ReSuccess from "./reSuccess.vue";
-	import { saveSpart, getSpartLevel, getSpartTwoLevelAll } from "../../../../api/workbench";
+	import {
+		saveSpart,
+		getSpartLevel,
+		getSpartTwoLevelAll,
+		getSpartBandList,
+		getSpartTwoLevel,
+		saveSpartBand,
+	} from "../../../../api/workbench";
 	import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 	export default {
 		components: { Worktitle, Editor, Toolbar, ReSuccess },
@@ -323,7 +396,21 @@
 					oneLevelId: [{ required: true, message: "请输入一级分类", trigger: "change" }],
 					twoLevelId: [{ required: true, message: "请输入二级分类", trigger: "change" }],
 					tradeName: [{ required: true, message: "请输入商品名称", trigger: "blur" }],
-					brand: [{ required: true, message: "请输入商品品牌", trigger: "blur" }],
+					brand: [
+						{
+							required: true,
+							validator: (rule, value, callback) => {
+								let rules = this.form.brand != "";
+								if (rules) {
+									callback();
+								} else {
+									callback(new Error("请输入说明"));
+								}
+							},
+							message: "请输入商品品牌",
+							trigger: "change",
+						},
+					],
 					picList: [
 						{
 							required: true,
@@ -388,6 +475,8 @@
 					},
 				},
 				mode: "default",
+				brandAddName: "",
+				brandAddNameList: [],
 			};
 		},
 		mounted() {
@@ -402,8 +491,48 @@
 					this.twoLev = res.data || [];
 				}
 			});
+			this.getSpartBandList();
 		},
 		methods: {
+			getSpartBandList(params) {
+				getSpartBandList(params).then((res) => {
+					if (res.code == "0000") {
+						this.brandAddNameList = res.data || [];
+					}
+				});
+			},
+			oneLvChange(id) {
+				id = this.oneLev.filter((item) => item.oneLevelName == id);
+				let params = { level: id[0].guid };
+				let paramsBand = { keyword: id[0].guid };
+				getSpartTwoLevel(params).then((res) => {
+					if (res.code == "0000") {
+						this.twoLev = res.data || [];
+					}
+				});
+				this.getSpartBandList(paramsBand);
+			},
+			brandAdd() {
+				let f = this.brandAddNameList.every((v) => v.value != this.brandAddName);
+				if (!this.form.oneLevelId) {
+					this.$message.error("请选择一级分类");
+				} else {
+					if (this.brandAddName && f) {
+						let params = {
+							brand: this.brandAddName,
+							levelId: this.form.oneLevelId || "",
+						};
+						saveSpartBand(params).then((res) => {
+							if (res.code == "0000") {
+								this.brandAddName = "";
+							}
+						});
+						this.getSpartBandList();
+					} else {
+						this.$message.error("品牌名称不能重复或为空");
+					}
+				}
+			},
 			upLoadBefore(index) {
 				this.index = index.$index;
 			},

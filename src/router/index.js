@@ -155,31 +155,31 @@ const routes = [
 				name: "bulkCargo",
 				component: () => import("@/views/workbench/release/bulkCargo/index.vue"),
 			},
-			// 工作台-船舶备件发布
+			// 工作台-船舶供应发布
 			{
 				path: "/workbench/release/spart",
 				name: "spart",
 				component: () => import("@/views/workbench/release/spart/index.vue"),
 			},
-			// 工作台-船舶备件
+			// 工作台-船舶供应
 			// {
 			//   path: '/workbench/spart',
 			//   name: 'spart',
 			//   component: () => import('@/views/workbench/spart/spartList/index.vue'),
 			// },
-			// 工作台-发布船舶备件
+			// 工作台-发布船舶供应
 			{
 				path: "/workbench/spart/reSpart",
 				name: "reSpart",
 				component: () => import("@/views/workbench/spart/reSpart/index.vue"),
 			},
-			// 工作台-船舶备件列表
+			// 工作台-船舶供应列表
 			{
 				path: "/workbench/spart/spartList",
 				name: "spartList",
 				component: () => import("@/views/workbench/spart/spartList/index.vue"),
 			},
-			// 工作台-船舶备件编辑
+			// 工作台-船舶供应编辑
 			{
 				path: "/workbench/spart/spartEdit",
 				name: "spartList",
@@ -394,7 +394,7 @@ const routes = [
 		name: "assistance",
 		component: () => import("@/views/h5share/assistance.vue"),
 	},
-	// 船舶备件
+	// 船舶供应
 	{
 		path: "/h5share/spart",
 		name: "h5spart",
@@ -435,6 +435,12 @@ const routes = [
 		path: "/h5share/h5Editor",
 		name: "h5Editor",
 		component: () => import("@/views/h5share/h5Editor.vue"),
+	},
+	// 船舶供应详情页
+	{
+		path: "/h5share/spartEdit",
+		name: "spartEdit",
+		component: () => import("@/views/h5share/spartEdit.vue"),
 	},
 ];
 

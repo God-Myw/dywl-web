@@ -114,7 +114,7 @@ export default {
       agencyList: [
         {
           itemCode: 1,
-          itemValue: "船舶备件",
+          itemValue: "船舶供应",
         },
         {
           itemCode: 2,

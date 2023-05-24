@@ -76,11 +76,11 @@
 							<!-- <t-menu-item value="release">我要发布</t-menu-item> -->
 							<t-menu-item value="bulkCargo">发布散杂货</t-menu-item>
 							<t-menu-item value="spart" v-if="status == 1"
-								>发布船舶备件</t-menu-item
+								>发布船舶供应</t-menu-item
 							>
 						</t-submenu>
 						<!-- v-if="status == 1" -->
-						<t-submenu title="船舶备件" value="船舶备件">
+						<t-submenu title="船舶供应" value="船舶供应">
 							<template #icon>
 								<div
 									class="iconfont icon-NaviLeft-10-attachment"
@@ -91,10 +91,10 @@
 								>申请开店</t-menu-item
 							>
 							<t-menu-item v-if="status == 1" value="reSpart"
-								>发布船舶备件</t-menu-item
+								>发布船舶供应</t-menu-item
 							>
 							<t-menu-item v-if="status == 1" value="spartList"
-								>船舶备件商品列表</t-menu-item
+								>船舶供应商品列表</t-menu-item
 							>
 							<t-menu-item v-if="status == 1" value="myStore"
 								>我的店铺</t-menu-item
@@ -257,7 +257,7 @@
 			margin-bottom: 10px;
 			border-radius: 5px;
 			background-color: #ffffff;
-			width: 99%;
+			width: 100%;
 			box-shadow: 0px 0px 5px rgb(235, 227, 227);
 		}
 		/deep/.t-menu__operations-icon {

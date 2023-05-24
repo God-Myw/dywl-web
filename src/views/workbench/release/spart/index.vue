@@ -1,6 +1,6 @@
 <template>
   <div class="myStore">
-    <Worktitle title="船舶备件"></Worktitle>
+    <Worktitle title="船舶供应"></Worktitle>
   </div>
 </template>
 <script>

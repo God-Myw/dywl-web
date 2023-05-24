@@ -3,7 +3,7 @@
 		<div class="box shaixuan">
 			<el-row :gutter="20">
 				<el-col :span="5">
-					<span>商品编号</span>
+					<span>商品类型</span>
 					<el-input v-model="number" placeholder="请输入内容"></el-input>
 				</el-col>
 				<el-col :span="5">
@@ -36,7 +36,7 @@
 			</el-row>
 		</div>
 		<div class="box list">
-			<Worktitle title="船舶备件商品列表" />
+			<Worktitle title="船舶供应商品列表" />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<el-button
 				icon="el-icon-plus"
@@ -53,6 +53,7 @@
 			<el-button icon="el-icon-refresh" @click="getData()"></el-button>
 			<el-table :data="spartList" style="width: 100%">
 				<el-table-column prop="number" label="商品编号" />
+				<el-table-column prop="number" label="商品类型" />
 				<el-table-column prop="fileName" label="商品图片">
 					<template slot-scope="scope">
 						<img
@@ -65,7 +66,7 @@
 						/>
 					</template>
 				</el-table-column>
-				<el-table-column prop="tradeName" label="商品名称" />
+				<el-table-column prop="tradeName" label="商品" />
 				<el-table-column prop="twoLevelId" label="所属类目" />
 				<el-table-column prop="brand" label="品牌" />
 				<el-table-column prop="money" label="价格(元)" />
@@ -113,7 +114,7 @@
 </template>
 <script>
 	import Worktitle from "../../../../components/WorkTitle.vue";
-	import { getSpartList, shelfChange, getSpartTwoLevel } from "../../../../api/workbench";
+	import { getSpartList, shelfChange, getSpartTwoLevelAll } from "../../../../api/workbench";
 
 	export default {
 		data() {
@@ -134,7 +135,7 @@
 		components: { Worktitle },
 		mounted() {
 			this.source = localStorage.getItem("source");
-			getSpartTwoLevel().then((res) => {
+			getSpartTwoLevelAll().then((res) => {
 				if (res.code == "0000") this.twoLevelList = res.data;
 			});
 			this.getData();
@@ -246,7 +247,7 @@
 </script>
 <style lang="scss" scoped>
 	.spartList {
-		width: 1635px;
+		width: calc(100vw - 280px);
 		/deep/.el-button--primary {
 			background-color: #0052db;
 		}

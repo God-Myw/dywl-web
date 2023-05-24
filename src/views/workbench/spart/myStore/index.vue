@@ -41,7 +41,7 @@
 							<div class="search">
 								<el-input
 									v-model="search"
-									placeholder="搜索船舶备件"
+									placeholder="搜索船舶供应"
 									size="normal"
 									clearable
 									@change="() => {}"
