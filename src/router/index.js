@@ -442,6 +442,18 @@ const routes = [
 		name: "spartEdit",
 		component: () => import("@/views/h5share/spartEdit.vue"),
 	},
+	// 船舶供应分享页H5
+	{
+		path: "/h5share/spartShareH5",
+		name: "spartShareH5",
+		component: () => import("@/views/h5share/spartShareH5.vue"),
+	},
+	// 船舶供应详情页H5
+	{
+		path: "/h5share/spartDetailsH5",
+		name: "spartDetailsH5",
+		component: () => import("@/views/h5share/spartDetailsH5.vue"),
+	},
 ];
 
 const router = new VueRouter({

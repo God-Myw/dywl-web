@@ -55,6 +55,8 @@ import {
 	Button,
 	Form,
 	Overlay,
+	Swipe,
+	SwipeItem,
 } from "vant";
 Vue.use(List);
 Vue.use(Uploader);
@@ -70,6 +72,8 @@ Vue.use(Toast);
 Vue.use(Button);
 Vue.use(ActionSheet);
 Vue.use(Overlay);
+Vue.use(Swipe);
+Vue.use(SwipeItem);
 Vue.config.productionTip = false; //屏蔽提示信息
 Vue.config.ignoredElements = ["wx-open-launch-app"];
 new Vue({

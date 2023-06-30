@@ -7,10 +7,7 @@
 						<div class="header">
 							<div class="storeInfo">
 								<div class="storeImg">
-									<img
-										src="http://58.33.34.10:10443/images/spart/1670573471742.jpg"
-										alt=""
-									/>
+									<img src="http://58.33.34.10:10443/images/spart/1670573471742.jpg" alt="" />
 								</div>
 								<div class="storeName">
 									<p>
@@ -135,10 +132,7 @@
 						<div class="header">
 							<div class="storeInfo">
 								<div class="storeImg">
-									<img
-										src="http://58.33.34.10:10443/images/spart/1670573471742.jpg"
-										alt=""
-									/>
+									<img src="http://58.33.34.10:10443/images/spart/1670573471742.jpg" alt="" />
 								</div>
 								<div class="storeName">
 									<p>
@@ -192,22 +186,15 @@
 								</div>
 							</div>
 							<div class="storeInfo license">
-								<Worktitle
-									blueSty="store"
-									:title="type == 1 ? '营业证照' : '身份证'"
-								/>
+								<Worktitle blueSty="store" :title="type == 1 ? '营业证照' : '身份证'" />
 								<ul>
 									<li>
-										<img
-											src="http://58.33.34.10:10443/images/spart/1670573471742.jpg"
-											alt=""
-										/>
+										<img src="http://58.33.34.10:10443/images/spart/1670573471742.jpg" alt="" />
 										<i
 											class="el-icon-zoom-in big"
 											@click="
 												dialogVisible = true;
-												bigSrc =
-													'http://58.33.34.10:10443/images/spart/1670573471742.jpg';
+												bigSrc = 'http://58.33.34.10:10443/images/spart/1670573471742.jpg';
 											"
 										></i>
 									</li>
@@ -349,9 +336,9 @@
 				/deep/.el-tabs__nav-wrap::after {
 					height: 4px;
 				}
-				/deep/.el-tabs__nav-wrap::after {
-					// display: none;
-				}
+				// /deep/.el-tabs__nav-wrap::after {
+				// 	// display: none;
+				// }
 			}
 		}
 		.box {
@@ -487,7 +474,7 @@
 						width: 100%;
 						display: flex;
 						.left {
-							width: 20%;
+							min-width: 20%;
 							p {
 								margin: 16px 0px;
 								font-size: 18px;

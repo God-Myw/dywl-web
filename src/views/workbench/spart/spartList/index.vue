@@ -4,7 +4,15 @@
 			<el-row :gutter="20">
 				<el-col :span="5">
 					<span>商品类型</span>
-					<el-input v-model="number" placeholder="请输入内容"></el-input>
+					<el-select v-model="oneLevelId" filterable clearable placeholder="请选择">
+						<el-option
+							v-for="item in oneLevelList"
+							:key="item.oneLevelName"
+							:label="item.oneLevelName"
+							:value="item.oneLevelName"
+						>
+						</el-option>
+					</el-select>
 				</el-col>
 				<el-col :span="5">
 					<span>商品名称</span>
@@ -15,7 +23,7 @@
 					<el-select v-model="twoLevelId" filterable clearable placeholder="请选择">
 						<el-option
 							v-for="item in twoLevelList"
-							:key="item.twoLevelName"
+							:key="item.guid"
 							:label="item.twoLevelName"
 							:value="item.twoLevelName"
 						>
@@ -53,7 +61,7 @@
 			<el-button icon="el-icon-refresh" @click="getData()"></el-button>
 			<el-table :data="spartList" style="width: 100%">
 				<el-table-column prop="number" label="商品编号" />
-				<el-table-column prop="number" label="商品类型" />
+				<el-table-column prop="oneLevelId" label="商品类型" />
 				<el-table-column prop="fileName" label="商品图片">
 					<template slot-scope="scope">
 						<img
@@ -114,7 +122,12 @@
 </template>
 <script>
 	import Worktitle from "../../../../components/WorkTitle.vue";
-	import { getSpartList, shelfChange, getSpartTwoLevelAll } from "../../../../api/workbench";
+	import {
+		getSpartList,
+		shelfChange,
+		getSpartTwoLevelAll,
+		getSpartLevel,
+	} from "../../../../api/workbench";
 
 	export default {
 		data() {
@@ -123,11 +136,13 @@
 				number: "",
 				source: 1,
 				tradeName: "",
+				oneLevelId: "",
 				twoLevelId: "",
 				shelf: "",
 				currentPage: 1,
 				pageSize: 10,
 				total: 0,
+				oneLevelList: [],
 				twoLevelList: [],
 				spartList: [],
 			};
@@ -138,6 +153,9 @@
 			getSpartTwoLevelAll().then((res) => {
 				if (res.code == "0000") this.twoLevelList = res.data;
 			});
+			getSpartLevel().then((res) => {
+				if (res.code == "0000") this.oneLevelList = res.data;
+			});
 			this.getData();
 		},
 		methods: {
@@ -145,6 +163,7 @@
 				let params = {
 					number: this.number,
 					tradeName: this.tradeName,
+					oneLevelId: this.oneLevelId,
 					twoLevelId: this.twoLevelId,
 					shelf: this.shelf,
 					currentPage: this.currentPage,
@@ -159,6 +178,7 @@
 							obj.number = item.number || "";
 							obj.fileName = item.fileName || "";
 							obj.tradeName = item.tradeName || "";
+							obj.oneLevelId = item.oneLevelId || "";
 							obj.twoLevelId = item.twoLevelId || "";
 							obj.brand = item.brand || "";
 							obj.money = item.money || "";
@@ -178,6 +198,7 @@
 			clear() {
 				this.number = "";
 				this.tradeName = "";
+				this.oneLevelId = "";
 				this.twoLevelId = "";
 				this.shelf = "";
 				this.getData();

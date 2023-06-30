@@ -135,3 +135,20 @@ export function saveSpartBand(params) {
 		headers: { token: localStorage.getItem("token") },
 	});
 }
+// 新增模板
+export function saveAddressMould(params) {
+	return axios({
+		url: `api/sys/addressMould/saveAddressMould`,
+		method: "post",
+		data: params,
+		headers: { token: localStorage.getItem("token") },
+	});
+}
+// 获取模板
+export function getAddressMouldList() {
+	return axios({
+		url: `api/sys/addressMould/getAddressMouldList`,
+		method: "get",
+		headers: { token: localStorage.getItem("token") },
+	});
+}

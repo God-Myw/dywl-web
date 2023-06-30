@@ -286,6 +286,93 @@
 						</el-form-item>
 					</el-col>
 				</el-row>
+				<el-row :gutter="24" class="demo-autocomplete">
+					<el-col :span="24">
+						<el-form-item label="配送方式" prop="deliveryMethod">
+							<el-radio-group v-model="form.deliveryMethod">
+								<el-radio :label="1">快递发货</el-radio>
+								<el-radio :label="2">商家自选</el-radio>
+								<el-radio :label="3">委托道裕平台统一配送</el-radio>
+							</el-radio-group>
+						</el-form-item>
+					</el-col>
+				</el-row>
+				<el-row :gutter="24" class="demo-autocomplete">
+					<el-col :span="24">
+						<el-form-item label="快递运费" prop="addressMoneyMould">
+							<div class="tyyf" style="margin-bottom: 15px">
+								<el-radio v-model="form.addressMoneyType" :label="1">统一运费</el-radio>
+								<el-input
+									:disabled="form.addressMoneyType == 2"
+									style="width: 15%"
+									type="number"
+									v-model="addressMoneyMould_1"
+									placeholder="请输入内容"
+								></el-input>
+								&nbsp;
+								<span style="color: #606266">元</span>
+							</div>
+							<div class="yfmb">
+								<el-radio v-model="form.addressMoneyType" :label="2">运费模板</el-radio>
+								<el-select
+									style="width: 15%"
+									:disabled="form.addressMoneyType == 1"
+									v-model="addressMoneyMould_2"
+									placeholder="请选择"
+								>
+									<el-option
+										v-for="item in mouldList"
+										:key="item.guid"
+										:label="item.remark"
+										:value="item.guid"
+									>
+									</el-option>
+								</el-select>
+								&nbsp;
+								<div
+									@click="centerDialogVisible = form.addressMoneyType == 2 ? true : false"
+									style="display: inline-block; cursor: pointer; color: #606266"
+								>
+									<i class="el-icon-plus" style="border: 2px solid #b2b1b2; padding: 7px"></i>
+									&nbsp; 新建模板
+								</div>
+							</div>
+							<el-dialog
+								title="新建快递模板"
+								:visible.sync="centerDialogVisible"
+								width="21%"
+								center
+							>
+								<el-form label-width="80px">
+									<el-form-item label="运费">
+										<el-col :span="18">
+											<el-input
+												type="number"
+												placeholder="请输入运费和企额"
+												v-model="addressMoneyType_1"
+											></el-input> </el-col
+										>&nbsp;元
+									</el-form-item>
+									<p style="height: 10px"></p>
+									<el-form-item label="模板说明">
+										<el-col :span="22">
+											<el-input
+												type="textarea"
+												placeholder="清输入快递运界说明"
+												v-model="addressMoneyType_2"
+											></el-input>
+											<p>请新增模板后再选择运费模板</p>
+										</el-col>
+									</el-form-item>
+								</el-form>
+								<span slot="footer" class="dialog-footer">
+									<el-button @click="centerDialogVisible = false">取 消</el-button>
+									<el-button type="primary" @click="yfmbAdd">确 定</el-button>
+								</span>
+							</el-dialog>
+						</el-form-item>
+					</el-col>
+				</el-row>
 				<!-- 提交 -->
 				<el-row :gutter="24" class="demo-autocomplete submitFix">
 					<el-col :span="6">
@@ -320,8 +407,11 @@
 		getSpartTwoLevel,
 		getSpartBandList,
 		saveSpartBand,
+		saveAddressMould,
+		getAddressMouldList,
 	} from "../../../../api/workbench";
 	import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
+	import { stringify } from "qs";
 	export default {
 		components: { Worktitle, Editor, Toolbar },
 		data() {
@@ -388,6 +478,9 @@
 					],
 					partExplain: [],
 					details: "",
+					deliveryMethod: 1,
+					addressMoneyType: 1,
+					addressMoneyMould: "",
 				},
 				picList2: [],
 				rules: {
@@ -442,9 +535,13 @@
 							trigger: "blur",
 						},
 					],
+					deliveryMethod: [{ required: true, message: "请选择配送方式", trigger: "change" }],
+					addressMoneyType: [{ required: true, message: "请选择快递运费", trigger: "change" }],
+					addressMoneyMould: [{ required: true, message: "此处不能为空", trigger: "change" }],
 				},
 				editor: null,
 				html: "",
+				centerDialogVisible: false,
 				toolbarConfig: {},
 				brandAddName: "",
 				brandAddNameList: [],
@@ -474,6 +571,11 @@
 						},
 					},
 				},
+				mouldList: [],
+				addressMoneyType_1: "",
+				addressMoneyType_2: "",
+				addressMoneyMould_1: "",
+				addressMoneyMould_2: "",
 			};
 		},
 		mounted() {
@@ -486,6 +588,11 @@
 			getSpartTwoLevelAll().then((res) => {
 				if (res.code == "0000") {
 					this.twoLev = res.data || [];
+				}
+			});
+			getAddressMouldList().then((res) => {
+				if (res.code == "0000") {
+					this.mouldList = res.data || [];
 				}
 			});
 			this.getSpartBandList();
@@ -522,9 +629,11 @@
 					this.$message.error("请选择一级分类");
 				} else {
 					if (this.brandAddName && f) {
+						let levelId = this.oneLev.filter((item) => item.oneLevelName == this.form.oneLevelId)[0]
+							.guid;
 						let params = {
 							brand: this.brandAddName,
-							levelId: this.form.oneLevelId || "",
+							levelId: levelId || "",
 						};
 						saveSpartBand(params).then((res) => {
 							if (res.code == "0000") {
@@ -537,6 +646,23 @@
 						this.$message.error("品牌名称不能重复或为空");
 					}
 				}
+			},
+			yfmbAdd() {
+				let params = {
+					money: this.addressMoneyType_1,
+					remark: "运费" + this.addressMoneyType_1 + "元," + this.addressMoneyType_2,
+				};
+				saveAddressMould(params).then((res) => {
+					if (res.code == "0000") {
+						this.centerDialogVisible = false;
+
+						getAddressMouldList().then((res) => {
+							if (res.code == "0000") {
+								this.mouldList = res.data || [];
+							}
+						});
+					}
+				});
 			},
 			getData(params) {
 				getSpartById(params).then((res) => {
@@ -577,6 +703,14 @@
 						this.form.spartParts = res.data.spartParts || [];
 						this.form.partExplain = partExplain || "";
 						this.form.details = res.data.details || "";
+						this.form.deliveryMethod = res.data.deliveryMethod || "";
+						this.form.addressMoneyType = res.data.addressMoneyType || "";
+						if (res.data.addressMoneyType == 1) {
+							this.addressMoneyMould_1 = res.data.addressMoneyMould;
+						} else {
+							this.addressMoneyMould_2 = res.data.addressMoneyMould * 1;
+						}
+						this.form.addressMoneyMould = res.data.addressMoneyMould || "";
 						this.editor.setHtml(res.data.details);
 					}
 				});
@@ -638,7 +772,7 @@
 			},
 			onSubmit(info) {
 				this.$refs["form"].validate((valid) => {
-					if (valid) {
+					if (valid && this.form.addressMoneyMould) {
 						let params = { ...info } || {};
 						params.partExplain = [...new Set(params.partExplain)].join("/");
 						params.picList = this.picList2;
@@ -660,6 +794,21 @@
 						return false;
 					}
 				});
+			},
+		},
+		watch: {
+			addressMoneyMould_1(v) {
+				this.form.addressMoneyMould = v;
+			},
+			addressMoneyMould_2(v) {
+				this.form.addressMoneyMould = v;
+			},
+			"form.addressMoneyType"(v) {
+				if (v == 1) {
+					this.addressMoneyMould_2 = "";
+				} else {
+					this.addressMoneyMould_1 = "";
+				}
 			},
 		},
 	};
