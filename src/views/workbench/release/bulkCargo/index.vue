@@ -375,7 +375,7 @@
                     label=" $ "
                     placeholder="请输入金额"
                     v-model="formData.intentionMoney"
-                    suffix="USD"
+                    suffix="人民币"
                     style="width: 240px"
                   />
                 </div>

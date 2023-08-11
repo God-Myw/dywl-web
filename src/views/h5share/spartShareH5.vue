@@ -35,7 +35,7 @@
 				</div>
 				<div class="divR">
 					<p v-for="item in lists.partExplain" :key="item">
-						<img src="http://58.33.34.10:10443/images/spart/1670551173075.png" alt="" />
+						<img src="../../assets/h5share/说明.png" alt="" />
 						<span> {{ item }} </span>
 					</p>
 				</div>
@@ -64,7 +64,7 @@
 							>信用评级
 							<img
 								v-for="(item, index) in 5"
-								src="http://58.33.34.10:10443/images/spart/1670924109041.png"
+								src="../../assets/h5share/星星.png"
 								:key="index"
 							/>
 						</span>
@@ -142,16 +142,24 @@
 			},
 			increment(data) {
 				let picList = [];
+				if (data.picList) {
+					picList = data.picList.map((v) => {
+						return v.source == 1
+							? "http://58.33.34.10:10443/images/spart/" + v.fileName
+							: "http://39.105.35.83:10443/images/spart/" + v.fileName;
+					});
+				}
 				let partExplain = data.partExplain
 					.split("/")
 					.filter(Boolean)
 					.map((v) => {
 						return v;
 					});
+				this.lists.picList = picList || [];
 				this.lists.money = data.money || "";
 				this.lists.views = data.views || 0;
 				this.lists.type = data.type || "";
-				this.lists.storeLogo = data.storeLogo || "1682241015756.png";
+				this.lists.storeLogo = data.storeLogo || "../../assets/h5share/道裕默认头像.png";
 				this.lists.tradeName = data.tradeName || "";
 				this.lists.storeName = data.storeName || "";
 				this.lists.brand = data.brand || "";
@@ -163,14 +171,6 @@
 						.toString() || "";
 				this.lists.partExplain = partExplain || "";
 				this.editor.setHtml(data.details);
-				if (data.picList) {
-					picList = data.picList.map((v) => {
-						return v.source == 1
-							? "http://58.33.34.10:10443/images/spart/" + v.fileName
-							: "http://39.105.35.83:10443/images/spart/" + v.fileName;
-					});
-				}
-				this.lists.picList = picList || [];
 				this.editor.disable();
 			},
 			dialogShow(title, message, confirmButtonText) {
@@ -257,6 +257,7 @@
 
 	.swiper {
 		width: 100%;
+		aspect-ratio: 1/1;
 	}
 
 	.swiper img {

@@ -12,7 +12,8 @@
 // }
 
 // const developmentIp = IP.ip_01
-const developmentUrl = `http://192.168.1.114:9527/`
+// const developmentUrl = `http://192.168.0.174:9527/`
+const developmentUrl = `https://www.dylnet.cn/`
 const productionUrl = `https://www.dylnet.cn/`
 export default {
   development: developmentUrl, // 模拟数据

@@ -260,7 +260,7 @@
 				this.lists.storeName = data.storeName || "";
 				this.lists.brand = data.brand || "";
 				this.lists.placeOf = data.placeOf || "";
-				this.lists.model = 
+				this.lists.model =
 					data.models
 						.split("，")
 						.filter((item) => item != "null")

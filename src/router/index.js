@@ -68,6 +68,18 @@ const routes = [
 				name: "voyagetime",
 				component: () => import("@/views/product/voyagetime/index.vue"),
 			},
+			// 首页船舶备件
+			{
+				path: "/product/shipSpart",
+				name: "shipSpart",
+				component: () => import("@/views/product/shipSpart/index.vue"),
+			},
+			// 首页船舶备件详情
+			{
+				path: "/product/spartEdit",
+				name: "spartEdit",
+				component: () => import("@/views/product/shipSpart/spartEdit.vue"),
+			},
 			// 国内航次详情
 			{
 				path: "/details/voyagetime/internal",
