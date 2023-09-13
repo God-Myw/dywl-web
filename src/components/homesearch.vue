@@ -104,7 +104,7 @@ export default {
   created() {},
   mounted() {
     // 起始港
-    this.getBegList();
+    // this.getBegList();
   },
   methods: {
     dighintStutas(stats) {

@@ -38,7 +38,9 @@
 					</el-select>
 				</el-col>
 				<el-col :span="3">
-					<el-button type="primary" @click="serach">查询</el-button>
+					<el-button type="primary" style="background: green; border: none" @click="serach"
+						>查询</el-button
+					>
 					<el-button @click="clear">重置</el-button>
 				</el-col>
 			</el-row>
@@ -47,6 +49,7 @@
 			<Worktitle title="船舶供应商品列表" />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<el-button
+				style="background: red; border: none"
 				icon="el-icon-plus"
 				type="primary"
 				@click="

@@ -712,7 +712,11 @@
 								<div class="voyage_cont_li_b" style="width: 100%">
 									<div class="li_pallet_date">
 										<img
-											:src="`http://58.33.34.10:10443/images/spart/${item.fileName}`"
+											:src="
+												source == 1
+													? `http://58.33.34.10:10443/images/spart/${item.fileName}`
+													: `http://39.105.35.83:10443/images/spart/${item.fileName}`
+											"
 											style="width: 60px; height: 60px"
 										/>
 									</div>
@@ -848,6 +852,7 @@
 				palletSum1: "",
 				specialSum: "",
 				emergencySum: "",
+				source: "",
 			};
 		},
 		components: {
@@ -858,6 +863,7 @@
 			Hint,
 		},
 		mounted() {
+			this.source = localStorage.getItem("source");
 			if (this.$route.query.code) {
 				this.Wxcode = this.$route.query.code;
 				return this.$router.push("/");
@@ -873,9 +879,9 @@
 			// 航次数据
 			this.foreignvoyage();
 			// 起始港
-			this.getBegList();
+			// this.getBegList();
 			// 货物名称
-			this.goodsName();
+			// this.goodsName();
 			// 船舶备件
 			this.getSpartList();
 			this.getnum();
@@ -1113,11 +1119,11 @@
 					twoLevelId: this.twoLevelId || "",
 					shelf: this.shelf || "",
 					currentPage: 1,
-					pageSize: 10,
+					pageSize: 2,
 				};
 				getSpartList(params).then((res) => {
 					if (res.code == "0000") {
-						this.shipSpartData = res.data.records.splice(0, 2);
+						this.shipSpartData = res.data.records;
 					} else {
 						this.shipSpartData = [];
 					}

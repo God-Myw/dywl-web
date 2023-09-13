@@ -62,11 +62,7 @@
 					<div>
 						<span
 							>信用评级
-							<img
-								v-for="(item, index) in 5"
-								src="../../assets/h5share/星星.png"
-								:key="index"
-							/>
+							<img v-for="(item, index) in 5" src="../../assets/h5share/星星.png" :key="index" />
 						</span>
 						<span class="score">5.0</span>
 					</div>

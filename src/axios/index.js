@@ -31,7 +31,7 @@ service.interceptors.request.use(
 	(config) => {
 		if (localStorage.getItem("token")) {
 			config.headers.token = localStorage.getItem("token");
-			if (config.url.includes("rest/2.0/ocr/v1") || config.url.includes("getSpartListByWeb")) {
+			if (config.url.includes("rest/2.0/ocr/v1")) {
 				delete config.headers.token;
 			}
 		}

@@ -31,34 +31,43 @@
 						></el-input-number>
 					</div>
 					<div class="partExplain">
+						配送至&nbsp;&nbsp;&nbsp;
+						<input type="text" />
+						有货 支持
+						<span style="color: #646fb0">可配送全球 | 99元免基础运费 | 7天价保 | 自提</span>
+					</div>
+					<div class="partExplain">
 						说明&nbsp;&nbsp;&nbsp;
 						<span style="margin-right: 30px" v-for="item in partExplain" :key="item">{{
 							item
 						}}</span>
 					</div>
-					<el-button type="danger" round>立即下单</el-button>
+					<el-button type="danger" style="width: 200px" round>立即下单</el-button>
+					<p>温馨提示 <span style="color: red">·支持7天无理由退货</span></p>
 				</div>
 			</div>
 			<div class="info">
-				<h2>宝贝详情</h2>
-				<div class="infoBody">
-					<div>
-						一级分类: <span>{{ oneLevelId }}</span>
-					</div>
-					<div>
-						二级分类: <span>{{ twoLevelId }}</span>
-					</div>
-					<div>
-						商品名称: <span>{{ tradeName }}</span>
-					</div>
-					<div>
-						商品品牌: <span>{{ brand }}</span>
-					</div>
-				</div>
-			</div>
-			<div class="foot">
-				<h2>详情描述</h2>
-				<Editor style="min-height: auto" @onCreated="editorCreated" />
+				<el-tabs type="border-card">
+					<el-tab-pane label="宝贝详情">
+						<div class="infoBody">
+							<div>
+								一级分类: <span>{{ oneLevelId }}</span>
+							</div>
+							<div>
+								二级分类: <span>{{ twoLevelId }}</span>
+							</div>
+							<div>
+								商品名称: <span>{{ tradeName }}</span>
+							</div>
+							<div>
+								商品品牌: <span>{{ brand }}</span>
+							</div>
+						</div>
+					</el-tab-pane>
+					<el-tab-pane label="详情描述">
+						<Editor style="min-height: auto" v-model="html" @onCreated="editorCreated" />
+					</el-tab-pane>
+				</el-tabs>
 			</div>
 		</div>
 		<div class="back" @click="back"><i class="el-icon-close"></i></div>
@@ -117,7 +126,9 @@
 		},
 		methods: {
 			editorCreated(editor) {
-				this.editor = Object.seal(editor);
+				this.editor = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
+				this.editor.setHtml(this.details);
+				this.editor.disable();
 			},
 			getData(params) {
 				getSpartById(params).then((res) => {
@@ -160,9 +171,6 @@
 						this.partExplain = partExplain || "";
 						this.details = res.data.details || "";
 						this.deliveryMethod = res.data.deliveryMethod || "";
-						console.log(this.editor);
-						this.editor.setHtml(res.data.details);
-						this.editor.disable();
 					}
 				});
 			},
@@ -171,8 +179,14 @@
 				this.$router.push({ path: "/product/shipSpart" });
 			},
 		},
+		beforeDestroy() {
+			const editor = this.editor;
+			if (editor == null) return;
+			editor.destroy(); // 组件销毁时，及时销毁编辑器
+		},
 	};
 </script>
+<style src="@wangeditor/editor/dist/css/style.css"></style>
 <style lang="scss" scoped>
 	.spartEdit {
 		position: relative;
@@ -384,14 +398,14 @@
 			.info {
 				margin-top: 30px;
 				.infoBody {
-					width: 60%;
+					width: 90%;
 					margin: 0 auto;
 					margin-top: 30px;
 					font-family: PingFang SC;
 					font-size: 14px;
 					display: grid;
-					grid-template-columns: repeat(3, 33%);
-					grid-template-rows: repeat(2, 60px);
+					grid-template-columns: repeat(4, 20%);
+					// grid-template-rows: repeat(2, 60px);
 				}
 			}
 			.foot {

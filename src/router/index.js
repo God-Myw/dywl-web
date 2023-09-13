@@ -77,7 +77,7 @@ const routes = [
 			// 首页船舶备件详情
 			{
 				path: "/product/spartEdit",
-				name: "spartEdit",
+				name: "spartEdithome",
 				component: () => import("@/views/product/shipSpart/spartEdit.vue"),
 			},
 			// 国内航次详情
@@ -194,7 +194,7 @@ const routes = [
 			// 工作台-船舶供应编辑
 			{
 				path: "/workbench/spart/spartEdit",
-				name: "spartList",
+				name: "spartEdit",
 				component: () => import("@/views/workbench/spart/spartList/spartEdit.vue"),
 			},
 			// 工作台-我的商铺
@@ -226,6 +226,18 @@ const routes = [
 				path: "/workbench/orderList/container",
 				name: "containerList",
 				component: () => import("@/views/workbench/orderList/container/index.vue"),
+			},
+			// 工作台-船舶供应订单
+			{
+				path: "/workbench/spartOrder",
+				name: "containerList",
+				component: () => import("@/views/workbench/orderList/spartOrder/index.vue"),
+			},
+			// 工作台-消息区
+			{
+				path: "/workbench/UserMessage",
+				name: "userMessage",
+				component: () => import("@/views/workbench/userMessage/index.vue"),
 			},
 		],
 	},
@@ -382,11 +394,23 @@ const routes = [
 		name: "shiBuy",
 		component: () => import("@/views/h5share/shiBuy.vue"),
 	},
+	// 买船详情
+	{
+		path: "/h5share/shiHire",
+		name: "shiHire",
+		component: () => import("@/views/h5share/shiHire.vue"),
+	},
 	// 船舶求购详情
 	{
 		path: "/h5share/askbuy",
 		name: "askbuy",
 		component: () => import("@/views/h5share/askbuy.vue"),
+	},
+	// 船舶求租详情
+	{
+		path: "/h5share/askHire",
+		name: "askHire",
+		component: () => import("@/views/h5share/askHire.vue"),
 	},
 	// 港口服务
 	{
@@ -451,7 +475,7 @@ const routes = [
 	// 船舶供应详情页
 	{
 		path: "/h5share/spartEdit",
-		name: "spartEdit",
+		name: "spartEdith5",
 		component: () => import("@/views/h5share/spartEdit.vue"),
 	},
 	// 船舶供应分享页H5

@@ -13,13 +13,7 @@
 					<div
 						class="goback"
 						@click="gohome"
-						style="
-							width: 54px;
-							height: 20px;
-							display: flex;
-							align-items: center;
-							cursor: pointer;
-						"
+						style="width: 54px; height: 20px; display: flex; align-items: center; cursor: pointer"
 					>
 						<img
 							style="width: 100%; height: 100%"
@@ -47,102 +41,66 @@
 							>
 								货主/货代工作台
 							</div>
-						</div> -->					
+						</div> -->
 						<t-menu-item value="workbench">
 							<template #icon>
-								<div
-									class="iconfont icon-NaviLeft-1-home"
-									style="margin-right: 8px"
-								></div>
+								<div class="iconfont icon-NaviLeft-1-home" style="margin-right: 8px"></div>
 							</template>
 							工作台首页
 						</t-menu-item>
 						<t-menu-item value="dataVerify">
 							<template #icon>
-								<div
-									class="iconfont icon-NaviLeft-2-material"
-									style="margin-right: 9px"
-								></div>
+								<div class="iconfont icon-NaviLeft-2-material" style="margin-right: 9px"></div>
 							</template>
 							资料认证
 						</t-menu-item>
 						<t-submenu title="我要发布" value="我要发布">
 							<template #icon>
-								<div
-									class="iconfont icon-NaviLeft-3-release"
-									style="margin-right: 9px"
-								></div>
+								<div class="iconfont icon-NaviLeft-3-release" style="margin-right: 9px"></div>
 							</template>
 							<!-- <t-menu-item value="release">我要发布</t-menu-item> -->
 							<t-menu-item value="bulkCargo">发布散杂货</t-menu-item>
-							<t-menu-item value="spart" v-if="status == 1"
-								>发布船舶供应</t-menu-item
-							>
+							<t-menu-item value="spart" v-if="status == 1">发布船舶供应</t-menu-item>
 						</t-submenu>
 						<!-- v-if="status == 1" -->
 						<t-submenu title="船舶供应" value="船舶供应">
 							<template #icon>
-								<div
-									class="iconfont icon-NaviLeft-10-attachment"
-									style="margin-right: 9px"
-								></div>
+								<div class="iconfont icon-NaviLeft-10-attachment" style="margin-right: 9px"></div>
 							</template>
-							<t-menu-item v-if="status !== 1" value="applyStore"
-								>申请开店</t-menu-item
-							>
-							<t-menu-item v-if="status == 1" value="reSpart"
-								>发布船舶供应</t-menu-item
-							>
-							<t-menu-item v-if="status == 1" value="spartList"
-								>船舶供应商品列表</t-menu-item
-							>
-							<t-menu-item v-if="status == 1" value="myStore"
-								>我的店铺</t-menu-item
-							>
+							<t-menu-item v-if="status !== 1" value="applyStore">申请开店</t-menu-item>
+							<t-menu-item v-if="status == 1" value="reSpart">发布船舶供应</t-menu-item>
+							<t-menu-item v-if="status == 1" value="spartList">船舶供应商品列表</t-menu-item>
+							<t-menu-item v-if="status == 1" value="myStore">我的店铺</t-menu-item>
 						</t-submenu>
 						<t-submenu title="订单列表" value="bulkShip">
 							<template #icon>
-								<div
-									class="iconfont icon-NaviLeft-4-order"
-									style="margin-right: 9px"
-								></div>
+								<div class="iconfont icon-NaviLeft-4-order" style="margin-right: 9px"></div>
 							</template>
 							<t-menu-item value="bulkShip">散杂货订单</t-menu-item>
 							<t-menu-item value="container">集装箱订单</t-menu-item>
+							<t-menu-item value="spartOrder">船舶供应订单</t-menu-item>
 						</t-submenu>
 						<t-menu-item value="发票管理">
 							<template #icon>
-								<div
-									class="iconfont icon-NaviLeft-5-bill"
-									style="margin-right: 9px"
-								></div>
+								<div class="iconfont icon-NaviLeft-5-bill" style="margin-right: 9px"></div>
 							</template>
 							发票管理
 						</t-menu-item>
-						<t-menu-item value="消息区">
+						<t-menu-item value="userMessage">
 							<template #icon>
-								<div
-									class="iconfont icon-NaviLeft-6-message"
-									style="margin-right: 9px"
-								></div>
+								<div class="iconfont icon-NaviLeft-6-message" style="margin-right: 9px"></div>
 							</template>
 							消息区
 						</t-menu-item>
 						<t-menu-item value="在线留言">
 							<template #icon>
-								<div
-									class="iconfont icon-NaviLeft-7-news"
-									style="margin-right: 9px"
-								></div>
+								<div class="iconfont icon-NaviLeft-7-news" style="margin-right: 9px"></div>
 							</template>
 							在线留言
 						</t-menu-item>
 						<t-menu-item value="账号管理">
 							<template #icon>
-								<div
-									class="iconfont icon-NaviLeft-8-account"
-									style="margin-right: 9px"
-								></div>
+								<div class="iconfont icon-NaviLeft-8-account" style="margin-right: 9px"></div>
 							</template>
 							账号管理
 						</t-menu-item>
@@ -244,6 +202,17 @@
 							path: "/workbench/orderList/container",
 						});
 						break;
+					case "userMessage":
+						this.$router.push({
+							path: "/workbench/UserMessage",
+						});
+						break;
+					case "spartOrder":
+						this.$router.push({
+							path: "/workbench/spartOrder",
+						});
+						break;
+
 					default:
 				}
 			},

@@ -21,7 +21,11 @@
 								<div class="inter_list_left">
 									<div class="inter_list_z">
 										<img
-											:src="`http://58.33.34.10:10443/images/spart/${item.fileName}`"
+											:src="
+												source == 1
+													? `http://58.33.34.10:10443/images/spart/${item.fileName}`
+													: `http://39.105.35.83:10443/images/spart/${item.fileName}`
+											"
 											style="width: 60px; height: 60px"
 										/>
 									</div>
