@@ -15,7 +15,7 @@
 			<div class="second">
 				<p>我的账户 : ￥{{ moneySum }}</p>
 				<p>&nbsp;</p>
-				<p>我的下级 : 总人数 {{ userRebate }}人</p>
+				<p>我的下级 : 总人数 {{ getUserPromotionListTotal }}人</p>
 			</div>
 			<div class="three">
 				<ul>
@@ -79,17 +79,17 @@
 				<div class="iconfont icon-NaviLeft-4-order" style="margin-right: 9px"></div>
 				订单管理
 			</li>
-			<li style="background: #da542e">
+			<li style="background: #da542e" @click="invoices">
 				<div class="iconfont icon-NaviLeft-5-bill" style="margin-right: 9px"></div>
-				发票管理
+				我的下级
 			</li>
 			<li style="background: #9954a4" @click="userMessage">
 				<div class="iconfont icon-NaviLeft-6-message" style="margin-right: 9px"></div>
 				消息区
 			</li>
-			<li style="background: #95a9e3; width: 30%">
+			<li style="background: #95a9e3; width: 30%" @click="accountManagement">
 				<div class="iconfont icon-NaviLeft-8-account" style="margin-right: 9px"></div>
-				账号管理
+				我的账户
 			</li>
 			<li style="background: #05a9e3" @click="dataVerify">
 				<div class="iconfont iconfont icon-NaviLeft-2-material"></div>
@@ -137,6 +137,7 @@
 				userMessag: [],
 				source: 1,
 				userRebate: 0,
+				getUserPromotionListTotal: 0,
 			};
 		},
 		components: { Worktitle },
@@ -165,14 +166,14 @@
 				});
 				this.moneySum = moneySum.data.data.moneySum.toFixed(3);
 				//我的下级
-				let userRebate = await axios({
+				let getUserPromotionList = await axios({
 					method: "get",
 					url: "/api/sys/user/getUserPromotionList",
 					headers: {
 						token: localStorage.getItem("token") || "dcd43c33-2fb9-4f66-b1a3-a5ab027e9ce1",
 					},
 				});
-				this.userRebate = userRebate.data.data.userRebate || 0;
+				this.getUserPromotionListTotal = getUserPromotionList.data.data.sum || 0;
 				//新消息
 				let userMessag = await axios({
 					method: "get",
@@ -218,6 +219,12 @@
 			spartOrder() {
 				this.$router.push("/workbench/spartOrder");
 			},
+			Message() {
+				this.$router.push("/workbench/Message");
+			},
+			invoices() {
+				this.$router.push("/workbench/invoices");
+			},
 			userMessage() {
 				this.$router.push("/workbench/UserMessage");
 			},
@@ -226,6 +233,9 @@
 			},
 			tohome() {
 				this.$router.push("/index");
+			},
+			accountManagement() {
+				this.$router.push("/workbench/accountManagement");
 			},
 		},
 	};

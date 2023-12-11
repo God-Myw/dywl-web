@@ -196,6 +196,7 @@
 				});
 			},
 			serach() {
+				console.log("1");
 				this.getData();
 			},
 			clear() {

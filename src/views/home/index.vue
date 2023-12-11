@@ -117,7 +117,7 @@
 								suffix=""
 							></countTo>
 						</div>
-						<div>船舶买卖</div>
+						<div>船舶交易</div>
 					</li>
 					<!-- <li>
 						<div>

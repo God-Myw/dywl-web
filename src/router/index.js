@@ -230,14 +230,32 @@ const routes = [
 			// 工作台-船舶供应订单
 			{
 				path: "/workbench/spartOrder",
-				name: "containerList",
+				name: "spartOrder",
 				component: () => import("@/views/workbench/orderList/spartOrder/index.vue"),
+			},
+			// 工作台-发票管理
+			{
+				path: "/workbench/invoices",
+				name: "invoices",
+				component: () => import("@/views/workbench/invoices/index.vue"),
 			},
 			// 工作台-消息区
 			{
 				path: "/workbench/UserMessage",
 				name: "userMessage",
 				component: () => import("@/views/workbench/userMessage/index.vue"),
+			},
+			// 工作台-在线留言
+			{
+				path: "/workbench/Message",
+				name: "Message",
+				component: () => import("@/views/workbench/Message/index.vue"),
+			},
+			// 工作台-账号管理
+			{
+				path: "/workbench/accountManagement",
+				name: "accountManagement",
+				component: () => import("@/views/workbench/accountManagement/index.vue"),
 			},
 		],
 	},
@@ -489,6 +507,12 @@ const routes = [
 		path: "/h5share/spartDetailsH5",
 		name: "spartDetailsH5",
 		component: () => import("@/views/h5share/spartDetailsH5.vue"),
+	},
+	// 船舶供应详情页H5
+	{
+		path: "/h5share/International",
+		name: "International",
+		component: () => import("@/views/h5share/International.vue"),
 	},
 ];
 

@@ -7,18 +7,18 @@
 						<div class="header">
 							<div class="storeInfo">
 								<div class="storeImg">
-									<img src="http://58.33.34.10:10443/images/spart/1670573471742.jpg" alt="" />
+									<img :src="`http://58.33.34.10:10443/images/spart/${storePic}`" alt="" />
 								</div>
 								<div class="storeName">
 									<p>
 										店铺名称
 										<img
-											v-if="storeType == 1"
+											v-if="type == 1"
 											src="http://58.33.34.10:10443/images/spart/1670924635524.png"
 											alt=""
 										/>
 										<img
-											v-if="storeType !== 2"
+											v-if="type == 2"
 											src="http://58.33.34.10:10443/images/spart/1670924637144.png"
 											alt=""
 										/>
@@ -36,45 +36,32 @@
 								</div>
 							</div>
 							<div class="search">
-								<el-input
-									v-model="search"
-									placeholder="搜索船舶供应"
-									size="normal"
-									clearable
-									@change="() => {}"
-								/>
+								<el-input v-model="search" placeholder="搜索船舶供应" size="normal" clearable />
 								<el-button
 									style="background-color: #0052d9"
 									type="primary"
 									size="default"
-									@click="() => {}"
+									@click="searchF"
 								>
 									搜本店</el-button
 								>
 							</div>
 						</div>
 					</div>
-					<div v-if="empty" class="box">
+					<div v-if="spartList" class="box">
 						<div class="spartInfo">
 							<div class="storeClass">
 								<div class="cla">
 									<p>商品分类</p>
 								</div>
-								<el-menu @open="handleOpen" @close="handleClose">
-									<el-menu-item index="1">
-										<span slot="title">电子系统</span>
-									</el-menu-item>
-									<el-menu-item index="2">
-										<span slot="title">通信设备</span>
-									</el-menu-item>
-									<el-menu-item index="3">
-										<span slot="title">电子海图</span>
-									</el-menu-item>
-									<el-menu-item index="4">
-										<span slot="title">螺旋机</span>
-									</el-menu-item>
-									<el-menu-item index="5">
-										<span slot="title">船用灯具</span>
+								<el-menu style="overflow: auto; height: 479px">
+									<el-menu-item
+										v-for="item in twoLevelList"
+										:index="item.twoLevelName"
+										:key="item.guid"
+										@click="twoLevelNameChange(item.twoLevelName)"
+									>
+										<span slot="title">{{ item.twoLevelName }}</span>
 									</el-menu-item>
 								</el-menu>
 							</div>
@@ -86,16 +73,26 @@
 										marginLeft: '7px',
 									}"
 								>
-									<el-radio-button label="top">热销备件</el-radio-button>
-									<el-radio-button label="right">二手备件</el-radio-button>
-									<el-radio-button label="bottom">自营备件</el-radio-button>
+									<el-radio-button
+										v-for="item in oneLevelList"
+										:key="item.guid"
+										:label="item.oneLevelName"
+									>
+										{{ item.oneLevelName }}
+									</el-radio-button>
 								</el-radio-group>
 								<ul>
-									<li :key="index" v-for="(item, index) in info">
-										<img :src="item.url" />
-										<p>{{ item.name }}</p>
-										<p>{{ item.model }}</p>
-										<p>¥{{ item.price }}</p>
+									<li :key="index" v-for="(item, index) in spartList">
+										<img
+											:src="
+												source == 1
+													? 'http://58.33.34.10:10443/images/spart/' + item.fileName
+													: 'http://39.105.35.83:10443/images/spart/' + item.fileName
+											"
+										/>
+										<p>{{ item.tradeName }}</p>
+										<p>{{ item.brand }}</p>
+										<p>¥{{ item.money }}</p>
 									</li>
 								</ul>
 							</div>
@@ -113,7 +110,7 @@
 							</el-pagination>
 						</div>
 					</div>
-					<div else class="box empty">
+					<div v-else class="box empty">
 						<img src="../../../../assets/workbench/商品为空.png" alt="" />
 						<p>您暂未上传商品</p>
 						<el-button
@@ -132,18 +129,18 @@
 						<div class="header">
 							<div class="storeInfo">
 								<div class="storeImg">
-									<img src="http://58.33.34.10:10443/images/spart/1670573471742.jpg" alt="" />
+									<img :src="`http://58.33.34.10:10443/images/spart/${storePic}`" alt="" />
 								</div>
 								<div class="storeName">
 									<p>
 										店铺名称
 										<img
-											v-if="storeType == 1"
+											v-if="type == 1"
 											src="http://58.33.34.10:10443/images/spart/1670924635524.png"
 											alt=""
 										/>
 										<img
-											v-if="storeType !== 2"
+											v-if="type == 2"
 											src="http://58.33.34.10:10443/images/spart/1670924637144.png"
 											alt=""
 										/>
@@ -182,19 +179,21 @@
 								<Worktitle blueSty="store" title="认证身份"></Worktitle>
 								<div class="infobox">
 									<div class="left"><p>认证身份</p></div>
-									<div class="right"><p>公司店铺</p></div>
+									<div class="right">
+										<p>{{ type == 2 ? "公司店铺" : "个人店铺" }}</p>
+									</div>
 								</div>
 							</div>
 							<div class="storeInfo license">
-								<Worktitle blueSty="store" :title="type == 1 ? '营业证照' : '身份证'" />
+								<Worktitle blueSty="store" :title="type == 2 ? '营业证照' : '身份证'" />
 								<ul>
 									<li>
-										<img src="http://58.33.34.10:10443/images/spart/1670573471742.jpg" alt="" />
+										<img :src="`http://58.33.34.10:10443/images/spart/${storeLicense}`" alt="" />
 										<i
 											class="el-icon-zoom-in big"
 											@click="
 												dialogVisible = true;
-												bigSrc = 'http://58.33.34.10:10443/images/spart/1670573471742.jpg';
+												bigSrc = `http://58.33.34.10:10443/images/spart/${storeLicense}`;
 											"
 										></i>
 									</li>
@@ -204,21 +203,21 @@
 								<Worktitle blueSty="store" title="其他信息" />
 								<div class="infobox">
 									<div class="left">
-										<p v-if="type == 1">公司名称</p>
+										<p v-if="type == 2">公司名称</p>
 										<p>联系人</p>
 										<p>联系电话</p>
-										<p v-if="type == 1">客服电话</p>
-										<p v-if="type == 1">公司地址</p>
+										<p v-if="type == 2">客服电话</p>
+										<p v-if="type == 2">公司地址</p>
 										<p>店铺简介</p>
 									</div>
 									<div class="right">
-										<p v-if="type == 1">上海道裕科技有限公司</p>
-										<p>王路</p>
-										<p>1895555888</p>
-										<p v-if="type == 1">1856445699</p>
-										<p v-if="type == 1">上海市宝山区友谊路钢领2号楼1503</p>
+										<p v-if="type == 2">{{ storeName }}</p>
+										<p>{{ contacter }}</p>
+										<p>{{ phoneNumber }}</p>
+										<p v-if="type == 2">{{ customerPhoneNumber }}</p>
+										<p v-if="type == 2">{{ companyAddress }}</p>
 										<p>
-											道裕物流专业从事线上物流运输服务交易平台，业务涵盖国内、国际海运，租船运输、集装箱运输、集装箱租赁和买
+											{{ storeRemark }}
 										</p>
 									</div>
 								</div>
@@ -237,6 +236,12 @@
 <script>
 	import Worktitle from "../../../../components/WorkTitle.vue";
 	import StoreEdit from "./storeEdit.vue";
+	import {
+		getSpartList,
+		getMerchantByCreater,
+		getSpartTwoLevel,
+		getSpartLevel,
+	} from "../../../../api/workbench";
 	export default {
 		data() {
 			return {
@@ -249,52 +254,78 @@
 				activeName2: "hotSpart",
 				spartActive: "",
 				tabsStatus: "我的店铺",
+				source: "",
 				total: 15,
+				currentPage: 1,
+				pageSize: 10,
+				oneLevelId: "",
+				twoLevelId: "",
+				oneLevelList: [],
+				twoLevelList: [],
+				spartList: [],
 				bigSrc: "",
 				dialogVisible: false,
-				info: [
-					{
-						url: "http://58.33.34.10:10443/images/spart/1670573471742.jpg",
-						name: "CPP调距桨电力推进系统",
-						model: "HYCP38-1",
-						price: "12680",
-					},
-					{
-						url: "http://58.33.34.10:10443/images/spart/1670573471742.jpg",
-						name: "CPP调距桨电力推进系统",
-						model: "HYCP38-1",
-						price: "12680",
-					},
-					{
-						url: "http://58.33.34.10:10443/images/spart/1670573471742.jpg",
-						name: "CPP调距桨电力推进系统",
-						model: "HYCP38-1",
-						price: "12680",
-					},
-					{
-						url: "http://58.33.34.10:10443/images/spart/1670573471742.jpg",
-						name: "CPP调距桨电力推进系统",
-						model: "HYCP38-1",
-						price: "12680",
-					},
-					{
-						url: "http://58.33.34.10:10443/images/spart/1670573471742.jpg",
-						name: "CPP调距桨电力推进系统",
-						model: "HYCP38-1",
-						price: "12680",
-					},
-					{
-						url: "http://58.33.34.10:10443/images/spart/1670573471742.jpg",
-						name: "CPP调距桨电力推进系统",
-						model: "HYCP38-1",
-						price: "12680",
-					},
-				],
+				storePic: "",
+				storeLicense: "",
+				storeName: "",
+				type: "",
+				contacter: "",
+				phoneNumber: "",
+				customerPhoneNumber: "",
+				companyAddress: "",
+				storeRemark: "",
 			};
 		},
 		components: { Worktitle, StoreEdit },
-		mounted() {},
+		mounted() {
+			this.source = localStorage.getItem("source");
+			getSpartTwoLevel().then((res) => {
+				if (res.code == "0000") this.twoLevelList = res.data;
+			});
+			getSpartLevel().then((res) => {
+				if (res.code == "0000") this.oneLevelList = res.data;
+			});
+			this.getData();
+		},
 		methods: {
+			twoLevelNameChange(v) {
+				this.twoLevelId = v;
+				this.getData();
+			},
+			async getData() {
+				let params = {
+					number: "",
+					tradeName: "",
+					oneLevelId: this.oneLevelId,
+					twoLevelId: this.twoLevelId,
+					currentPage: this.currentPage,
+					pageSize: this.pageSize,
+				};
+				getSpartList(params).then((res) => {
+					this.spartList = res.data.records || [];
+					this.total = res.data.total || 0;
+				});
+				let res = await getMerchantByCreater();
+				if (res.code == "0000") {
+					if (res.data.merchantDto.type == 2) {
+						this.storeLicense =
+							res.data.attachmentsDtos.filter((item) => item.fileLog == 51)[0].fileName || "";
+					} else {
+						this.storeLicense =
+							res.data.attachmentsDtos.filter((item) => item.fileLog == 50)[0].fileName || "";
+					}
+					this.storePic =
+						res.data.attachmentsDtos.filter((item) => item.fileLog == 52)[0].fileName || "";
+					this.storeName = res.data.merchantDto.storeName || "";
+					this.type = res.data.merchantDto.type || "";
+					this.storeName = res.data.merchantDto.storeName || "";
+					this.contacter = res.data.merchantDto.contacter || "";
+					this.phoneNumber = res.data.merchantDto.phoneNumber || "";
+					this.customerPhoneNumber = res.data.merchantDto.customerPhoneNumber || "";
+					this.companyAddress = res.data.merchantDto.companyAddress || "";
+					this.storeRemark = res.data.merchantDto.storeRemark || "";
+				}
+			},
 			tabsChange(name) {
 				this.tabsStatus = name;
 			},
@@ -303,6 +334,34 @@
 			},
 			storeEdit(status) {
 				this.status = status ?? false;
+			},
+			currentChange(currentPage) {
+				this.currentPage = currentPage;
+				this.getData();
+			},
+			handleSizeChange(handleSizeChange) {
+				this.pageSize = handleSizeChange;
+				this.getData();
+			},
+			searchF() {
+				let params = {
+					number: "",
+					tradeName: this.search,
+					oneLevelId: "",
+					twoLevelId: "",
+					currentPage: this.currentPage,
+					pageSize: this.pageSize,
+				};
+				getSpartList(params).then((res) => {
+					this.spartList = res.data.records || [];
+					this.total = res.data.total || 0;
+				});
+			},
+		},
+		watch: {
+			spartActive(v) {
+				this.oneLevelId = v;
+				this.getData();
 			},
 		},
 	};
@@ -445,8 +504,9 @@
 								color: red;
 							}
 							img {
-								width: 100%;
-								aspect-ratio: 1/1;
+								width: 260px;
+								height: 260px;
+								// aspect-ratio: 1/1;
 								border-bottom: 1px solid rgb(216, 212, 212);
 							}
 						}

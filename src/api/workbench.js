@@ -54,7 +54,7 @@ export function getSpartLevel(params) {
 // 已发布的二级分类
 export function getSpartTwoLevel(params) {
 	return axios({
-		url: "api/business/spartLevel/getSpartLevel",
+		url: "api/business/spartLevel/getSpartTwoLevel",
 		method: "get",
 		params: requestParam(params, "get"),
 	});
@@ -149,6 +149,15 @@ export function getAddressMouldList() {
 	return axios({
 		url: `api/sys/addressMould/getAddressMouldList`,
 		method: "get",
+		headers: { token: localStorage.getItem("token") },
+	});
+}
+// 我的店铺
+export function getMerchantByCreater(params) {
+	return axios({
+		url: `api/business/merchant/getMerchantByCreater`,
+		method: "get",
+		params: params,
 		headers: { token: localStorage.getItem("token") },
 	});
 }

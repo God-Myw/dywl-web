@@ -375,7 +375,7 @@
 	}
 	.hypothecate {
 		.service_bg {
-			background: url("../../assets/container/3611.png") no-repeat;
+			background: url("../../assets/container/361.jpg") no-repeat;
 			background-size: 100% 484px;
 			width: 100%;
 			height: 484px;

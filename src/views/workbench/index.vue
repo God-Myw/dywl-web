@@ -80,11 +80,11 @@
 							<t-menu-item value="container">集装箱订单</t-menu-item>
 							<t-menu-item value="spartOrder">船舶供应订单</t-menu-item>
 						</t-submenu>
-						<t-menu-item value="发票管理">
+						<t-menu-item value="invoices">
 							<template #icon>
 								<div class="iconfont icon-NaviLeft-5-bill" style="margin-right: 9px"></div>
 							</template>
-							发票管理
+							我的下级
 						</t-menu-item>
 						<t-menu-item value="userMessage">
 							<template #icon>
@@ -92,17 +92,17 @@
 							</template>
 							消息区
 						</t-menu-item>
-						<t-menu-item value="在线留言">
+						<t-menu-item value="Message">
 							<template #icon>
 								<div class="iconfont icon-NaviLeft-7-news" style="margin-right: 9px"></div>
 							</template>
 							在线留言
 						</t-menu-item>
-						<t-menu-item value="账号管理">
+						<t-menu-item value="accountManagement">
 							<template #icon>
 								<div class="iconfont icon-NaviLeft-8-account" style="margin-right: 9px"></div>
 							</template>
-							账号管理
+							我的账户
 						</t-menu-item>
 					</t-menu>
 				</t-aside>
@@ -202,6 +202,11 @@
 							path: "/workbench/orderList/container",
 						});
 						break;
+					case "invoices":
+						this.$router.push({
+							path: "/workbench/invoices",
+						});
+						break;
 					case "userMessage":
 						this.$router.push({
 							path: "/workbench/UserMessage",
@@ -210,6 +215,16 @@
 					case "spartOrder":
 						this.$router.push({
 							path: "/workbench/spartOrder",
+						});
+						break;
+					case "Message":
+						this.$router.push({
+							path: "/workbench/Message",
+						});
+						break;
+					case "accountManagement":
+						this.$router.push({
+							path: "/workbench/accountManagement",
 						});
 						break;
 
