@@ -2,7 +2,7 @@
 	<div class="det_internal">
 		<div class="internal_bg">
 			<div class="internal">
-				<div class="title">国际货运详情</div>
+				<div class="title">International Freight Details</div>
 				<div class="issue_time">
 					<span>发布时间</span>
 					<span></span>

@@ -3,7 +3,7 @@
 		<div class="product_bg">
 			<div class="voyagetime">
 				<div class="voyagetime_title" v-if="activeName == 'internal'">国内航次</div>
-				<div class="voyagetime_title" v-else>国际航次</div>
+				<div class="voyagetime_title" v-else>Global Voyage</div>
 				<div class="vouagetime_seach">
 					<div class="home_search_input">
 						<div class="search_input_launch">
@@ -31,7 +31,7 @@
 		</div>
 		<div class="product_tabs">
 			<el-tabs v-model="activeName" @tab-click="handleClick">
-				<el-tab-pane label="国际航次" name="foreign"></el-tab-pane>
+				<el-tab-pane label="Global Voyage" name="foreign"></el-tab-pane>
 				<el-tab-pane label="国内航次" name="internal"></el-tab-pane>
 			</el-tabs>
 			<!-- 国际航次 -->
@@ -76,22 +76,22 @@
 										</div>
 									</div>
 									<div class="inter_list_t">
-										<div>船舶类型</div>
+										<div>Ship Type</div>
 										<div>{{ item.titleCn }}</div>
 									</div>
 									<div class="inter_list_o">
-										<div>可接受吨位</div>
+										<div>Accepted Weight</div>
 										<div v-if="item.acceptTon">{{ item.acceptTon }}吨</div>
 										<div v-else>--</div>
 									</div>
 									<div class="inter_list_s">
-										<div>可接受体积</div>
+										<div>Accepted Volume</div>
 										<div v-if="item.acceptCapacity">{{ item.acceptCapacity }}m³</div>
 										<div v-else>--</div>
 									</div>
 								</div>
 								<div class="inter_list_e" @click="toDetvoforeign(item)">
-									<div>查看详情</div>
+									<div>Exact Details</div>
 								</div>
 							</div>
 						</div>

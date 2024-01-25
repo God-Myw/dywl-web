@@ -509,7 +509,7 @@
 					<div class="more" @click="toproduct()"></div>
 					<div class="straygoods_pallet">
 						<span @click="foreignpallet()" :class="pallet == 'foreign' ? 'pallet_optfor' : ''"
-							>推荐国际货盘</span
+							>Recommended international pallets</span
 						>
 						<span @click="internalpallet()" :class="pallet == 'internal' ? 'pallet_optfor' : ''"
 							>推荐国内货盘</span
@@ -618,7 +618,7 @@
 					<div class="more" @click="toVoyagetime()"></div>
 					<div class="straygoods_voyage">
 						<span @click="foreignvoyage()" :class="voyage == 'foreign' ? 'voyage_optfor' : ''"
-							>推荐国际航次</span
+							>Recommended Global Voyage</span
 						>
 						<span @click="internalvoyage()" :class="voyage == 'internal' ? 'voyage_optfor' : ''"
 							>推荐国内航次</span

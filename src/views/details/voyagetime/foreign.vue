@@ -2,69 +2,69 @@
 	<div class="det_foreign">
 		<div class="foreign_bg">
 			<div class="foreign">
-				<div class="title">国际航次详情</div>
+				<div class="title">International Voyage Details</div>
 				<div class="issue_time">
-					<span>发布时间</span>
+					<span>Release time</span>
 					<span></span>
 					<span>{{ createDate }}</span>
 				</div>
 				<div class="ship">
-					<div class="ship_title">船舶信息</div>
+					<div class="ship_title">Ship Information</div>
 					<div class="ship_cargo">
 						<div class="ship_cargo_l">
 							<div class="ship_cargo_left_t">
-								<span>船型</span>
+								<span>Ship Type</span>
 								<span>单夹板</span>
 							</div>
 							<div class="ship_cargo_left_c">
-								<span>船舶类型</span>
+								<span>Ship Kinds</span>
 								<span>{{ titleCn }}</span>
 							</div>
 							<div class="ship_cargo_left_b">
-								<span>建造年份</span>
+								<span>Year of Construction</span>
 								<span>2017年</span>
 							</div>
 						</div>
 						<div class="ship_cargo_c">
 							<div class="ship_cargo_c_t">
-								<span>船舶吃水</span>
+								<span>Draft</span>
 								<span>12米</span>
 							</div>
 							<div class="ship_cargo_c_c">
-								<span>载重吨</span>
+								<span>Dwt</span>
 								<span>55500吨</span>
 							</div>
 							<div class="ship_cargo_c_b">
-								<span>船吊</span>
+								<span>Ship Cranes</span>
 								<span>{{ shipCrane }}个</span>
 							</div>
 						</div>
-						<div class="ship_cargo_r"><span></span><span>联系客服</span></div>
+						<div class="ship_cargo_r"><span></span><span>ContactUs</span></div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="accept_info">
-			<div class="accept_title">承运信息</div>
+			<div class="accept_title">Tonnage Details</div>
 			<div class="accept_cont">
 				<div class="accept_cont_l">
-					<span>船舶航程</span>
+					<span>Voyage Periods</span>
 					<span>{{ shipVoyage }}天</span>
 				</div>
 				<div class="accept_cont_c">
-					<span>可接受吨位</span>
+					<span>Accepted Weight</span>
 					<span>5500吨</span>
 				</div>
 				<div class="accept_cont_r">
-					<span>可接受体积</span>
+					<span>Accepted Volume</span>
 					<span>55000m³</span>
 				</div>
 			</div>
 		</div>
 		<div class="flight_course">
-			<div class="flight_title">航线信息</div>
+			<div class="flight_title">Tonnage Itinerary</div>
 			<div class="flight_box_header">
-				<span>停靠港口</span>
+				<span> L/D Port</span>
 				<span>ETA</span>
 				<span>ETD</span>
 			</div>
@@ -101,7 +101,9 @@
 			this.voyageLine = data.voyageLine;
 			this.shipCrane = data.shipCrane;
 			this.shipVoyage = data.shipVoyage;
-			this.createDate = data.createDate.replace("T", " ").replace(".000+0000", " ");
+			this.createDate = data.createDate
+				.replace("T", " ")
+				.replace(".000+0000", " ");
 		},
 
 		methods: {},
@@ -140,7 +142,8 @@
 						opacity: 0.8;
 					}
 					span:nth-child(2) {
-						background: url("../../../assets/seckill/路径 4042@2x (1).png") no-repeat;
+						background: url("../../../assets/seckill/路径 4042@2x (1).png")
+							no-repeat;
 						background-size: 100% 100%;
 						width: 14px;
 						height: 14px;
@@ -309,7 +312,8 @@
 								display: block;
 							}
 							span:nth-child(1) {
-								background: url("../../../assets/seckill/蒙版组 285@2x (1).png") no-repeat;
+								background: url("../../../assets/seckill/蒙版组 285@2x (1).png")
+									no-repeat;
 								background-size: 100% 100%;
 								width: 20px;
 								height: 20px;
@@ -482,7 +486,8 @@
 							margin-right: 60px;
 						}
 						div:nth-child(3) {
-							background: url("../../../assets/seckill/蒙版组 288@2x.png") no-repeat;
+							background: url("../../../assets/seckill/蒙版组 288@2x.png")
+								no-repeat;
 							width: 14px;
 							height: 14px;
 							background-size: 100% 100%;
@@ -497,7 +502,8 @@
 							color: #606266;
 						}
 						div:nth-child(5) {
-							background: url("../../../assets/seckill/蒙版组 288@2x.png") no-repeat;
+							background: url("../../../assets/seckill/蒙版组 288@2x.png")
+								no-repeat;
 							width: 14px;
 							height: 14px;
 							background-size: 100% 100%;
