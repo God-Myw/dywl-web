@@ -15,13 +15,13 @@
 							<div>
 								<span>L/port</span>
 								<span></span>
-								<span>{{ detailData.titleCnStart }}</span>
+								<span>{{ detailData.titleEnStart }}</span>
 							</div>
 							<div></div>
 							<div>
 								<span>D/port</span>
 								<span></span>
-								<span>{{ detailData.titleCnDes }}</span>
+								<span>{{ detailData.titleEnDes }}</span>
 							</div>
 							<div>
 								<span>Laycan</span>
@@ -43,25 +43,15 @@
 		<div class="cargo">
 			<div class="cargo_title">
 				<span>cargo details</span>
-				<span class="cargo_title_great" v-if="detailData.majorParts == 1"
-					>重大件</span
-				>
-				<span class="cargo_title_risk" v-if="detailData.goodsProperty == 1"
-					>危险品</span
-				>
-				<span class="cargo_title_risk" v-if="detailData.goodsProperty == 2"
-					>化学品</span
-				>
-				<span class="cargo_title_risk" v-if="detailData.goodsProperty == 3"
-					>散装</span
-				>
-				<span class="cargo_title_risk" v-if="detailData.goodsProperty == 4"
-					>袋装</span
-				>
+				<span class="cargo_title_great" v-if="detailData.majorParts == 1">Major</span>
+				<span class="cargo_title_risk" v-if="detailData.goodsProperty == 1">dangers</span>
+				<span class="cargo_title_risk" v-if="detailData.goodsProperty == 2">chemical</span>
+				<span class="cargo_title_risk" v-if="detailData.goodsProperty == 3">bulker</span>
+				<span class="cargo_title_risk" v-if="detailData.goodsProperty == 4">In bag</span>
 			</div>
 			<div class="cargo_name">
 				<span>Cargo name</span>
-				<span>{{ detailData.titleCnPallet }}</span>
+				<span>{{ detailData.titleEnPallet }}</span>
 			</div>
 			<div class="cargo_info">
 				<div class="cargo_info_l">
@@ -71,15 +61,15 @@
 					</div>
 					<div class="cargo_location">
 						<span>Position</span>
-						<span v-if="detailData.location == 0">舱内</span>
-						<span v-if="detailData.location == 1">甲板</span>
-						<span v-if="detailData.location == 2">舱内/甲板</span>
+						<span v-if="detailData.location == 0">In cabin</span>
+						<span v-if="detailData.location == 1">Deck</span>
+						<span v-if="detailData.location == 2">In cabin/Deck</span>
 					</div>
 				</div>
 				<div class="cargo_info_r">
 					<div class="cargo_weight">
 						<span>Cargo weight</span>
-						<span>{{ detailData.goodsWeight }}吨</span>
+						<span>{{ detailData.goodsWeight }}Ton</span>
 					</div>
 					<div class="cargo_volume">
 						<span>Cargo cbm</span>
@@ -87,26 +77,25 @@
 					</div>
 					<div class="cargo_character">
 						<span>packing</span>
-						<span v-if="detailData.goodsProperty == 0">通货物</span>
-						<span v-if="detailData.goodsProperty == 1">危险品</span>
-						<span v-if="detailData.goodsProperty == 2">化学品</span>
-						<span v-if="detailData.goodsProperty == 3">散装</span>
-						<span v-if="detailData.goodsProperty == 4">袋装</span>
+						<span v-if="detailData.goodsProperty == 0">Connect goods</span>
+						<span v-if="detailData.goodsProperty == 1">Dangerous goods</span>
+						<span v-if="detailData.goodsProperty == 2">Chemical</span>
+						<span v-if="detailData.goodsProperty == 3">Bulk</span>
+						<span v-if="detailData.goodsProperty == 4">In bags</span>
 					</div>
 				</div>
 			</div>
 			<div class="cargo_brokerage">
 				<span>Commission</span>
 				<span
-					>Add.com
-					<i style="color: #4791ff">{{ detailData.addCommission }}</i> + com
+					>Add.com <i style="color: #4791ff">{{ detailData.addCommission }}</i> + com
 					<i style="color: #4791ff">{{ detailData.commission }}</i></span
 				>
 			</div>
 			<div class="transport_remark">
 				<span>remark</span>
 				<span v-if="detailData.remark">{{ detailData.remark }}</span>
-				<span v-else>无</span>
+				<span v-else>NIL</span>
 			</div>
 			<div class="transport_cargolist">
 				<div class="cargolist_title">Cargolist</div>
@@ -136,10 +125,8 @@
 			<div class="intention_title">chrtr's fixing idea & L/D term</div>
 			<div class="intention_price">
 				<span>Chrtr'sfixingidea</span>
-				<span
-					><i style="color: #4791ff">${{ detailData.intentionMoney }}</i>
-					USD</span
-				>
+				<!-- <span><i style="color: #4791ff">${{ detailData.intentionMoney }}</i> USD</span> -->
+				<span><i style="color: #4791ff">${{ 0 }}</i> USD</span>
 			</div>
 			<div class="intention_price">
 				<span>L/Dterm</span>
@@ -147,11 +134,11 @@
 			</div>
 			<div class="intention_price">
 				<span>L/rate</span>
-				<span>{{ detailData.loadingRate }}%</span>
+				<span>{{ detailData.loadingRate }}</span>
 			</div>
 			<div class="intention_price">
 				<span>D/rate</span>
-				<span>{{ detailData.unloadingRate }}%</span>
+				<span>{{ detailData.unloadingRate }}</span>
 			</div>
 		</div>
 	</div>
@@ -179,10 +166,7 @@
 						this.detailData = res.data.pallet;
 						res.data.palletFileList.map((item) => {
 							this.srcList.push(
-								"http://58.33.34.10:10443/images/" +
-									item.type +
-									"/" +
-									item.fileName,
+								"http://58.33.34.10:10443/images/" + item.type + "/" + item.fileName,
 							);
 						});
 					} else {
@@ -244,8 +228,7 @@
 						opacity: 0.8;
 					}
 					span:nth-child(2) {
-						background: url("../../../assets/seckill/路径 4042@2x (1).png")
-							no-repeat;
+						background: url("../../../assets/seckill/路径 4042@2x (1).png") no-repeat;
 						background-size: 100% 100%;
 						width: 14px;
 						height: 14px;
@@ -287,8 +270,7 @@
 									padding: 5px 0 3px 0;
 								}
 								span:nth-child(2) {
-									background: url("../../../assets/homepage/蒙版组 179@2x.png")
-										no-repeat;
+									background: url("../../../assets/homepage/蒙版组 179@2x.png") no-repeat;
 									background-size: 100% 100%;
 									width: 20px;
 									height: 20px;
@@ -297,8 +279,7 @@
 								}
 								span:nth-child(3) {
 									font-size: 22px;
-									font-family: "SourceHanSansCN-Medium", "Microsoft YaHei",
-										Arial;
+									font-family: "SourceHanSansCN-Medium", "Microsoft YaHei", Arial;
 									font-weight: 500;
 									line-height: 22px;
 									color: #303133;
@@ -325,8 +306,7 @@
 									padding: 5px 0 3px 0;
 								}
 								span:nth-child(2) {
-									background: url("../../../assets/homepage/蒙版组 180@2x.png")
-										no-repeat;
+									background: url("../../../assets/homepage/蒙版组 180@2x.png") no-repeat;
 									background-size: 100% 100%;
 									width: 20px;
 									height: 20px;
@@ -335,8 +315,7 @@
 								}
 								span:nth-child(3) {
 									font-size: 22px;
-									font-family: "SourceHanSansCN-Medium", "Microsoft YaHei",
-										Arial;
+									font-family: "SourceHanSansCN-Medium", "Microsoft YaHei", Arial;
 									font-weight: 500;
 									line-height: 22px;
 									color: #303133;
@@ -367,8 +346,7 @@
 								content: "";
 								width: 14px;
 								height: 40px;
-								background: url("../../../assets/voyagetime/蒙版组 289@2x.png")
-									no-repeat;
+								background: url("../../../assets/voyagetime/蒙版组 289@2x.png") no-repeat;
 								background-size: 100% 100%;
 								position: absolute;
 								top: 4px;
@@ -408,8 +386,7 @@
 									display: block;
 								}
 								span:nth-child(1) {
-									background: url("../../../assets/seckill/蒙版组 285@2x.png")
-										no-repeat;
+									background: url("../../../assets/seckill/蒙版组 285@2x.png") no-repeat;
 									background-size: 100% 100%;
 									width: 20px;
 									height: 20px;

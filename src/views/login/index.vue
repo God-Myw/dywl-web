@@ -21,6 +21,13 @@
             >
               密码登录
             </div>
+            <div
+              :class="{ login_cut_status: loginCutstatus == '3' }"
+              class="login_cut_pass"
+              @click="loginCut(3)"
+            >
+              微信登录
+            </div>
           </div>
           <div class="login_input_recoin" v-if="loginCutstatus == '1'">
             <div class="login_input_recoin_correct">
@@ -99,6 +106,10 @@
             <div class="login_else_l" @click="goRegister">
               <div></div>
               <div>新用户注册</div>
+            </div>
+            <div class="login_else_c" @click="goRegister2">
+              <div></div>
+              <div> Registing（Email）</div>
             </div>
             <div
               v-if="loginCutstatus == '2'"
@@ -197,6 +208,11 @@ export default {
     goRegister() {
       this.$router.push({
         path: '/register',
+      })
+    },
+    goRegister2() {
+      this.$router.push({
+        path: '/register2',
       })
     },
     loginCut(id) {
@@ -416,7 +432,7 @@ export default {
             font-size: 18px;
             line-height: 42px;
             color: #909399;
-            margin-right: 72px;
+            margin-right: 32px;
             cursor: pointer;
           }
           .login_cut_pass {
@@ -424,6 +440,7 @@ export default {
             height: 42px;
             font-size: 18px;
             line-height: 42px;
+            margin-right: 32px;
             color: #909399;
             cursor: pointer;
           }
@@ -680,6 +697,7 @@ export default {
         }
         .login_else {
           display: flex;
+          justify-content: space-between;
           margin-bottom: 72px;
           .login_else_l {
             display: flex;
@@ -696,6 +714,7 @@ export default {
               font-weight: 400;
               line-height: 16px;
               color: #4791ff;
+              white-space: nowrap;
             }
             &:hover {
               div:nth-child(1) {
@@ -715,7 +734,8 @@ export default {
             font-weight: 400;
             line-height: 16px;
             color: #909399;
-            margin: 0 64px 0 20px;
+            margin: 0 0px 0 20px;
+            white-space: nowrap;
             cursor: pointer;
             &:hover {
               color: #376bc5;
@@ -736,6 +756,7 @@ export default {
               font-weight: 400;
               line-height: 16px;
               color: #4791ff;
+              white-space: nowrap;
             }
             &:hover {
               div:nth-child(1) {

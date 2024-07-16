@@ -40,12 +40,12 @@
 						<div>
 							<countTo
 								:startVal="Number(0)"
-								:endVal="Number(this.palletSum) + 1613"
+								:endVal="Number(this.palletSum) + Number(this.emergencySum)*7"
 								:duration="1000"
 								suffix=""
 							></countTo>
 						</div>
-						<div>货物数量</div>
+						<div>水运货源</div>
 					</li>
 					<li>
 						<div>
@@ -399,12 +399,15 @@
 			<div class="straygoods_content">
 				<div class="straygoods_content_l">
 					<div class="straygoods_freight_title">
-						<div class="straygoods_freight_p">我有货要运</div>
+						<div class="straygoods_freight_p" v-if="pallet == 'foreign'">Goods Shipped</div>
+						<div class="straygoods_freight_p" v-else>我有货要运</div>
 						<div class="straygoods_freight_t">
 							<div></div>
-							<div>配套衍生服务</div>
+							<div v-if="pallet == 'foreign'">Supporting services</div>
+							<div v-else>配套衍生服务</div>
 							<div></div>
-							<div>报价洽谈</div>
+							<div v-if="pallet == 'foreign'">Quotation negotiation</div>
+							<div v-else>报价洽谈</div>
 						</div>
 					</div>
 					<div class="straygoods_freight_seach">
@@ -423,7 +426,7 @@
 											v-model="ruleForm.origin"
 											filterable
 											clearable
-											placeholder="从哪里起运"
+											:placeholder="pallet == 'foreign' ? 'L/P' : '从哪里起运'"
 										>
 											<el-option
 												v-for="item in startPortList"
@@ -439,7 +442,7 @@
 											v-model="ruleForm.purpose"
 											filterable
 											clearable
-											placeholder="货到哪里去"
+											:placeholder="pallet == 'foreign' ? 'D/P' : '货到哪里去'"
 										>
 											<el-option
 												v-for="item in endtPortList"
@@ -455,7 +458,9 @@
 											v-model="ruleForm.goodsName"
 											filterable
 											clearable
-											placeholder="请选择货物名称"
+											:placeholder="
+												pallet == 'foreign' ? 'select the name of the goods' : '请选择货物名称'
+											"
 										>
 											<el-option
 												v-for="(item, index) in goodsNameList"
@@ -472,7 +477,7 @@
 												<el-input
 													v-model="ruleForm.minton"
 													oninput="value=value.replace(/[^0-9.]/g,'')"
-													placeholder="最小吨位"
+													:placeholder="pallet == 'foreign' ? 'Minton' : '最小吨位'"
 													style="width: 112px"
 												></el-input>
 											</el-form-item>
@@ -483,12 +488,21 @@
 												<el-input
 													v-model="ruleForm.maxton"
 													oninput="value=value.replace(/[^0-9.]/g,'')"
-													placeholder="最大吨位"
+													:placeholder="pallet == 'foreign' ? 'Maxton' : '最大吨位'"
 													style="width: 112px"
 												></el-input>
 											</el-form-item>
 										</el-col>
-										<el-col style="font-size: 16px; color: #909399; padding-left: 4px" :span="1"
+										<el-col
+											v-if="pallet == 'foreign'"
+											style="font-size: 16px; color: #909399; padding-left: 4px"
+											:span="1"
+											>Ton</el-col
+										>
+										<el-col
+											v-else
+											style="font-size: 16px; color: #909399; padding-left: 4px"
+											:span="1"
 											>吨</el-col
 										>
 									</el-form-item>
@@ -496,8 +510,15 @@
 							</div>
 						</div>
 						<div class="straygoods_freight_bott">
-							<div class="straygoods_freight_bott_l">客服计算价格后将消息通知您</div>
-							<div class="straygoods_freight_bott_r">
+							<div v-if="pallet == 'foreign'" class="">
+								After the customer service calculates the price, they will notify you by message
+							</div>
+							<div v-else class="straygoods_freight_bott_l">客服计算价格后将消息通知您</div>
+							<div v-if="pallet == 'foreign'" class="straygoods_freight_bott_r">
+								<span v-if="roleinfo.allianceStutas == 2">Next step</span>
+								<span v-else @click="freightNext">Next step</span>
+							</div>
+							<div v-else class="straygoods_freight_bott_r">
 								<span v-if="roleinfo.allianceStutas == 2">下一步</span>
 								<span v-else @click="freightNext">下一步</span>
 							</div>
@@ -525,20 +546,22 @@
 								<ul>
 									<li v-for="item in items" :key="item.guid">
 										<div class="pallet_cont_li_h">
-											{{ item.titleCnPallet }}
+											{{ pallet == "foreign" ? item.titleEnPallet : item.titleCnPallet }}
 											<span v-if="item.goodsWeight">/</span>
-											<i v-if="item.goodsWeight">{{ item.goodsWeight }}吨</i>
+											<i v-if="item.goodsWeight"
+												>{{ item.goodsWeight }}{{ pallet == "foreign" ? "Ton" : "吨" }}</i
+											>
 											<span v-if="item.goodsVolume && pallet == 'foreign'">/</span>
 											<i v-if="item.goodsVolume && pallet == 'foreign'">{{ item.goodsVolume }}m³</i>
 										</div>
 										<div class="pallet_cont_li_b">
 											<div class="li_pallet_date">
 												<div class="li_pallet_date_s">
-													<div>装货</div>
+													<div>{{ pallet == "foreign" ? "Load" : "装货" }}</div>
 													<div>{{ item.loadDate | renderTime }}</div>
 												</div>
 												<div class="li_pallet_date_e">
-													<div>日期</div>
+													<div>{{ pallet == "foreign" ? "Date" : "日期" }}</div>
 													<div>{{ item.endDate | renderTime }}</div>
 												</div>
 											</div>
@@ -547,20 +570,26 @@
 												<div class="li_pallet_place_s">
 													<div v-if="pallet == 'foreign'" class="li_pallet_place_cir"></div>
 													<div v-else class="li_pallet_place_cir_foreign"></div>
-													<div>{{ item.titleCnStart }}</div>
+													<div>
+														{{ pallet == "foreign" ? item.titleEnStart : item.titleCnStart }}
+													</div>
 												</div>
 												<div class="li_pallet_place_e">
 													<div></div>
-													<div>{{ item.titleCnDes }}</div>
+													<div>{{ pallet == "foreign" ? item.titleEnDes : item.titleCnDes }}</div>
 												</div>
 											</div>
 											<div v-if="pallet == 'foreign'" class="li_pallet_btn">
-												<div @click="toDetforeign(item.guid)">详情</div>
-												<div @click="gohint">抢单</div>
+												<div @click="toDetforeign(item.guid)">
+													{{ pallet == "foreign" ? "Detail" : "详情" }}
+												</div>
+												<div @click="gohint">{{ pallet == "foreign" ? "Grab" : "抢单" }}</div>
 											</div>
 											<div v-else class="li_pallet_btn_internal">
-												<div @click="toDetinternal(item.guid)">详情</div>
-												<div @click="gohint">抢单</div>
+												<div @click="toDetinternal(item.guid)">
+													{{ pallet == "foreign" ? "Detail" : "详情" }}
+												</div>
+												<div @click="gohint">{{ pallet == "foreign" ? "Grab" : "抢单" }}</div>
 											</div>
 										</div>
 									</li>
@@ -590,15 +619,29 @@
 			<div class="voyage_content">
 				<div class="voyage_content_l">
 					<div class="voyage_freight_title">
-						<div class="voyage_freight_p">我要发布航次</div>
-						<div class="voyage_freight_t">
+						<div v-if="voyage == 'foreign'" class="voyage_freight_p">Build Ship Rotations</div>
+						<div v-else class="voyage_freight_p">我要发布航次</div>
+						<div v-if="voyage != 'foreign'" class="voyage_freight_t">
 							<div></div>
 							<div>真实船期</div>
 							<div>最新船舶信息</div>
 						</div>
+						<div v-else class="voyage_freight_t">
+							<div></div>
+							<div>Real shipping schedule</div>
+							<div>Latest ship information</div>
+						</div>
 					</div>
+
 					<div class="announce_voyage">
-						<div class="announce_new_voyage">
+						<div v-if="voyage == 'foreign'" class="announce_new_voyage">
+							<div>
+								<span></span>
+								<span>Building New Rotations</span>
+							</div>
+							<div>select the publishing voyage area</div>
+						</div>
+						<div v-else class="announce_new_voyage">
 							<div>
 								<span></span>
 								<span>发布新航次</span>
@@ -618,10 +661,10 @@
 					<div class="more" @click="toVoyagetime()"></div>
 					<div class="straygoods_voyage">
 						<span @click="foreignvoyage()" :class="voyage == 'foreign' ? 'voyage_optfor' : ''"
-							>Recommended Global Voyage</span
+							>Recommended Global Rotaions</span
 						>
 						<span @click="internalvoyage()" :class="voyage == 'internal' ? 'voyage_optfor' : ''"
-							>推荐国内航次</span
+							>Recommended Coastal Rotaions</span
 						>
 					</div>
 					<div class="voyage_cont">
@@ -629,7 +672,8 @@
 							<li @click="toDetvoforeign()" v-for="item in forVoyageData" :key="item.guid">
 								<div class="voyage_cont_li_h">
 									<div>
-										{{ item.titleCn }}<span>/</span>{{ item.acceptTon }}
+										{{ voyage == "foreign" ? item.titleEn : item.titleCn }}<span>/</span
+										>{{ item.acceptTon }}
 										吨
 									</div>
 									<div v-if="voyage == 'foreign'">
@@ -655,7 +699,11 @@
 											<div v-if="voyage == 'foreign'" class="li_pallet_place_cir"></div>
 											<div v-else class="li_pallet_place_cir_foreign"></div>
 											<div v-if="item.voyageLine.length > 0">
-												{{ item.voyageLine[0].titleCN }}
+												{{
+													voyage == "foreign"
+														? item.voyageLine[0].titleCN
+														: item.voyageLine[0].titleCN
+												}}
 											</div>
 										</div>
 										<div class="li_pallet_place_e">
@@ -879,9 +927,9 @@
 			// 航次数据
 			this.foreignvoyage();
 			// 起始港
-			// this.getBegList();
+			this.getBegList();
 			// 货物名称
-			// this.goodsName();
+			this.goodsName();
 			// 船舶备件
 			this.getSpartList();
 			this.getnum();
@@ -2358,7 +2406,7 @@
 									.pallet_cont_li_b {
 										display: flex;
 										.li_pallet_date {
-											margin: 27px 14px 32px 19px;
+											margin: 27px 7px 32px 7px;
 											font-size: 14px;
 											font-weight: 400;
 											line-height: 14px;

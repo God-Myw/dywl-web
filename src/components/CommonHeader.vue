@@ -53,6 +53,20 @@
             >
               工作台
             </li>
+            <li
+              class="hoverEffect"
+              :class="activeClass == 6 ? 'router-link-active' : ''"
+              @click="activeClass = 6"
+            >
+              中文
+            </li>
+            <li
+              class="hoverEffect"
+              :class="activeClass == 7 ? 'router-link-active' : ''"
+              @click="activeClass = 7"
+            >
+              En
+            </li>
           </ul>
         </div>
       </div>
@@ -239,6 +253,13 @@
             >
               密码登录
             </div>
+            <div
+              :class="{ login_cut_status: loginCutstatus == '3' }"
+              class="login_cut_pass"
+              @click="impower"
+            >
+              微信登录
+            </div>
           </div>
           <div class="login_input_recoin" v-if="loginCutstatus == '1'">
             <div class="login_input_recoin_correct">
@@ -325,9 +346,9 @@
               <div></div>
               <div>新用户注册</div>
             </div>
-            <div class="login_else_r" @click="impower">
+            <div class="login_else_r" @click="goRegister2">
               <div></div>
-              <div>微信登录</div>
+              <div> Registing（Email）</div>
             </div>
             <div class="login_else_join" @click="cargoStutas = false">
               加盟商登录
@@ -699,6 +720,12 @@ export default {
         case 5:
           this.activeClass = newdata;
           this.$router.push("/workbench");
+          break;
+        case 6:
+          this.activeClass = newdata;
+          break;
+        case 7:
+          this.activeClass = newdata;
           break;
       }
     },
@@ -1093,6 +1120,12 @@ export default {
         path: "/register",
       });
     },
+    goRegister2() {
+      this.loginStatus = false;
+      this.$router.push({
+        path: "/register2",
+      });
+    },
     closeFun() {
       this.reload();
       // Object.assign(this.$data, this.$options.data());
@@ -1294,7 +1327,7 @@ export default {
           font-size: 18px;
           line-height: 42px;
           color: #909399;
-          margin-right: 72px;
+          margin-right: 32px;
           cursor: pointer;
         }
         .login_cut_pass {
@@ -1302,6 +1335,7 @@ export default {
           height: 42px;
           font-size: 18px;
           line-height: 42px;
+          margin-right: 32px;
           color: #909399;
           cursor: pointer;
         }
@@ -1622,7 +1656,7 @@ export default {
           div:nth-child(1) {
             width: 16px;
             height: 16px;
-            background: url("../assets/login/蒙版组 315@2x.png") no-repeat;
+            // background: url("../assets/login/蒙版组 315@2x.png") no-repeat;
             background-size: 16px 16px;
             margin-right: 6px;
           }
@@ -1636,7 +1670,7 @@ export default {
             div:nth-child(1) {
               width: 16px;
               height: 16px;
-              background: url("../assets/login/蒙版组 315@2x (1).png") no-repeat;
+              // background: url("../assets/login/蒙版组 315@2x (1).png") no-repeat;
               background-size: 16px 16px;
             }
             div:nth-child(2) {
@@ -1732,7 +1766,7 @@ export default {
         ul {
           position: relative;
           display: flex;
-          margin: 20px 0 0 47px;
+          margin: 20px 0 0 27px;
           li {
             font-size: 16px;
             line-height: 16px;

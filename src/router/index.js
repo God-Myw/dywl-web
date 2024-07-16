@@ -20,6 +20,11 @@ const routes = [
 				name: "register",
 				component: () => import("@/views/register/index.vue"),
 			},
+			{
+				path: "/register2",
+				name: "register2",
+				component: () => import("@/views/register/index2.vue"),
+			},
 			// 登录
 			{
 				path: "/login",

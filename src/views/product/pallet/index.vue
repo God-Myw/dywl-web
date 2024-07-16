@@ -5,7 +5,7 @@
 				<div class="voyagetime_title" v-if="activeName == 'internal'">
 					国内货盘
 				</div>
-				<div class="voyagetime_title" v-else>国际货盘</div>
+				<div class="voyagetime_title" v-else>Global Shipping</div>
 				<div class="vouagetime_seach">
 					<div class="home_search_input">
 						<div class="search_input_launch">
@@ -14,7 +14,7 @@
 								<input
 									v-model="bookingStart"
 									type="text"
-									placeholder="从哪里起运"
+									placeholder="L/P"
 								/>
 							</div>
 						</div>
@@ -25,17 +25,17 @@
 								<input
 									v-model="bookingEnd"
 									type="text"
-									placeholder="货到哪里去"
+									placeholder="D/P"
 								/>
 							</div>
 						</div>
 						<div class="search_input_rectangle"></div>
 						<div class="search_input_elapsedtime">
 							<i></i>
-							<div>货物名称</div>
+							<div>Product Name</div>
 						</div>
 					</div>
-					<div class="home_search_btn" @click="gohint">搜 索</div>
+					<div class="home_search_btn" @click="gohint">Search</div>
 				</div>
 			</div>
 		</div>
@@ -99,16 +99,16 @@
 									<div class="inter_list_se">
 										<div>
 											<span></span>
-											<span>{{ item.titleCnStart }}</span>
+											<span>{{ item.titleEnStart }}</span>
 										</div>
 										<div>
 											<span></span>
-											<span>{{ item.titleCnDes }}</span>
+											<span>{{ item.titleEnDes }}</span>
 										</div>
 									</div>
 									<div class="inter_list_t">
 										<div>Cargo name</div>
-										<div>{{ item.titleCnPallet }}</div>
+										<div>{{ item.titleEnPallet }}</div>
 									</div>
 									<div class="inter_list_o">
 										<div>Cargo cbm</div>
@@ -117,7 +117,7 @@
 									</div>
 									<div class="inter_list_s">
 										<div>Cargo weight</div>
-										<div v-if="item.goodsWeight">{{ item.goodsWeight }}吨</div>
+										<div v-if="item.goodsWeight">{{ item.goodsWeight }}Ton</div>
 										<div v-else>--</div>
 									</div>
 									·
@@ -197,7 +197,8 @@
 			</div>
 		</div>
 		<div v-if="productBtn" class="product_btn" @click="addContainerList">
-			<span>More</span>
+			<span v-if="activeName == 'foreign'">More</span>
+			<span v-if="activeName == 'internal'">更多</span>
 		</div>
 		<div v-else class="product_zw">已加载全部内容</div>
 		<Hint @dighintStutas="dighintStutas" :hintStutas="hintStutas"></Hint>
